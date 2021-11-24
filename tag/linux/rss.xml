@@ -43,7 +43,7 @@ Now we can remove the screws on its back and install the new SSD.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;I bought the Screwdrivers + SSD Adapter on &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3Nob3BlZS50dw==&#34;&gt;shopee.tw&lt;/span&gt; -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img data-src=&#34;0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/swap.jpg&#34; alt=&#34;swap&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;swap.jpg&#34; alt=&#34;swap&#34;&gt;&lt;/p&gt;
 &lt;br&gt;
 &lt;h2 id=&#34;ssd-data-migration&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-data-migration&#34;&gt;#&lt;/a&gt; SSD Data Migration&lt;/h2&gt;
 &lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being&lt;br&gt;
@@ -158,7 +158,7 @@ options	cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
 &lt;p&gt;Install my dotfiles:&lt;/p&gt;
 &lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;user$ &lt;span class=&#34;token function&#34;&gt;git&lt;/span&gt; clone https://github.com/aesophor/dotfiles.git ~/Dots&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;user$ &lt;span class=&#34;token builtin class-name&#34;&gt;cd&lt;/span&gt; ~/Dots&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;user$ &lt;span class=&#34;token function&#34;&gt;rm&lt;/span&gt; ~/.zshrc ~/.bashrc&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;user$ ./.install.sh&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;Start an X11 session (GUI) as your unprivileged user:&lt;/p&gt;
 &lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;user$ startx&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;
-&lt;img data-src=&#34;0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/result.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;img data-src=&#34;result.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
  ]]></description>
         </item>
     </channel>
