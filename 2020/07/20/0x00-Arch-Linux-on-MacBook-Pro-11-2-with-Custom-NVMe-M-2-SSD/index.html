@@ -1,0 +1,601 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/project/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/project/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="aesophor's lair" href="https://aesophor.github.io/project/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="aesophor's lair" href="https://aesophor.github.io/project/atom.xml" />
+<link rel="alternate" type="application/json" title="aesophor's lair" href="https://aesophor.github.io/project/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/project/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="linux" />
+
+
+<link rel="canonical" href="https://aesophor.github.io/project/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/">
+
+
+
+  <title>
+0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD |
+aesophor's lair</title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2020-07-20 18:48:46">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-07-20T18:48:46+08:00">2020-07-20</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/project/" rel="start">aesophor's lair</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/project/banner.jpg">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/project/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/project/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/project/images/avatar.jpg">
+    <meta itemprop="name" content="aesophor">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="aesophor's lair">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <p><img data-src="0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/banner.jpg" alt="banner"></p>
+<br>
+
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>The only laptop I own is Apple’s <span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=">MacBook Pro Retina 15” (late 2014)</span>,<br>on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==">Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)</span><br>and decided to install Arch Linux on it.</p>
+<br>
+
+
+<h2 id="Back-Up-the-Old-SSD"><a href="#Back-Up-the-Old-SSD" class="headerlink" title="Back Up the Old SSD"></a>Back Up the Old SSD</h2><p>I booted into a <code>Gentoo Live USB</code> and used <code>dd</code> to back up my entire old SSD to an image file.</p>
+<pre><code class="bash">root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
+</code></pre>
+<p>Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive<br>on <code>/mnt/external_drive</code> and run the following commands to copy all my data from the image file to<br>the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.</p>
+<pre><code class="bash">root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
+</code></pre>
+<br>
+
+
+<h2 id="Firmware-Upgrade"><a href="#Firmware-Upgrade" class="headerlink" title="Firmware Upgrade"></a>Firmware Upgrade</h2><p>Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to <strong>macOS Mojave<br>which includes the firmware required to boot from NVMe M.2 SSD</strong>.</p>
+<br>
+
+<h2 id="SSD-Upgrade"><a href="#SSD-Upgrade" class="headerlink" title="SSD Upgrade"></a>SSD Upgrade</h2><blockquote>
+<p><strong>CAUTION</strong><br><br>Be very careful with the screws. I stripped some of my screws due to the bloated batteries,<br>and ended up spending $3000 NTD (approx. $100 USD) for repairment.</p>
+</blockquote>
+<p>After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on.<br>Now we can remove the screws on its back and install the new SSD.</p>
+<ul>
+<li>I bought the Screwdrivers + SSD Adapter on shopee.tw -&gt; <a target="_blank" rel="noopener" href="https://shopee.tw/product/4848951/1501356237"><strong>Link</strong></a></li>
+</ul>
+<p><img data-src="0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/swap.jpg" alt="swap"></p>
+<br>
+
+
+<h2 id="SSD-Data-Migration"><a href="#SSD-Data-Migration" class="headerlink" title="SSD Data Migration"></a>SSD Data Migration</h2><p>After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being<br>a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux.<br>Therefore, I decided to go back to Linux again.</p>
+<p>At first I used <code>dd</code> to clone all my data from the image file to the new SSD. However, this didn’t work<br>for me, since <strong>I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel</strong>,<br>so although the disk was successfully migrated, I wasn’t able to boot from it.</p>
+<br>
+
+
+<h2 id="Prepare-Installation-Medium"><a href="#Prepare-Installation-Medium" class="headerlink" title="Prepare Installation Medium"></a>Prepare Installation Medium</h2><p>Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave<br>Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience),<br>but after manually compiling all those packages for 3 years on this fucking MacBook,<br>I’ve already become kinda fed up with it.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=">Download Arch Linux ISO</span> and prepare Arch Live USB:</p>
+<pre><code class="bash">root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
+</code></pre>
+<p>Power off your MacBook, insert the USB stick, hold <code>alt/option</code> and power it on again.<br>Now you should see the option to boot from Arch Linux Live USB.</p>
+<br>
+
+
+<h2 id="Base-Installation"><a href="#Base-Installation" class="headerlink" title="Base Installation"></a>Base Installation</h2><p>After booting from Arch Linux Live USB, you’ll be logged in as the root user.<br>To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable,<br>turned on <code>USB Tethering</code>, and ran:</p>
+<pre><code class="bash">root$ dhcpcd
+</code></pre>
+<p>Ensure the clock is accurate:</p>
+<pre><code class="bash">root$ timedatectl set-ntp true
+</code></pre>
+<p>Run <code>cfdisk /dev/nvme0n1</code> and partition the new SSD as follows:</p>
+<pre><code>                                   Disk: /dev/nvme0n1
+                 Size: 931.53 GiB, 1000204886016 bytes, 1953525168 sectors
+                Label: gpt, identifier: 85CF6A21-FC5C-408D-8532-8751C80F0593
+
+Device                 Start          End        Sectors        Size Type
+/dev/nvme0n1p1          2048       411647         409600        200M EFI System             
+/dev/nvme0n1p2       411648    1953525134     1953113487      931.3G Linux filesystem
+</code></pre>
+<p>Now run <code>lsblk</code> and you’ll see something like this:</p>
+<pre><code>NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+nvme0n1            259:0    0 931.5G  0 disk  
+├─nvme0n1p1        259:1    0   200M  0 part  
+└─nvme0n1p2        259:2    0 931.3G  0 part  
+</code></pre>
+<p>Prepare LVM+LUKS on the new SSD:</p>
+<pre><code class="bash">root$ cryptsetup -v --cipher aes-xts-plain64 --key-size 256 --hash sha1 --iter-time 1000\
+            --use-random --verify-passphrase luksFormat /dev/nvme0n1p2
+root$ cryptsetup luksOpen /dev/nvme0n1p2 lvm
+root$ pvcreate /dev/mapper/lvm
+root$ vgcreate vgcrypt /dev/mapper/lvm
+root$ lvcreate --size 30G --name root vgcrypt
+root$ lvcreate --extents +100%FREE --name home vgcrypt
+root$ mkfs.fat -F32 /dev/nvme0n1p1
+root$ mkfs.ext4 /dev/mapper/vgcrypt-root
+root$ mkfs.ext4 /dev/mapper/vgcrypt-home
+</code></pre>
+<p>Now run <code>lsblk</code> again and you’ll see something like this:</p>
+<pre><code>NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+nvme0n1            259:0    0 931.5G  0 disk  
+├─nvme0n1p1        259:1    0   200M  0 part  
+└─nvme0n1p2        259:2    0 931.3G  0 part  
+  └─vgcrypt        254:0    0 931.3G  0 crypt 
+    ├─vgcrypt-root 254:1    0    30G  0 lvm   
+    └─vgcrypt-home 254:2    0 901.3G  0 lvm   
+</code></pre>
+<p>Mount the partitions:</p>
+<pre><code class="bash">root$ mount /dev/mapper/vgcrypt-root /mnt
+root$ mkdir -p /mnt/home
+root$ mkdir -p /mnt/boot
+root$ mount /dev/mapper/vgcrypt-home /mnt/home
+root$ mount /dev/nvme0n1p1 /mnt/boot
+</code></pre>
+<p>Install the base system:</p>
+<pre><code class="bash">root$ pacstrap -i /mnt base base-devel linux linux-firmware lvm2
+</code></pre>
+<p>Generate fstab:</p>
+<ul>
+<li><code>-L</code> generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.</li>
+<li><code>-p</code> prevents pseudo-filesystems from being added.</li>
+</ul>
+<pre><code class="bash">root$ genfstab -L -p /mnt &gt;&gt; /mnt/etc/fstab
+root$ cat /mnt/etc/fstab
+</code></pre>
+<br>
+
+<h2 id="Configure-the-New-System"><a href="#Configure-the-New-System" class="headerlink" title="Configure the New System"></a>Configure the New System</h2><p>Chroot into our new system:</p>
+<pre><code class="bash">root$ arch-chroot /mnt /bin/bash
+</code></pre>
+<p>Generate locales:</p>
+<ul>
+<li>uncomment the locales you’re going to use in /etc/locale.gen, and run <code>locale-gen</code>.</li>
+<li>run <code>echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</code> to make ENG UTF-8 the default locale. </li>
+</ul>
+<p>Replace the default console font with terminus:</p>
+<pre><code class="bash">root$ pacman -S terminus-font
+root$ echo FONT=ter-v24n &gt; /etc/vconsole.conf
+</code></pre>
+<p>Set timezone and set time to UTC:</p>
+<pre><code class="bash">root$ ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+root$ hwclock --systohc --utc
+</code></pre>
+<p>To ensure the kernel loads the proper modules to decrypt root disk at startup,<br>we have to add necessary hooks in <code>/etc/mkinitcpio.conf</code>:</p>
+<pre><code>HOOKS=&quot;base udev autodetect modconf block consolefont encrypt lvm2 filesystems keyboard fsck&quot;
+</code></pre>
+<p>Regenerate the initramfs image to EFI Partition (<code>/dev/nvme0n1p1</code>):</p>
+<pre><code class="bash">root$ mount /dev/nvme0n1p1 /boot  # just in case you forgot to do this
+root$ mkinitcpio -p linux
+</code></pre>
+<p>Set hostname:</p>
+<pre><code class="bash">root$ echo allegro &gt; /etc/hostname
+</code></pre>
+<p>Install systemd-boot as our bootloader:</p>
+<pre><code class="bash">root$ pacman -S dosfstools
+root$ bootctl --path=/boot install
+</code></pre>
+<p>Add an boot entry for systemd-boot by editing <code>/boot/loader/entries/arch.conf</code>:</p>
+<pre><code>title    Arch Linux
+linux    /vmlinuz-linux
+initrd    /initramfs-linux.img
+options    cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
+</code></pre>
+<p>Change root user’s password:</p>
+<pre><code class="bash">root$ passwd
+</code></pre>
+<p>Install additional packages:</p>
+<pre><code class="bash">root$ pacman -S dhcpcd git zsh vim neovim wget stow tmux
+</code></pre>
+<p>Reboot:</p>
+<pre><code>root$ reboot
+</code></pre>
+<p>Add an unprivileged user:</p>
+<pre><code class="bash">root$ useradd --create-home --groups wheel --shell /bin/zsh aesophor
+root$ passwd aesophor
+</code></pre>
+<p>Set up sudo:</p>
+<ul>
+<li>run <code>visudo</code> and uncomment the line <code>%wheel ALL=(ALL) ALL</code>.</li>
+</ul>
+<br>
+
+<p>At this point, you may logout the root user and re-login with your unprivileged user.</p>
+<br>
+
+<h2 id="Post-Installation"><a href="#Post-Installation" class="headerlink" title="Post Installation"></a>Post Installation</h2><p>Install <a target="_blank" rel="noopener" href="https://github.com/Jguer/yay"><code>yay</code></a>, an AUR helper:</p>
+<pre><code class="bash">user$ git clone https://aur.archlinux.org/yay.git
+user$ cd yay
+user$ sudo makepkg -si
+</code></pre>
+<p>Install X and video drivers:</p>
+<pre><code class="bash">user$ sudo pacman -S xf86-video-intel mesa-libgl libva-intel-driver libva
+user$ yay -S opencl-intel
+user$ sudo pacman -S xorg-server xorg-xinit xorg-apps
+</code></pre>
+<p>Install <code>xf86-input-mtrack</code> as our trackpad driver:</p>
+<pre><code class="bash">user$ yay -S xf86-input-mtrack
+user$ sudo wget -O /etc/X11/xorg.conf.d/10-mtrack.conf https://raw.githubusercontent.com/aesophor/macbookpro-11-2-gentoo-config/master/etc/X11/xorg.conf.d/10mtrack.conf
+user$ sudo gpasswd -a aesophor input
+</code></pre>
+<p>Install <code>broadcom-wl-dkms</code> as our Wi-Fi driver (my laptop model is A1398):</p>
+<pre><code class="bash">user$ sudo pacman -S dkms broadcom-wl-dkms
+</code></pre>
+<p>Install <code>bcwc-pcie-git</code> as our FaceTimeHD webcam driver:</p>
+<pre><code class="bash">user$ yay -S bcwc-pcie-git
+</code></pre>
+<p>Install font packages:</p>
+<pre><code class="bash">user$ sudo pacman -S ttf-liberation wqy-zenhei wqy-bitmapfont
+user$ yay -S siji-git uw-ttyp0-font
+</code></pre>
+<p>Get audio to work:</p>
+<pre><code class="bash">user$ sudo pacman -S pulseaudio alsa-lib alsa-utils
+</code></pre>
+<p>Install DE, WM, bar, etc:</p>
+<pre><code class="bash">user$ sudo pacman -S plasma-desktop
+user$ yay -S wmderland-git polybar dunst picom rofi-git rxvt-unicode firefox
+</code></pre>
+<p>Install fcitx5 input method:</p>
+<pre><code class="bash">user$ sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-material-color
+user$ yay -S fcitx5-pinyin-zhwiki
+</code></pre>
+<p>Downgrade <code>pango</code> to 1.43 since &gt;= 1.44 cause issue with font rendering on rofi:</p>
+<pre><code class="bash">user$ sudo pacman -U https://archive.archlinux.org/packages/p/pango/pango-1.43.0-1-x86_64.pkg.tar.xz
+</code></pre>
+<p>Powersaving:</p>
+<pre><code class="bash">user$ yay -S powertop thermald cpupower mbpfan-git
+user$ sudo systemctl enable thermald.service
+user$ sudo systemctl enable cpupower.service
+user$ sudo systemctl enable mbpfan.service
+</code></pre>
+<p>Finally, create systemd services that execute the following commands, respectively:</p>
+<ul>
+<li>echo ‘disable’ &gt; /sys/firmware/acpi/interrupts/gpe06  # fix kworker high cpu usage</li>
+<li>echo “XHC1” &gt; /proc/acpi/wakeup  # fix immediate wakeup after suspension on macbook</li>
+<li>setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control</li>
+</ul>
+<br>
+
+<h2 id="Enter-X11"><a href="#Enter-X11" class="headerlink" title="Enter X11"></a>Enter X11</h2><p>Install my dotfiles:</p>
+<pre><code class="bash">user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
+user$ cd ~/Dots
+user$ rm ~/.zshrc ~/.bashrc
+user$ ./.install.sh
+</code></pre>
+<p>Start an X11 session (GUI) as your unprivileged user:</p>
+<pre><code class="bash">user$ startx
+</code></pre>
+<p>Voilà. Now you can go ahead and start customizing it!<br><img data-src="0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/result.png"></p>
+
+      <div class="tags">
+          <a href="/project/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2021-11-24 11:20:40" itemprop="dateModified" datetime="2021-11-24T11:20:40+08:00">2021-11-24</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/project/images/wechatpay.png" alt="aesophor WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/project/images/alipay.png" alt="aesophor Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/project/images/paypal.png" alt="aesophor PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>aesophor <i class="ic i-at"><em>@</em></i>aesophor's lair
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="https://aesophor.github.io/project/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">https://aesophor.github.io/project/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Back-Up-the-Old-SSD"><span class="toc-number">2.</span> <span class="toc-text">Back Up the Old SSD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Firmware-Upgrade"><span class="toc-number">3.</span> <span class="toc-text">Firmware Upgrade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSD-Upgrade"><span class="toc-number">4.</span> <span class="toc-text">SSD Upgrade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSD-Data-Migration"><span class="toc-number">5.</span> <span class="toc-text">SSD Data Migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prepare-Installation-Medium"><span class="toc-number">6.</span> <span class="toc-text">Prepare Installation Medium</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Installation"><span class="toc-number">7.</span> <span class="toc-text">Base Installation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configure-the-New-System"><span class="toc-number">8.</span> <span class="toc-text">Configure the New System</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Post-Installation"><span class="toc-number">9.</span> <span class="toc-text">Post Installation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enter-X11"><span class="toc-number">10.</span> <span class="toc-text">Enter X11</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="aesophor"
+      data-src="/project/images/avatar.jpg">
+  <p class="name" itemprop="name">aesophor</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/project/archives/">
+        <span class="count">1</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/project/tags/">
+        <span class="count">1</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/project/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/project/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/project/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2021</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">aesophor @ aesophor's lair</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/project/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
