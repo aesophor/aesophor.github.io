@@ -11,51 +11,52 @@
         <link rel="alternate" href="https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/"/>
         <content type="html">&lt;p&gt;&lt;img data-src=&#34;banner.jpg&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h2&gt;
-&lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15&amp;quot; (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
+
+
+&lt;h2 id=&#34;Introduction&#34;&gt;&lt;a href=&#34;#Introduction&#34; class=&#34;headerlink&#34; title=&#34;Introduction&#34;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15” (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;back-up-the-old-ssd&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#back-up-the-old-ssd&#34;&gt;#&lt;/a&gt; Back Up the Old SSD&lt;/h2&gt;
-&lt;p&gt;I booted into a  &lt;code&gt;Gentoo Live USB&lt;/code&gt;  and used  &lt;code&gt;dd&lt;/code&gt;  to back up my entire old SSD to an image file.&lt;/p&gt;
+
+
+&lt;h2 id=&#34;Back-Up-the-Old-SSD&#34;&gt;&lt;a href=&#34;#Back-Up-the-Old-SSD&#34; class=&#34;headerlink&#34; title=&#34;Back Up the Old SSD&#34;&gt;&lt;/a&gt;Back Up the Old SSD&lt;/h2&gt;&lt;p&gt;I booted into a &lt;code&gt;Gentoo Live USB&lt;/code&gt; and used &lt;code&gt;dd&lt;/code&gt; to back up my entire old SSD to an image file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on  &lt;code&gt;/mnt/external_drive&lt;/code&gt;  and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
+&lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on &lt;code&gt;/mnt/external_drive&lt;/code&gt; and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
 &lt;/code&gt;&lt;/pre&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;firmware-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#firmware-upgrade&#34;&gt;#&lt;/a&gt; Firmware Upgrade&lt;/h2&gt;
-&lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
+
+
+&lt;h2 id=&#34;Firmware-Upgrade&#34;&gt;&lt;a href=&#34;#Firmware-Upgrade&#34; class=&#34;headerlink&#34; title=&#34;Firmware Upgrade&#34;&gt;&lt;/a&gt;Firmware Upgrade&lt;/h2&gt;&lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;ssd-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-upgrade&#34;&gt;#&lt;/a&gt; SSD Upgrade&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
-Be very careful with the screws. I stripped some of my screws due to the bloated batteries,&lt;br&gt;
-and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
+
+&lt;h2 id=&#34;SSD-Upgrade&#34;&gt;&lt;a href=&#34;#SSD-Upgrade&#34; class=&#34;headerlink&#34; title=&#34;SSD Upgrade&#34;&gt;&lt;/a&gt;SSD Upgrade&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Be very careful with the screws. I stripped some of my screws due to the bloated batteries,&lt;br&gt;and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;I bought the Screwdrivers + SSD Adapter on &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3Nob3BlZS50dw==&#34;&gt;shopee.tw&lt;/span&gt; -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on shopee.tw -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;swap.jpg&#34; alt=&#34;swap&#34;&gt;&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;ssd-data-migration&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-data-migration&#34;&gt;#&lt;/a&gt; SSD Data Migration&lt;/h2&gt;
-&lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
-&lt;p&gt;At first I used  &lt;code&gt;dd&lt;/code&gt;  to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
+
+
+&lt;h2 id=&#34;SSD-Data-Migration&#34;&gt;&lt;a href=&#34;#SSD-Data-Migration&#34; class=&#34;headerlink&#34; title=&#34;SSD Data Migration&#34;&gt;&lt;/a&gt;SSD Data Migration&lt;/h2&gt;&lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
+&lt;p&gt;At first I used &lt;code&gt;dd&lt;/code&gt; to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;prepare-installation-medium&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prepare-installation-medium&#34;&gt;#&lt;/a&gt; Prepare Installation Medium&lt;/h2&gt;
-&lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
+
+
+&lt;h2 id=&#34;Prepare-Installation-Medium&#34;&gt;&lt;a href=&#34;#Prepare-Installation-Medium&#34; class=&#34;headerlink&#34; title=&#34;Prepare Installation Medium&#34;&gt;&lt;/a&gt;Prepare Installation Medium&lt;/h2&gt;&lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=&#34;&gt;Download Arch Linux ISO&lt;/span&gt; and prepare Arch Live USB:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Power off your MacBook, insert the USB stick, hold  &lt;code&gt;alt/option&lt;/code&gt;  and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
+&lt;p&gt;Power off your MacBook, insert the USB stick, hold &lt;code&gt;alt/option&lt;/code&gt; and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;base-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#base-installation&#34;&gt;#&lt;/a&gt; Base Installation&lt;/h2&gt;
-&lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on  &lt;code&gt;USB Tethering&lt;/code&gt; , and ran:&lt;/p&gt;
+
+
+&lt;h2 id=&#34;Base-Installation&#34;&gt;&lt;a href=&#34;#Base-Installation&#34; class=&#34;headerlink&#34; title=&#34;Base Installation&#34;&gt;&lt;/a&gt;Base Installation&lt;/h2&gt;&lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on &lt;code&gt;USB Tethering&lt;/code&gt;, and ran:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dhcpcd
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Ensure the clock is accurate:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ timedatectl set-ntp true
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Run  &lt;code&gt;cfdisk /dev/nvme0n1&lt;/code&gt;  and partition the new SSD as follows:&lt;/p&gt;
+&lt;p&gt;Run &lt;code&gt;cfdisk /dev/nvme0n1&lt;/code&gt; and partition the new SSD as follows:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;                                   Disk: /dev/nvme0n1
                  Size: 931.53 GiB, 1000204886016 bytes, 1953525168 sectors
                 Label: gpt, identifier: 85CF6A21-FC5C-408D-8532-8751C80F0593
@@ -64,7 +65,7 @@ Device                 Start          End        Sectors        Size Type
 /dev/nvme0n1p1          2048       411647         409600        200M EFI System             
 /dev/nvme0n1p2       411648    1953525134     1953113487      931.3G Linux filesystem
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now run  &lt;code&gt;lsblk&lt;/code&gt;  and you’ll see something like this:&lt;/p&gt;
+&lt;p&gt;Now run &lt;code&gt;lsblk&lt;/code&gt; and you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -82,7 +83,7 @@ root$ mkfs.fat -F32 /dev/nvme0n1p1
 root$ mkfs.ext4 /dev/mapper/vgcrypt-root
 root$ mkfs.ext4 /dev/mapper/vgcrypt-home
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now run  &lt;code&gt;lsblk&lt;/code&gt;  again and you’ll see something like this:&lt;/p&gt;
+&lt;p&gt;Now run &lt;code&gt;lsblk&lt;/code&gt; again and you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -103,21 +104,21 @@ root$ mount /dev/nvme0n1p1 /mnt/boot
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Generate fstab:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-L&lt;/code&gt;  generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;  prevents pseudo-filesystems from being added.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt; prevents pseudo-filesystems from being added.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;root$ genfstab -L -p /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
 root$ cat /mnt/etc/fstab
 &lt;/code&gt;&lt;/pre&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;configure-the-new-system&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#configure-the-new-system&#34;&gt;#&lt;/a&gt; Configure the New System&lt;/h2&gt;
-&lt;p&gt;Chroot into our new system:&lt;/p&gt;
+
+&lt;h2 id=&#34;Configure-the-New-System&#34;&gt;&lt;a href=&#34;#Configure-the-New-System&#34; class=&#34;headerlink&#34; title=&#34;Configure the New System&#34;&gt;&lt;/a&gt;Configure the New System&lt;/h2&gt;&lt;p&gt;Chroot into our new system:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ arch-chroot /mnt /bin/bash
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Generate locales:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;uncomment the locales you’re going to use in /etc/locale.gen, and run  &lt;code&gt;locale-gen&lt;/code&gt; .&lt;/li&gt;
-&lt;li&gt;run  &lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt; /etc/locale.conf&lt;/code&gt;  to make ENG UTF-8 the default locale.&lt;/li&gt;
+&lt;li&gt;uncomment the locales you’re going to use in /etc/locale.gen, and run &lt;code&gt;locale-gen&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;run &lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt; /etc/locale.conf&lt;/code&gt; to make ENG UTF-8 the default locale. &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Replace the default console font with terminus:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ pacman -S terminus-font
@@ -127,10 +128,10 @@ root$ echo FONT=ter-v24n &amp;gt; /etc/vconsole.conf
 &lt;pre&gt;&lt;code&gt;root$ ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 root$ hwclock --systohc --utc
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in  &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt; :&lt;/p&gt;
+&lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;HOOKS=&amp;quot;base udev autodetect modconf block consolefont encrypt lvm2 filesystems keyboard fsck&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Regenerate the initramfs image to EFI Partition ( &lt;code&gt;/dev/nvme0n1p1&lt;/code&gt; ):&lt;/p&gt;
+&lt;p&gt;Regenerate the initramfs image to EFI Partition (&lt;code&gt;/dev/nvme0n1p1&lt;/code&gt;):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ mount /dev/nvme0n1p1 /boot  # just in case you forgot to do this
 root$ mkinitcpio -p linux
 &lt;/code&gt;&lt;/pre&gt;
@@ -141,11 +142,11 @@ root$ mkinitcpio -p linux
 &lt;pre&gt;&lt;code&gt;root$ pacman -S dosfstools
 root$ bootctl --path=/boot install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Add an boot entry for systemd-boot by editing  &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt; :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;title	Arch Linux
-linux	/vmlinuz-linux
-initrd	/initramfs-linux.img
-options	cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
+&lt;p&gt;Add an boot entry for systemd-boot by editing &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;title    Arch Linux
+linux    /vmlinuz-linux
+initrd    /initramfs-linux.img
+options    cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Change root user’s password:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ passwd
@@ -162,13 +163,14 @@ root$ passwd aesophor
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Set up sudo:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;run  &lt;code&gt;visudo&lt;/code&gt;  and uncomment the line  &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;run &lt;code&gt;visudo&lt;/code&gt; and uncomment the line &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;
+
 &lt;p&gt;At this point, you may logout the root user and re-login with your unprivileged user.&lt;/p&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;post-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#post-installation&#34;&gt;#&lt;/a&gt; Post Installation&lt;/h2&gt;
-&lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt; &lt;code&gt;yay&lt;/code&gt; &lt;/a&gt;, an AUR helper:&lt;/p&gt;
+
+&lt;h2 id=&#34;Post-Installation&#34;&gt;&lt;a href=&#34;#Post-Installation&#34; class=&#34;headerlink&#34; title=&#34;Post Installation&#34;&gt;&lt;/a&gt;Post Installation&lt;/h2&gt;&lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt;&lt;code&gt;yay&lt;/code&gt;&lt;/a&gt;, an AUR helper:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://aur.archlinux.org/yay.git
 user$ cd yay
 user$ sudo makepkg -si
@@ -178,15 +180,15 @@ user$ sudo makepkg -si
 user$ yay -S opencl-intel
 user$ sudo pacman -S xorg-server xorg-xinit xorg-apps
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install  &lt;code&gt;xf86-input-mtrack&lt;/code&gt;  as our trackpad driver:&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;xf86-input-mtrack&lt;/code&gt; as our trackpad driver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ yay -S xf86-input-mtrack
 user$ sudo wget -O /etc/X11/xorg.conf.d/10-mtrack.conf https://raw.githubusercontent.com/aesophor/macbookpro-11-2-gentoo-config/master/etc/X11/xorg.conf.d/10mtrack.conf
 user$ sudo gpasswd -a aesophor input
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install  &lt;code&gt;broadcom-wl-dkms&lt;/code&gt;  as our Wi-Fi driver (my laptop model is A1398):&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;broadcom-wl-dkms&lt;/code&gt; as our Wi-Fi driver (my laptop model is A1398):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -S dkms broadcom-wl-dkms
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install  &lt;code&gt;bcwc-pcie-git&lt;/code&gt;  as our FaceTimeHD webcam driver:&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;bcwc-pcie-git&lt;/code&gt; as our FaceTimeHD webcam driver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ yay -S bcwc-pcie-git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Install font packages:&lt;/p&gt;
@@ -204,7 +206,7 @@ user$ yay -S wmderland-git polybar dunst picom rofi-git rxvt-unicode firefox
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-material-color
 user$ yay -S fcitx5-pinyin-zhwiki
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Downgrade  &lt;code&gt;pango&lt;/code&gt;  to 1.43 since &amp;gt;= 1.44 cause issue with font rendering on rofi:&lt;/p&gt;
+&lt;p&gt;Downgrade &lt;code&gt;pango&lt;/code&gt; to 1.43 since &amp;gt;= 1.44 cause issue with font rendering on rofi:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -U https://archive.archlinux.org/packages/p/pango/pango-1.43.0-1-x86_64.pkg.tar.xz
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Powersaving:&lt;/p&gt;
@@ -220,8 +222,8 @@ user$ sudo systemctl enable mbpfan.service
 &lt;li&gt;setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;
-&lt;h2 id=&#34;enter-x11&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#enter-x11&#34;&gt;#&lt;/a&gt; Enter X11&lt;/h2&gt;
-&lt;p&gt;Install my dotfiles:&lt;/p&gt;
+
+&lt;h2 id=&#34;Enter-X11&#34;&gt;&lt;a href=&#34;#Enter-X11&#34; class=&#34;headerlink&#34; title=&#34;Enter X11&#34;&gt;&lt;/a&gt;Enter X11&lt;/h2&gt;&lt;p&gt;Install my dotfiles:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
 user$ cd ~/Dots
 user$ rm ~/.zshrc ~/.bashrc
@@ -230,8 +232,7 @@ user$ ./.install.sh
 &lt;p&gt;Start an X11 session (GUI) as your unprivileged user:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ startx
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;
-&lt;img data-src=&#34;result.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;&lt;img data-src=&#34;result.png&#34;&gt;&lt;/p&gt;
 </content>
         <category term="linux" />
         <updated>2020-07-20T10:48:46.000Z</updated>
