@@ -259,11 +259,10 @@ root$ echo FONT=ter-v24n &gt; /etc/vconsole.conf
 root$ hwclock --systohc --utc
 </code></pre>
 <p>To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in  <code>/etc/mkinitcpio.conf</code> :</p>
-<pre><code>HOOKS=&quot;base udev autodetect modconf block consolefont encrypt lvm2 filesystems keyboard fsck&quot;
+<pre><code>HOOKS=&quot;base udev autodetect keyboard keymap modconf block consolefont encrypt lvm2 filesystems fsck&quot;
 </code></pre>
 <p>Regenerate the initramfs image to EFI Partition ( <code>/dev/nvme0n1p1</code> ):</p>
-<pre><code>root$ mount /dev/nvme0n1p1 /boot  # just in case you forgot to do this
-root$ mkinitcpio -p linux
+<pre><code>root$ mkinitcpio -p linux
 </code></pre>
 <p>Set hostname:</p>
 <pre><code>root$ echo allegro &gt; /etc/hostname
@@ -377,7 +376,7 @@ user$ ./.install.sh
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2021-11-24 16:51:27" itemprop="dateModified" datetime="2021-11-24T16:51:27+08:00">2021-11-24</time>
+    <time title="Modified: 2022-05-29 16:48:37" itemprop="dateModified" datetime="2022-05-29T16:48:37+08:00">2022-05-29</time>
   </span>
 </div>
 

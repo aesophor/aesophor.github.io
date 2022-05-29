@@ -129,11 +129,10 @@ root$ echo FONT=ter-v24n &amp;gt; /etc/vconsole.conf
 root$ hwclock --systohc --utc
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in  &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt; :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;HOOKS=&amp;quot;base udev autodetect modconf block consolefont encrypt lvm2 filesystems keyboard fsck&amp;quot;
+&lt;pre&gt;&lt;code&gt;HOOKS=&amp;quot;base udev autodetect keyboard keymap modconf block consolefont encrypt lvm2 filesystems fsck&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Regenerate the initramfs image to EFI Partition ( &lt;code&gt;/dev/nvme0n1p1&lt;/code&gt; ):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;root$ mount /dev/nvme0n1p1 /boot  # just in case you forgot to do this
-root$ mkinitcpio -p linux
+&lt;pre&gt;&lt;code&gt;root$ mkinitcpio -p linux
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Set hostname:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ echo allegro &amp;gt; /etc/hostname
