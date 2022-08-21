@@ -32,7 +32,7 @@
 
 
   <title>
-<LC>#0001 - Two Sums |
+LC#0001 - Two Sums |
 aesophor =  = software, adventures, and thoughts</title>
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -60,7 +60,7 @@ aesophor =  = software, adventures, and thoughts</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline"><LC>#0001 - Two Sums
+  <h1 itemprop="name headline">LC#0001 - Two Sums
   </h1>
   
 <div class="meta">
@@ -144,35 +144,43 @@ aesophor =  = software, adventures, and thoughts</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="前言"><a class="markdownIt-Anchor" href="#前言">#</a> 前言</h1>
-<p>以前刷題總是不寫 writeup，漫無目標的亂刷，導致久了就會忘記解法。最近受到兩位 SQLab 學長的激勵，分別是 <span class="exturl" data-url="aHR0cHM6Ly9iY2xpbi50dy9hYm91dC8=">Kevin Lin (bclin717)</span> 與 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RvbW15V3UtZmRna2hka2do">Tommy Wu (fdgkhdkgh)</span>，決定這輪刷題要養成好習慣：將解題過程記錄下來。</p>
-<h1 id="problem"><a class="markdownIt-Anchor" href="#problem">#</a> Problem</h1>
-<p>給定一串數字  <code>nums</code> ，以及一個目標  <code>target</code> 。</p>
-<p>請從  <code>nums</code>  中找到兩個數字 s.t. 兩數之和為  <code>target</code> ，並回傳那兩數的 index。</p>
-<h1 id="example"><a class="markdownIt-Anchor" href="#example">#</a> Example</h1>
-<p><img data-src="fig.png" alt=""></p>
-<h1 id="solution"><a class="markdownIt-Anchor" href="#solution">#</a> Solution</h1>
-<ol>
-<li>建一個 map：
-<ul>
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以前刷題總是不寫 writeup，漫無目標的亂刷，導致久了就會忘記解法。最近受到兩位 SQLab 學長的激勵，分別是 <span class="exturl" data-url="aHR0cHM6Ly9iY2xpbi50dy9hYm91dC8=">Kevin Lin (bclin717)</span> 與 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RvbW15V3UtZmRna2hka2do">Tommy Wu (fdgkhdkgh)</span>，決定這輪刷題要養成好習慣：將解題過程記錄下來。</p>
+<h1 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h1><p>給定一串數字 <code>nums</code>，以及一個目標 <code>target</code>。</p>
+<p>請從 <code>nums</code> 中找到兩個數字 s.t. 兩數之和為 <code>target</code>，並回傳那兩數的 index。</p>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><p><img data-src="fig.png"></p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><ol>
+<li>建一個 map：<ul>
 <li>key 為目前數字的 complement，即 target - 目前數字</li>
 <li>value 為目前數字的 index</li>
 </ul>
 </li>
-<li>線性掃描  <code>nums</code> ，假設目前掃描到的數字 index 為  <code>i</code> ，檢查 map 中是否存在 key =  <code>nums[i]</code>
-<ul>
-<li>若存在，返回兩個 index： <code>i</code>  與  <code>map[nums[i]]</code></li>
-<li>不存在，對 map 插入 { <code>target - nums[i]</code> ,  <code>i</code> }</li>
+<li>線性掃描 <code>nums</code>，假設目前掃描到的數字 index 為 <code>i</code>，檢查 map 中是否存在 key = <code>nums[i]</code><ul>
+<li>若存在，返回兩個 index：<code>i</code> 與 <code>map[nums[i]]</code></li>
+<li>不存在，對 map 插入 {<code>target - nums[i]</code>, <code>i</code>}</li>
 </ul>
 </li>
 </ol>
-<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token keyword">public</span><span class="token operator">:</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">twoSum</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> complementIdx<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>        <span class="token keyword">if</span> <span class="token punctuation">(</span>complementIdx<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>            <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>i<span class="token punctuation">,</span> complementIdx<span class="token punctuation">[</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>        complementIdx<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>target <span class="token operator">-</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h1 id="complexity-analysis"><a class="markdownIt-Anchor" href="#complexity-analysis">#</a> Complexity Analysis</h1>
-<ul>
-<li>Time: O (n) - worst case 需要掃到尾才能找到答案</li>
-<li>Space: O (n) - worst case 同上，map 需要存將近 n 個 entries</li>
+<pre><code class="cpp">class Solution &#123;
+ public:
+  vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;
+    std::map&lt;int, int&gt; complementIdx;
+
+    for (int i = 0; i &lt; nums.size(); i++) &#123;
+        if (complementIdx.count(nums[i])) &#123;
+            return &#123;i, complementIdx[nums[i]]&#125;;
+        &#125;
+        complementIdx.insert(&#123;target - nums[i], i&#125;);
+    &#125;
+
+    return &#123;-1, -1&#125;;
+  &#125;
+&#125;;
+</code></pre>
+<h1 id="Complexity-Analysis"><a href="#Complexity-Analysis" class="headerlink" title="Complexity Analysis"></a>Complexity Analysis</h1><ul>
+<li>Time: O(n) - worst case 需要掃到尾才能找到答案</li>
+<li>Space: O(n) - worst case 同上, map 需要存將近 n 個 entries</li>
 </ul>
-<h1 id="result"><a class="markdownIt-Anchor" href="#result">#</a> Result</h1>
-<pre><code>Runtime: 7 ms, faster than 98.41% of C++ online submissions for Two Sum.
+<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><pre><code>Runtime: 7 ms, faster than 98.41% of C++ online submissions for Two Sum.
 Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two Sum.
 </code></pre>
 
@@ -189,7 +197,7 @@ Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two 
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-21 14:51:33" itemprop="dateModified" datetime="2022-08-21T14:51:33+08:00">2022-08-21</time>
+    <time title="Modified: 2022-08-21 14:57:10" itemprop="dateModified" datetime="2022-08-21T14:57:10+08:00">2022-08-21</time>
   </span>
 </div>
 
@@ -202,7 +210,7 @@ Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two 
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="https://aesophor.github.io/2022/08/21/LC-0001-Two-Sums/" title="&lt;LC&gt;#0001 - Two Sums">https://aesophor.github.io/2022/08/21/LC-0001-Two-Sums/</a>
+    <a href="https://aesophor.github.io/2022/08/21/LC-0001-Two-Sums/" title="LC#0001 - Two Sums">https://aesophor.github.io/2022/08/21/LC-0001-Two-Sums/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -245,7 +253,7 @@ Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two 
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#problem"><span class="toc-number">2.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#example"><span class="toc-number">3.</span> <span class="toc-text"> Example</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#solution"><span class="toc-number">4.</span> <span class="toc-text"> Solution</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#complexity-analysis"><span class="toc-number">5.</span> <span class="toc-text"> Complexity Analysis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#result"><span class="toc-number">6.</span> <span class="toc-text"> Result</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Problem"><span class="toc-number">2.</span> <span class="toc-text">Problem</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Example"><span class="toc-number">3.</span> <span class="toc-text">Example</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Solution"><span class="toc-number">4.</span> <span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Complexity-Analysis"><span class="toc-number">5.</span> <span class="toc-text">Complexity Analysis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Result"><span class="toc-number">6.</span> <span class="toc-text">Result</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -351,7 +359,7 @@ Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two 
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/21/LC-0001-Two-Sums/" title="&lt;LC&gt;#0001 - Two Sums"><LC>#0001 - Two Sums</a></span>
+    <span><a href="/2022/08/21/LC-0001-Two-Sums/" title="LC#0001 - Two Sums">LC#0001 - Two Sums</a></span>
   </li>
 
   </ul>
