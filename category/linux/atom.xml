@@ -1,23 +1,18 @@
 <?xml version="1.0"?>
-<rss version="2.0">
-    <channel>
-        <title> • Posts by &#34;linux&#34; tag</title>
-        <link>https://aesophor.github.io</link>
-        <description>{software,reverse} engineer</description>
-        <language>en</language>
-        <pubDate>Mon, 20 Jul 2020 18:48:46 +0800</pubDate>
-        <lastBuildDate>Mon, 20 Jul 2020 18:48:46 +0800</lastBuildDate>
-        <category>linux</category>
-        <category>leetcode</category>
-        <category>linked-list</category>
-        <category>sliding-window</category>
-        <item>
-            <guid isPermalink="true">https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</guid>
-            <title>0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>
-            <link>https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</link>
-            <category>linux</category>
-            <pubDate>Mon, 20 Jul 2020 18:48:46 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;&lt;img data-src=&#34;banner.jpg&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://aesophor.github.io</id>
+    <title> • Posts by &#34;linux&#34; category</title>
+    <link href="https://aesophor.github.io" />
+    <updated>2020-07-20T10:48:46.000Z</updated>
+    <category term="linux" />
+    <category term="leetcode" />
+    <category term="linked-list" />
+    <category term="sliding-window" />
+    <entry>
+        <id>https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</id>
+        <title>0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>
+        <link rel="alternate" href="https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/"/>
+        <content type="html">&lt;p&gt;&lt;img data-src=&#34;banner.jpg&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h2&gt;
 &lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15&amp;quot; (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
 &lt;h2 id=&#34;back-up-the-old-ssd&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#back-up-the-old-ssd&#34;&gt;#&lt;/a&gt; Back Up the Old SSD&lt;/h2&gt;
@@ -224,7 +219,8 @@ user$ ./.install.sh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;
 &lt;img data-src=&#34;result.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-    </channel>
-</rss>
+</content>
+        <category term="linux" />
+        <updated>2020-07-20T10:48:46.000Z</updated>
+    </entry>
+</feed>

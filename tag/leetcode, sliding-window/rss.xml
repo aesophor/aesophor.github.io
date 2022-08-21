@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;leetcode, sliding-window&#34; tag</title>
+        <link>https://aesophor.github.io</link>
+        <description>{software,reverse} engineer</description>
+        <language>en</language>
+        <pubDate>Sun, 21 Aug 2022 20:00:05 +0800</pubDate>
+        <lastBuildDate>Sun, 21 Aug 2022 20:00:05 +0800</lastBuildDate>
+        <category>linux</category>
+        <category>leetcode</category>
+        <category>leetcode, linked-list</category>
+        <category>leetcode, sliding-window</category>
+        <item>
+            <guid isPermalink="true">https://aesophor.github.io/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/</guid>
+            <title>LC#0003 - Longest Substring Without Repeating Characters</title>
+            <link>https://aesophor.github.io/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/</link>
+            <category>leetcode, sliding-window</category>
+            <pubDate>Sun, 21 Aug 2022 20:00:05 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;Problem&#34;&gt;&lt;a href=&#34;#Problem&#34; class=&#34;headerlink&#34; title=&#34;Problem&#34;&gt;&lt;/a&gt;Problem&lt;/h1&gt;&lt;p&gt;給定一字串 &lt;code&gt;s&lt;/code&gt;，請找出不包含重複字元的 substring 的最長長度。&lt;/p&gt;
+&lt;h1 id=&#34;Examples&#34;&gt;&lt;a href=&#34;#Examples&#34; class=&#34;headerlink&#34; title=&#34;Examples&#34;&gt;&lt;/a&gt;Examples&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;Input: s = &amp;quot;abcabcbb&amp;quot;
+Output: 3
+Explanation: The answer is &amp;quot;abc&amp;quot;, with the length of 3.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Input: s = &amp;quot;bbbbb&amp;quot;
+Output: 1
+Explanation: The answer is &amp;quot;b&amp;quot;, with the length of 1.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Input: s = &amp;quot;pwwkew&amp;quot;
+Output: 3
+Explanation: The answer is &amp;quot;wke&amp;quot;, with the length of 3.
+Notice that the answer must be a substring, &amp;quot;pwke&amp;quot; is a subsequence and not a substring.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;Solution&#34;&gt;&lt;a href=&#34;#Solution&#34; class=&#34;headerlink&#34; title=&#34;Solution&#34;&gt;&lt;/a&gt;Solution&lt;/h1&gt;&lt;p&gt;使用 sliding window algorithm&lt;/p&gt;
+&lt;p&gt;維護兩個 index： &lt;code&gt;l&lt;/code&gt; 和 &lt;code&gt;r&lt;/code&gt;，分別代表 window 左界與右界，window 內的每個字元都是獨特的，不能重複。&lt;/p&gt;
+&lt;p&gt;接著線性掃描字串 &lt;code&gt;s&lt;/code&gt;，不斷將右界往右擴展：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果 &lt;code&gt;s[r]&lt;/code&gt; 和 window 內的某個字元重複，且假設兩個重複字元在 &lt;code&gt;s&lt;/code&gt; 中的 index 分別為 k 和 r，我們就將左界更新為 &lt;code&gt;k + 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;計算 window 長度 (i.e., r - l + 1)，必要時更新 max_len&lt;/li&gt;
+&lt;li&gt;紀錄 &lt;code&gt;s[r]&lt;/code&gt; 最後一次出現時的 index&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;cpp&#34;&gt;class Solution &amp;#123;
+ public:
+  int lengthOfLongestSubstring(const string &amp;amp;s) &amp;#123;
+    int l = 0;
+    int r = 0;
+    int max_len = 0;
+    std::unordered_map&amp;lt;char, int&amp;gt; appearedCharIdx;
+
+    while (r &amp;lt; s.size()) &amp;#123;
+      // If `s[r]` has already appeared before, and `s[r]`
+      // is within the current window, then we should adjust
+      // the left window boundary.
+      if (appearedCharIdx.count(s[r]) &amp;amp;&amp;amp; appearedCharIdx[s[r]] &amp;gt;= l) &amp;#123;
+        l = appearedCharIdx[s[r]] + 1;
+      &amp;#125;
+      
+      max_len = std::max(max_len, r - l + 1);
+      appearedCharIdx[s[r]] = r;
+
+      ++r;
+    &amp;#125;
+    
+    return max_len;
+  &amp;#125;
+&amp;#125;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;Complexity-Analysis&#34;&gt;&lt;a href=&#34;#Complexity-Analysis&#34; class=&#34;headerlink&#34; title=&#34;Complexity Analysis&#34;&gt;&lt;/a&gt;Complexity Analysis&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time: O(n)&lt;/strong&gt; - sliding window 只需將 s 從頭到尾掃描一次&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space: O(n)&lt;/strong&gt; - worst case 時 appearedCharIdx.size() 逼近 s.size()&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;Result&#34;&gt;&lt;a href=&#34;#Result&#34; class=&#34;headerlink&#34; title=&#34;Result&#34;&gt;&lt;/a&gt;Result&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;Runtime: 11 ms, faster than 84.71% of C++ online submissions for Longest Substring Without Repeating Characters.
+Memory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longest Substring Without Repeating Characters.
+&lt;/code&gt;&lt;/pre&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

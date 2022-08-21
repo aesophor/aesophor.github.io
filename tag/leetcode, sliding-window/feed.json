@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "null • All posts by \"leetcode, sliding-window\" tag",
+    "description": "{software,reverse} engineer",
+    "home_page_url": "https://aesophor.github.io",
+    "items": [
+        {
+            "id": "https://aesophor.github.io/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/",
+            "url": "https://aesophor.github.io/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/",
+            "title": "LC#0003 - Longest Substring Without Repeating Characters",
+            "date_published": "2022-08-21T12:00:05.000Z",
+            "content_html": "<h1 id=\"Problem\"><a href=\"#Problem\" class=\"headerlink\" title=\"Problem\"></a>Problem</h1><p>給定一字串 <code>s</code>，請找出不包含重複字元的 substring 的最長長度。</p>\n<h1 id=\"Examples\"><a href=\"#Examples\" class=\"headerlink\" title=\"Examples\"></a>Examples</h1><pre><code>Input: s = &quot;abcabcbb&quot;\nOutput: 3\nExplanation: The answer is &quot;abc&quot;, with the length of 3.\n</code></pre>\n<pre><code>Input: s = &quot;bbbbb&quot;\nOutput: 1\nExplanation: The answer is &quot;b&quot;, with the length of 1.\n</code></pre>\n<pre><code>Input: s = &quot;pwwkew&quot;\nOutput: 3\nExplanation: The answer is &quot;wke&quot;, with the length of 3.\nNotice that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.\n</code></pre>\n<h1 id=\"Solution\"><a href=\"#Solution\" class=\"headerlink\" title=\"Solution\"></a>Solution</h1><p>使用 sliding window algorithm</p>\n<p>維護兩個 index： <code>l</code> 和 <code>r</code>，分別代表 window 左界與右界，window 內的每個字元都是獨特的，不能重複。</p>\n<p>接著線性掃描字串 <code>s</code>，不斷將右界往右擴展：</p>\n<ol>\n<li>如果 <code>s[r]</code> 和 window 內的某個字元重複，且假設兩個重複字元在 <code>s</code> 中的 index 分別為 k 和 r，我們就將左界更新為 <code>k + 1</code></li>\n<li>計算 window 長度 (i.e., r - l + 1)，必要時更新 max_len</li>\n<li>紀錄 <code>s[r]</code> 最後一次出現時的 index</li>\n</ol>\n<pre><code class=\"cpp\">class Solution &#123;\n public:\n  int lengthOfLongestSubstring(const string &amp;s) &#123;\n    int l = 0;\n    int r = 0;\n    int max_len = 0;\n    std::unordered_map&lt;char, int&gt; appearedCharIdx;\n\n    while (r &lt; s.size()) &#123;\n      // If `s[r]` has already appeared before, and `s[r]`\n      // is within the current window, then we should adjust\n      // the left window boundary.\n      if (appearedCharIdx.count(s[r]) &amp;&amp; appearedCharIdx[s[r]] &gt;= l) &#123;\n        l = appearedCharIdx[s[r]] + 1;\n      &#125;\n      \n      max_len = std::max(max_len, r - l + 1);\n      appearedCharIdx[s[r]] = r;\n\n      ++r;\n    &#125;\n    \n    return max_len;\n  &#125;\n&#125;;\n</code></pre>\n<h1 id=\"Complexity-Analysis\"><a href=\"#Complexity-Analysis\" class=\"headerlink\" title=\"Complexity Analysis\"></a>Complexity Analysis</h1><ul>\n<li><strong>Time: O(n)</strong> - sliding window 只需將 s 從頭到尾掃描一次</li>\n<li><strong>Space: O(n)</strong> - worst case 時 appearedCharIdx.size() 逼近 s.size()</li>\n</ul>\n<h1 id=\"Result\"><a href=\"#Result\" class=\"headerlink\" title=\"Result\"></a>Result</h1><pre><code>Runtime: 11 ms, faster than 84.71% of C++ online submissions for Longest Substring Without Repeating Characters.\nMemory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longest Substring Without Repeating Characters.\n</code></pre>\n",
+            "tags": [
+                "leetcode, sliding-window"
+            ]
+        }
+    ]
+}

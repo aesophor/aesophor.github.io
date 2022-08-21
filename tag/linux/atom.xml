@@ -4,8 +4,10 @@
     <title> • Posts by &#34;linux&#34; tag</title>
     <link href="https://aesophor.github.io" />
     <updated>2020-07-20T10:48:46.000Z</updated>
-    <category term="leetcode" />
     <category term="linux" />
+    <category term="leetcode" />
+    <category term="linked-list" />
+    <category term="sliding-window" />
     <entry>
         <id>https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</id>
         <title>0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>

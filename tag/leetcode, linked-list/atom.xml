@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://aesophor.github.io</id>
+    <title> • Posts by &#34;leetcode, linked-list&#34; tag</title>
+    <link href="https://aesophor.github.io" />
+    <updated>2022-08-21T08:55:18.000Z</updated>
+    <category term="linux" />
+    <category term="leetcode" />
+    <category term="leetcode, linked-list" />
+    <category term="leetcode, sliding-window" />
+    <entry>
+        <id>https://aesophor.github.io/2022/08/21/LC-0002-Add-Two-Numbers/</id>
+        <title>LC#0002 - Add Two Numbers</title>
+        <link rel="alternate" href="https://aesophor.github.io/2022/08/21/LC-0002-Add-Two-Numbers/"/>
+        <content type="html">&lt;h1 id=&#34;Problem&#34;&gt;&lt;a href=&#34;#Problem&#34; class=&#34;headerlink&#34; title=&#34;Problem&#34;&gt;&lt;/a&gt;Problem&lt;/h1&gt;&lt;p&gt;給定兩條 singly linked lists：&lt;code&gt;l1&lt;/code&gt; 和 &lt;code&gt;l2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;一條 linked list 代表一個數，比如 [3, 4, 5] 這樣的 linked list 表示數字 543。&lt;/p&gt;
+&lt;p&gt;請將 &lt;code&gt;l1&lt;/code&gt; 和 &lt;code&gt;l2&lt;/code&gt; 所代表的數相加，然後依樣畫葫蘆製作一條全新的 linked list 回傳兩數之和。&lt;/p&gt;
+&lt;h1 id=&#34;Examples&#34;&gt;&lt;a href=&#34;#Examples&#34; class=&#34;headerlink&#34; title=&#34;Examples&#34;&gt;&lt;/a&gt;Examples&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;記得和考官確認 input linked list 是否可能為空&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Input: l1 = [2,4,3], l2 = [5,6,4]
+Output: [7,0,8]
+Explanation: 342 + 465 = 807.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Input: l1 = [0], l2 = [0]
+Output: [0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Output: [8,9,9,9,0,0,0,1]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;Solution&#34;&gt;&lt;a href=&#34;#Solution&#34; class=&#34;headerlink&#34; title=&#34;Solution&#34;&gt;&lt;/a&gt;Solution&lt;/h1&gt;&lt;p&gt;同時 traverse 兩條 linked lists，將目前走到的兩個節點的 value 做相加，並且記得處理進位。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;cpp&#34;&gt;/**
+ * Definition for singly-linked list.
+ * struct ListNode &amp;#123;
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) &amp;#123;&amp;#125;
+ *     ListNode(int x) : val(x), next(nullptr) &amp;#123;&amp;#125;
+ *     ListNode(int x, ListNode *next) : val(x), next(next) &amp;#123;&amp;#125;
+ * &amp;#125;;
+ */
+class Solution &amp;#123;
+ public:
+  ListNode *addTwoNumbers(const ListNode *l1, const ListNode *l2) &amp;#123;
+    bool carry = false;
+    int digit = 0;
+    
+    ListNode *head = nullptr;
+    ListNode *tail = nullptr;
+
+    while (l1 || l2 || carry) &amp;#123;
+      digit = 0;
+      if (carry) &amp;#123;
+        digit += 1;
+        carry = false;
+      &amp;#125;
+      if (l1) &amp;#123;
+        digit += l1-&amp;gt;val;
+        l1 = l1-&amp;gt;next;
+      &amp;#125;
+      if (l2) &amp;#123;
+        digit += l2-&amp;gt;val;
+        l2 = l2-&amp;gt;next;
+      &amp;#125;
+      if (digit &amp;gt;= 10) &amp;#123;
+        digit -= 10;
+        carry = true;
+      &amp;#125;
+      
+      ListNode *node = new ListNode(digit);
+      if (!head) &amp;#123;
+        head = node;
+      &amp;#125; else &amp;#123;
+        tail-&amp;gt;next = node;
+      &amp;#125;
+      tail = node;
+    &amp;#125;
+
+    return head;
+  &amp;#125;
+&amp;#125;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;Complexity-Analysis&#34;&gt;&lt;a href=&#34;#Complexity-Analysis&#34; class=&#34;headerlink&#34; title=&#34;Complexity Analysis&#34;&gt;&lt;/a&gt;Complexity Analysis&lt;/h1&gt;&lt;p&gt;假設 l1 長度為 &lt;code&gt;m&lt;/code&gt;，l2 長度為 &lt;code&gt;n&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time: O(max(m, n))&lt;/strong&gt; - 同時 traverse 兩個 list，所需時間為較長者&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space: O(max(m, n))&lt;/strong&gt; - m digits + n digits 最多可能產生一個 (m+n+1) digits 的數&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;Result&#34;&gt;&lt;a href=&#34;#Result&#34; class=&#34;headerlink&#34; title=&#34;Result&#34;&gt;&lt;/a&gt;Result&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;Runtime: 46 ms, faster than 74.37% of C++ online submissions for Add Two Numbers.
+Memory Usage: 71.3 MB, less than 90.92% of C++ online submissions for Add Two Numbers.
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+        <category term="leetcode, linked-list" />
+        <updated>2022-08-21T08:55:18.000Z</updated>
+    </entry>
+</feed>
