@@ -5,53 +5,83 @@
         <link>https://aesophor.github.io</link>
         <description>{software,reverse} engineer</description>
         <language>en</language>
-        <pubDate>Sun, 21 Aug 2022 14:05:49 +0800</pubDate>
-        <lastBuildDate>Sun, 21 Aug 2022 14:05:49 +0800</lastBuildDate>
+        <pubDate>Sun, 21 Aug 2022 16:55:18 +0800</pubDate>
+        <lastBuildDate>Sun, 21 Aug 2022 16:55:18 +0800</lastBuildDate>
         <category>linux</category>
         <category>leetcode</category>
+        <item>
+            <guid isPermalink="true">https://aesophor.github.io/2022/08/21/LC-0002-Add-Two-Numbers/</guid>
+            <title>LC#0002 - Add Two Numbers</title>
+            <link>https://aesophor.github.io/2022/08/21/LC-0002-Add-Two-Numbers/</link>
+            <category>leetcode</category>
+            <pubDate>Sun, 21 Aug 2022 16:55:18 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;problem&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#problem&#34;&gt;#&lt;/a&gt; Problem&lt;/h1&gt;
+&lt;p&gt;給定兩條 singly linked lists： &lt;code&gt;l1&lt;/code&gt;  和  &lt;code&gt;l2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;一條 linked list 代表一個數，比如 [3, 4, 5] 這樣的 linked list 表示數字 543。&lt;/p&gt;
+&lt;p&gt;請將  &lt;code&gt;l1&lt;/code&gt;  和  &lt;code&gt;l2&lt;/code&gt;  所代表的數相加，然後依樣畫葫蘆製作一條全新的 linked list 回傳兩數之和。&lt;/p&gt;
+&lt;h1 id=&#34;examples&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#examples&#34;&gt;#&lt;/a&gt; Examples&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果是 on-site，記得和考官確認 input linked list 是否可能為空&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Input: l1 = [2,4,3], l2 = [5,6,4]
+Output: [7,0,8]
+Explanation: 342 + 465 = 807.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Input: l1 = [0], l2 = [0]
+Output: [0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Output: [8,9,9,9,0,0,0,1]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;solution&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#solution&#34;&gt;#&lt;/a&gt; Solution&lt;/h1&gt;
+&lt;p&gt;同時 traverse 兩條 linked lists，將目前走到的兩個節點的 value 做相加，並且記得處理進位。&lt;/p&gt;
+&lt;figure class=&#34;highlight cpp&#34;&gt;&lt;figcaption data-lang=&#34;C++&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;/**&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; * Definition for singly-linked list.&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; * struct ListNode &amp;#123;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; *     int val;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; *     ListNode *next;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; *     ListNode() : val(0), next(nullptr) &amp;#123;&amp;#125;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; *     ListNode(int x) : val(x), next(nullptr) &amp;#123;&amp;#125;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; *     ListNode(int x, ListNode *next) : val(x), next(next) &amp;#123;&amp;#125;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; * &amp;#125;;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; */&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Solution&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; &lt;span class=&#34;token keyword&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  ListNode &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;addTwoNumbers&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; ListNode &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;l1&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; ListNode &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;l2&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;bool&lt;/span&gt; carry &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token boolean&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt; digit &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    ListNode &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;head &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;nullptr&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    ListNode &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;tail &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;nullptr&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;l1 &lt;span class=&#34;token operator&#34;&gt;||&lt;/span&gt; l2 &lt;span class=&#34;token operator&#34;&gt;||&lt;/span&gt; carry&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      digit &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;carry&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        digit &lt;span class=&#34;token operator&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        carry &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token boolean&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;l1&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;27&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        digit &lt;span class=&#34;token operator&#34;&gt;+=&lt;/span&gt; l1&lt;span class=&#34;token operator&#34;&gt;-&gt;&lt;/span&gt;val&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;28&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        l1 &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; l1&lt;span class=&#34;token operator&#34;&gt;-&gt;&lt;/span&gt;next&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;29&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;30&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;l2&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;31&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        digit &lt;span class=&#34;token operator&#34;&gt;+=&lt;/span&gt; l2&lt;span class=&#34;token operator&#34;&gt;-&gt;&lt;/span&gt;val&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;32&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        l2 &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; l2&lt;span class=&#34;token operator&#34;&gt;-&gt;&lt;/span&gt;next&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;33&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;34&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;digit &lt;span class=&#34;token operator&#34;&gt;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;35&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        digit &lt;span class=&#34;token operator&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;36&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        carry &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token boolean&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;37&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;38&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;39&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      ListNode &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;node &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;ListNode&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;digit&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;40&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;!&lt;/span&gt;head&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;41&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        head &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; node&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;42&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;43&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        tail&lt;span class=&#34;token operator&#34;&gt;-&gt;&lt;/span&gt;next &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; node&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;44&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;45&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      tail &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; node&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;46&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;47&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;48&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; head&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;49&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;50&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;complexity-analysis&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#complexity-analysis&#34;&gt;#&lt;/a&gt; Complexity Analysis&lt;/h1&gt;
+&lt;p&gt;假設 l1 長度為  &lt;code&gt;m&lt;/code&gt; ，l2 長度為  &lt;code&gt;n&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time: O(max(m, n))&lt;/strong&gt; - 同時 traverse 兩個 list，所需時間為較長者&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space: O(max(m, n, m+n+1))&lt;/strong&gt; - m digits + n digits 最多可能產生一個 (m+n+1) digits 的數&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;result&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#result&#34;&gt;#&lt;/a&gt; Result&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;Runtime: 46 ms, faster than 74.37% of C++ online submissions for Add Two Numbers.
+Memory Usage: 71.3 MB, less than 90.92% of C++ online submissions for Add Two Numbers.
+&lt;/code&gt;&lt;/pre&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://aesophor.github.io/2022/08/21/LC-0001-Two-Sums/</guid>
             <title>LC#0001 - Two Sums</title>
             <link>https://aesophor.github.io/2022/08/21/LC-0001-Two-Sums/</link>
             <category>leetcode</category>
             <pubDate>Sun, 21 Aug 2022 14:05:49 +0800</pubDate>
-            <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;以前刷題總是不寫 writeup，漫無目標的亂刷，導致久了就會忘記解法。最近受到兩位 SQLab 學長的激勵，分別是 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iY2xpbi50dy9hYm91dC8=&#34;&gt;Kevin Lin (bclin717)&lt;/span&gt; 與 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL1RvbW15V3UtZmRna2hka2do&#34;&gt;Tommy Wu (fdgkhdkgh)&lt;/span&gt;，決定這輪刷題要養成好習慣：將解題過程記錄下來。&lt;/p&gt;
-&lt;h1 id=&#34;Problem&#34;&gt;&lt;a href=&#34;#Problem&#34; class=&#34;headerlink&#34; title=&#34;Problem&#34;&gt;&lt;/a&gt;Problem&lt;/h1&gt;&lt;p&gt;給定一串數字 &lt;code&gt;nums&lt;/code&gt;，以及一個目標 &lt;code&gt;target&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;請從 &lt;code&gt;nums&lt;/code&gt; 中找到兩個數字 s.t. 兩數之和為 &lt;code&gt;target&lt;/code&gt;，並回傳那兩數的 index。&lt;/p&gt;
-&lt;h1 id=&#34;Example&#34;&gt;&lt;a href=&#34;#Example&#34; class=&#34;headerlink&#34; title=&#34;Example&#34;&gt;&lt;/a&gt;Example&lt;/h1&gt;&lt;p&gt;&lt;img data-src=&#34;fig.png&#34;&gt;&lt;/p&gt;
-&lt;h1 id=&#34;Solution&#34;&gt;&lt;a href=&#34;#Solution&#34; class=&#34;headerlink&#34; title=&#34;Solution&#34;&gt;&lt;/a&gt;Solution&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;建一個 map：&lt;ul&gt;
+            <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
+&lt;p&gt;以前刷題總是不寫 writeup，漫無目標的亂刷，導致久了就會忘記解法。最近受到兩位 SQLab 學長的激勵，分別是 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iY2xpbi50dy9hYm91dC8=&#34;&gt;Kevin Lin (bclin717)&lt;/span&gt; 與 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL1RvbW15V3UtZmRna2hka2do&#34;&gt;Tommy Wu (fdgkhdkgh)&lt;/span&gt;，決定這輪刷題要養成好習慣：將解題過程記錄下來。&lt;/p&gt;
+&lt;h1 id=&#34;problem&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#problem&#34;&gt;#&lt;/a&gt; Problem&lt;/h1&gt;
+&lt;p&gt;給定一串數字  &lt;code&gt;nums&lt;/code&gt; ，以及一個目標  &lt;code&gt;target&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;請從  &lt;code&gt;nums&lt;/code&gt;  中找到兩個數字 s.t. 兩數之和為  &lt;code&gt;target&lt;/code&gt; ，並回傳那兩數的 index。&lt;/p&gt;
+&lt;h1 id=&#34;example&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#example&#34;&gt;#&lt;/a&gt; Example&lt;/h1&gt;
+&lt;p&gt;&lt;img data-src=&#34;fig.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#solution&#34;&gt;#&lt;/a&gt; Solution&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;建一個 map：
+&lt;ul&gt;
 &lt;li&gt;key 為目前數字的 complement，即 target - 目前數字&lt;/li&gt;
 &lt;li&gt;value 為目前數字的 index&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;線性掃描 &lt;code&gt;nums&lt;/code&gt;，假設目前掃描到的數字 index 為 &lt;code&gt;i&lt;/code&gt;，檢查 map 中是否存在 key = &lt;code&gt;nums[i]&lt;/code&gt;&lt;ul&gt;
-&lt;li&gt;若存在，返回兩個 index：&lt;code&gt;i&lt;/code&gt; 與 &lt;code&gt;map[nums[i]]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;不存在，對 map 插入 {&lt;code&gt;target - nums[i]&lt;/code&gt;, &lt;code&gt;i&lt;/code&gt;}&lt;/li&gt;
+&lt;li&gt;線性掃描  &lt;code&gt;nums&lt;/code&gt; ，假設目前掃描到的數字 index 為  &lt;code&gt;i&lt;/code&gt; ，檢查 map 中是否存在 key =  &lt;code&gt;nums[i]&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;若存在，返回兩個 index： &lt;code&gt;i&lt;/code&gt;  與  &lt;code&gt;map[nums[i]]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;不存在，對 map 插入 { &lt;code&gt;target - nums[i]&lt;/code&gt; ,  &lt;code&gt;i&lt;/code&gt; }&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre&gt;&lt;code class=&#34;cpp&#34;&gt;class Solution &amp;#123;
- public:
-  vector&amp;lt;int&amp;gt; twoSum(vector&amp;lt;int&amp;gt;&amp;amp; nums, int target) &amp;#123;
-    std::map&amp;lt;int, int&amp;gt; complementIdx;
-
-    for (int i = 0; i &amp;lt; nums.size(); i++) &amp;#123;
-        if (complementIdx.count(nums[i])) &amp;#123;
-            return &amp;#123;i, complementIdx[nums[i]]&amp;#125;;
-        &amp;#125;
-        complementIdx.insert(&amp;#123;target - nums[i], i&amp;#125;);
-    &amp;#125;
-
-    return &amp;#123;-1, -1&amp;#125;;
-  &amp;#125;
-&amp;#125;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;Complexity-Analysis&#34;&gt;&lt;a href=&#34;#Complexity-Analysis&#34; class=&#34;headerlink&#34; title=&#34;Complexity Analysis&#34;&gt;&lt;/a&gt;Complexity Analysis&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;Time: O(n) - worst case 需要掃到尾才能找到答案&lt;/li&gt;
-&lt;li&gt;Space: O(n) - worst case 同上, map 需要存將近 n 個 entries&lt;/li&gt;
+&lt;figure class=&#34;highlight cpp&#34;&gt;&lt;figcaption data-lang=&#34;C++&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Solution&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; &lt;span class=&#34;token keyword&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  vector&lt;span class=&#34;token operator&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;&gt;&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;twoSum&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;vector&lt;span class=&#34;token operator&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;&gt;&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;&amp;amp;&lt;/span&gt; nums&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt; target&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    std&lt;span class=&#34;token double-colon punctuation&#34;&gt;::&lt;/span&gt;map&lt;span class=&#34;token operator&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;&gt;&lt;/span&gt; complementIdx&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt; i &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt; i &lt;span class=&#34;token operator&#34;&gt;&amp;lt;&lt;/span&gt; nums&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt; i&lt;span class=&#34;token operator&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;complementIdx&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;count&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;nums&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; complementIdx&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;nums&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      complementIdx&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;insert&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;target &lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt; nums&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; i&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;complexity-analysis&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#complexity-analysis&#34;&gt;#&lt;/a&gt; Complexity Analysis&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Time: O (n) - worst case 需要掃到尾才能找到答案&lt;/li&gt;
+&lt;li&gt;Space: O (n) - worst case 同上，map 需要存將近 n 個 entries&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;Result&#34;&gt;&lt;a href=&#34;#Result&#34; class=&#34;headerlink&#34; title=&#34;Result&#34;&gt;&lt;/a&gt;Result&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;Runtime: 7 ms, faster than 98.41% of C++ online submissions for Two Sum.
+&lt;h1 id=&#34;result&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#result&#34;&gt;#&lt;/a&gt; Result&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;Runtime: 7 ms, faster than 98.41% of C++ online submissions for Two Sum.
 Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two Sum.
 &lt;/code&gt;&lt;/pre&gt;
  ]]></description>
@@ -63,33 +93,41 @@ Memory Usage: 11.2 MB, less than 18.59% of C++ online submissions for Two 
             <category>linux</category>
             <pubDate>Mon, 20 Jul 2020 18:48:46 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;&lt;img data-src=&#34;banner.jpg&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;Introduction&#34;&gt;&lt;a href=&#34;#Introduction&#34; class=&#34;headerlink&#34; title=&#34;Introduction&#34;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15” (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
-&lt;h2 id=&#34;Back-Up-the-Old-SSD&#34;&gt;&lt;a href=&#34;#Back-Up-the-Old-SSD&#34; class=&#34;headerlink&#34; title=&#34;Back Up the Old SSD&#34;&gt;&lt;/a&gt;Back Up the Old SSD&lt;/h2&gt;&lt;p&gt;I booted into a &lt;code&gt;Gentoo Live USB&lt;/code&gt; and used &lt;code&gt;dd&lt;/code&gt; to back up my entire old SSD to an image file.&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h2&gt;
+&lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15&amp;quot; (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
+&lt;h2 id=&#34;back-up-the-old-ssd&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#back-up-the-old-ssd&#34;&gt;#&lt;/a&gt; Back Up the Old SSD&lt;/h2&gt;
+&lt;p&gt;I booted into a  &lt;code&gt;Gentoo Live USB&lt;/code&gt;  and used  &lt;code&gt;dd&lt;/code&gt;  to back up my entire old SSD to an image file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on &lt;code&gt;/mnt/external_drive&lt;/code&gt; and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
+&lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on  &lt;code&gt;/mnt/external_drive&lt;/code&gt;  and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;Firmware-Upgrade&#34;&gt;&lt;a href=&#34;#Firmware-Upgrade&#34; class=&#34;headerlink&#34; title=&#34;Firmware Upgrade&#34;&gt;&lt;/a&gt;Firmware Upgrade&lt;/h2&gt;&lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;SSD-Upgrade&#34;&gt;&lt;a href=&#34;#SSD-Upgrade&#34; class=&#34;headerlink&#34; title=&#34;SSD Upgrade&#34;&gt;&lt;/a&gt;SSD Upgrade&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
+&lt;h2 id=&#34;firmware-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#firmware-upgrade&#34;&gt;#&lt;/a&gt; Firmware Upgrade&lt;/h2&gt;
+&lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;ssd-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-upgrade&#34;&gt;#&lt;/a&gt; SSD Upgrade&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
+Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on shopee.tw -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3Nob3BlZS50dw==&#34;&gt;shopee.tw&lt;/span&gt; -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;swap.jpg&#34; alt=&#34;swap&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;SSD-Data-Migration&#34;&gt;&lt;a href=&#34;#SSD-Data-Migration&#34; class=&#34;headerlink&#34; title=&#34;SSD Data Migration&#34;&gt;&lt;/a&gt;SSD Data Migration&lt;/h2&gt;&lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
-&lt;p&gt;At first I used &lt;code&gt;dd&lt;/code&gt; to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
-&lt;h2 id=&#34;Prepare-Installation-Medium&#34;&gt;&lt;a href=&#34;#Prepare-Installation-Medium&#34; class=&#34;headerlink&#34; title=&#34;Prepare Installation Medium&#34;&gt;&lt;/a&gt;Prepare Installation Medium&lt;/h2&gt;&lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
+&lt;h2 id=&#34;ssd-data-migration&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-data-migration&#34;&gt;#&lt;/a&gt; SSD Data Migration&lt;/h2&gt;
+&lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
+&lt;p&gt;At first I used  &lt;code&gt;dd&lt;/code&gt;  to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
+&lt;h2 id=&#34;prepare-installation-medium&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prepare-installation-medium&#34;&gt;#&lt;/a&gt; Prepare Installation Medium&lt;/h2&gt;
+&lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=&#34;&gt;Download Arch Linux ISO&lt;/span&gt; and prepare Arch Live USB:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Power off your MacBook, insert the USB stick, hold &lt;code&gt;alt/option&lt;/code&gt; and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
-&lt;h2 id=&#34;Base-Installation&#34;&gt;&lt;a href=&#34;#Base-Installation&#34; class=&#34;headerlink&#34; title=&#34;Base Installation&#34;&gt;&lt;/a&gt;Base Installation&lt;/h2&gt;&lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on &lt;code&gt;USB Tethering&lt;/code&gt;, and ran:&lt;/p&gt;
+&lt;p&gt;Power off your MacBook, insert the USB stick, hold  &lt;code&gt;alt/option&lt;/code&gt;  and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
+&lt;h2 id=&#34;base-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#base-installation&#34;&gt;#&lt;/a&gt; Base Installation&lt;/h2&gt;
+&lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on  &lt;code&gt;USB Tethering&lt;/code&gt; , and ran:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dhcpcd
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Ensure the clock is accurate:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ timedatectl set-ntp true
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Run &lt;code&gt;cfdisk /dev/nvme0n1&lt;/code&gt; and partition the new SSD as follows:&lt;/p&gt;
+&lt;p&gt;Run  &lt;code&gt;cfdisk /dev/nvme0n1&lt;/code&gt;  and partition the new SSD as follows:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;                                   Disk: /dev/nvme0n1
                  Size: 931.53 GiB, 1000204886016 bytes, 1953525168 sectors
                 Label: gpt, identifier: 85CF6A21-FC5C-408D-8532-8751C80F0593
@@ -98,7 +136,7 @@ Device                 Start          End        Sectors        Size Type
 /dev/nvme0n1p1          2048       411647         409600        200M EFI System             
 /dev/nvme0n1p2       411648    1953525134     1953113487      931.3G Linux filesystem
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now run &lt;code&gt;lsblk&lt;/code&gt; and you’ll see something like this:&lt;/p&gt;
+&lt;p&gt;Now run  &lt;code&gt;lsblk&lt;/code&gt;  and you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -116,7 +154,7 @@ root$ mkfs.fat -F32 /dev/nvme0n1p1
 root$ mkfs.ext4 /dev/mapper/vgcrypt-root
 root$ mkfs.ext4 /dev/mapper/vgcrypt-home
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now run &lt;code&gt;lsblk&lt;/code&gt; again and you’ll see something like this:&lt;/p&gt;
+&lt;p&gt;Now run  &lt;code&gt;lsblk&lt;/code&gt;  again and you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -137,19 +175,20 @@ root$ mount /dev/nvme0n1p1 /mnt/boot
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Generate fstab:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p&lt;/code&gt; prevents pseudo-filesystems from being added.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L&lt;/code&gt;  generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;  prevents pseudo-filesystems from being added.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;root$ genfstab -L -p /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
 root$ cat /mnt/etc/fstab
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;Configure-the-New-System&#34;&gt;&lt;a href=&#34;#Configure-the-New-System&#34; class=&#34;headerlink&#34; title=&#34;Configure the New System&#34;&gt;&lt;/a&gt;Configure the New System&lt;/h2&gt;&lt;p&gt;Chroot into our new system:&lt;/p&gt;
+&lt;h2 id=&#34;configure-the-new-system&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#configure-the-new-system&#34;&gt;#&lt;/a&gt; Configure the New System&lt;/h2&gt;
+&lt;p&gt;Chroot into our new system:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ arch-chroot /mnt /bin/bash
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Generate locales:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;uncomment the locales you’re going to use in /etc/locale.gen, and run &lt;code&gt;locale-gen&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;run &lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt; /etc/locale.conf&lt;/code&gt; to make ENG UTF-8 the default locale. &lt;/li&gt;
+&lt;li&gt;uncomment the locales you’re going to use in /etc/locale.gen, and run  &lt;code&gt;locale-gen&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;run  &lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt; /etc/locale.conf&lt;/code&gt;  to make ENG UTF-8 the default locale.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Replace the default console font with terminus:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ pacman -S terminus-font
@@ -159,10 +198,10 @@ root$ echo FONT=ter-v24n &amp;gt; /etc/vconsole.conf
 &lt;pre&gt;&lt;code&gt;root$ ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 root$ hwclock --systohc --utc
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in  &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt; :&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;HOOKS=&amp;quot;base udev autodetect keyboard keymap modconf block consolefont encrypt lvm2 filesystems fsck&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Regenerate the initramfs image to EFI Partition (&lt;code&gt;/dev/nvme0n1p1&lt;/code&gt;):&lt;/p&gt;
+&lt;p&gt;Regenerate the initramfs image to EFI Partition ( &lt;code&gt;/dev/nvme0n1p1&lt;/code&gt; ):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ mkinitcpio -p linux
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Set hostname:&lt;/p&gt;
@@ -172,11 +211,11 @@ root$ hwclock --systohc --utc
 &lt;pre&gt;&lt;code&gt;root$ pacman -S dosfstools
 root$ bootctl --path=/boot install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Add an boot entry for systemd-boot by editing &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;title    Arch Linux
-linux    /vmlinuz-linux
-initrd    /initramfs-linux.img
-options    cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
+&lt;p&gt;Add an boot entry for systemd-boot by editing  &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt; :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;title	Arch Linux
+linux	/vmlinuz-linux
+initrd	/initramfs-linux.img
+options	cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Change root user’s password:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ passwd
@@ -193,10 +232,11 @@ root$ passwd aesophor
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Set up sudo:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;run &lt;code&gt;visudo&lt;/code&gt; and uncomment the line &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;run  &lt;code&gt;visudo&lt;/code&gt;  and uncomment the line  &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt; .&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;At this point, you may logout the root user and re-login with your unprivileged user.&lt;/p&gt;
-&lt;h2 id=&#34;Post-Installation&#34;&gt;&lt;a href=&#34;#Post-Installation&#34; class=&#34;headerlink&#34; title=&#34;Post Installation&#34;&gt;&lt;/a&gt;Post Installation&lt;/h2&gt;&lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt;&lt;code&gt;yay&lt;/code&gt;&lt;/a&gt;, an AUR helper:&lt;/p&gt;
+&lt;h2 id=&#34;post-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#post-installation&#34;&gt;#&lt;/a&gt; Post Installation&lt;/h2&gt;
+&lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt; &lt;code&gt;yay&lt;/code&gt; &lt;/a&gt;, an AUR helper:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://aur.archlinux.org/yay.git
 user$ cd yay
 user$ sudo makepkg -si
@@ -206,15 +246,15 @@ user$ sudo makepkg -si
 user$ yay -S opencl-intel
 user$ sudo pacman -S xorg-server xorg-xinit xorg-apps
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install &lt;code&gt;xf86-input-mtrack&lt;/code&gt; as our trackpad driver:&lt;/p&gt;
+&lt;p&gt;Install  &lt;code&gt;xf86-input-mtrack&lt;/code&gt;  as our trackpad driver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ yay -S xf86-input-mtrack
 user$ sudo wget -O /etc/X11/xorg.conf.d/10-mtrack.conf https://raw.githubusercontent.com/aesophor/macbookpro-11-2-gentoo-config/master/etc/X11/xorg.conf.d/10mtrack.conf
 user$ sudo gpasswd -a aesophor input
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install &lt;code&gt;broadcom-wl-dkms&lt;/code&gt; as our Wi-Fi driver (my laptop model is A1398):&lt;/p&gt;
+&lt;p&gt;Install  &lt;code&gt;broadcom-wl-dkms&lt;/code&gt;  as our Wi-Fi driver (my laptop model is A1398):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -S dkms broadcom-wl-dkms
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install &lt;code&gt;bcwc-pcie-git&lt;/code&gt; as our FaceTimeHD webcam driver:&lt;/p&gt;
+&lt;p&gt;Install  &lt;code&gt;bcwc-pcie-git&lt;/code&gt;  as our FaceTimeHD webcam driver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ yay -S bcwc-pcie-git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Install font packages:&lt;/p&gt;
@@ -232,7 +272,7 @@ user$ yay -S wmderland-git polybar dunst picom rofi-git rxvt-unicode firefox
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-material-color
 user$ yay -S fcitx5-pinyin-zhwiki
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Downgrade &lt;code&gt;pango&lt;/code&gt; to 1.43 since &amp;gt;= 1.44 cause issue with font rendering on rofi:&lt;/p&gt;
+&lt;p&gt;Downgrade  &lt;code&gt;pango&lt;/code&gt;  to 1.43 since &amp;gt;= 1.44 cause issue with font rendering on rofi:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -U https://archive.archlinux.org/packages/p/pango/pango-1.43.0-1-x86_64.pkg.tar.xz
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Powersaving:&lt;/p&gt;
@@ -247,7 +287,8 @@ user$ sudo systemctl enable mbpfan.service
 &lt;li&gt;echo “XHC1” &amp;gt; /proc/acpi/wakeup  # fix immediate wakeup after suspension on macbook&lt;/li&gt;
 &lt;li&gt;setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;Enter-X11&#34;&gt;&lt;a href=&#34;#Enter-X11&#34; class=&#34;headerlink&#34; title=&#34;Enter X11&#34;&gt;&lt;/a&gt;Enter X11&lt;/h2&gt;&lt;p&gt;Install my dotfiles:&lt;/p&gt;
+&lt;h2 id=&#34;enter-x11&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#enter-x11&#34;&gt;#&lt;/a&gt; Enter X11&lt;/h2&gt;
+&lt;p&gt;Install my dotfiles:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
 user$ cd ~/Dots
 user$ rm ~/.zshrc ~/.bashrc
@@ -256,7 +297,8 @@ user$ ./.install.sh
 &lt;p&gt;Start an X11 session (GUI) as your unprivileged user:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ startx
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;&lt;img data-src=&#34;result.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;
+&lt;img data-src=&#34;result.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
  ]]></description>
         </item>
     </channel>
