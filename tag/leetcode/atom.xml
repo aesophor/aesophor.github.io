@@ -4,8 +4,8 @@
     <title> • Posts by &#34;leetcode&#34; tag</title>
     <link href="https://aesophor.github.io" />
     <updated>2022-08-21T08:55:18.000Z</updated>
-    <category term="linux" />
     <category term="leetcode" />
+    <category term="linux" />
     <entry>
         <id>https://aesophor.github.io/2022/08/21/LC-0002-Add-Two-Numbers/</id>
         <title>LC#0002 - Add Two Numbers</title>
@@ -53,9 +53,8 @@ Memory Usage: 71.3 MB, less than 90.92% of C++ online submissions for Add 
 &lt;h1 id=&#34;problem&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#problem&#34;&gt;#&lt;/a&gt; Problem&lt;/h1&gt;
 &lt;p&gt;給定一串數字  &lt;code&gt;nums&lt;/code&gt; ，以及一個目標  &lt;code&gt;target&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;請從  &lt;code&gt;nums&lt;/code&gt;  中找到兩個數字 s.t. 兩數之和為  &lt;code&gt;target&lt;/code&gt; ，並回傳那兩數的 index。&lt;/p&gt;
-&lt;h1 id=&#34;example&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#example&#34;&gt;#&lt;/a&gt; Example&lt;/h1&gt;
-&lt;p&gt;&lt;img data-src=&#34;fig.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h1 id=&#34;solution&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#solution&#34;&gt;#&lt;/a&gt; Solution&lt;/h1&gt;
+&lt;p&gt;&lt;img data-src=&#34;fig.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;建一個 map：
 &lt;ul&gt;
