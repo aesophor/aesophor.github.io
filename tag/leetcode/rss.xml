@@ -39,7 +39,7 @@ Output: [8,9,9,9,0,0,0,1]
 &lt;p&gt;假設 l1 長度為  &lt;code&gt;m&lt;/code&gt; ，l2 長度為  &lt;code&gt;n&lt;/code&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Time: O(max(m, n))&lt;/strong&gt; - 同時 traverse 兩個 list，所需時間為較長者&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Space: O(max(m, n, m+n+1))&lt;/strong&gt; - m digits + n digits 最多可能產生一個 (m+n+1) digits 的數&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space: O(max(m, n))&lt;/strong&gt; - m digits + n digits 最多可能產生一個 (m+n+1) digits 的數&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;result&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#result&#34;&gt;#&lt;/a&gt; Result&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;Runtime: 46 ms, faster than 74.37% of C++ online submissions for Add Two Numbers.
