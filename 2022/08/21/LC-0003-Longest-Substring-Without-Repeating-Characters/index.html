@@ -146,10 +146,8 @@ aesophor =  = software, adventures, and thoughts</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="problem"><a class="markdownIt-Anchor" href="#problem">#</a> Problem</h1>
-<p>給定一字串  <code>s</code> ，請找出不包含重複字元的 substring 的最長長度。</p>
-<h1 id="examples"><a class="markdownIt-Anchor" href="#examples">#</a> Examples</h1>
-<pre><code>Input: s = &quot;abcabcbb&quot;
+    <h1 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h1><p>給定一字串 <code>s</code>，請找出不包含重複字元的 substring 的最長長度。</p>
+<h1 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h1><pre><code>Input: s = &quot;abcabcbb&quot;
 Output: 3
 Explanation: The answer is &quot;abc&quot;, with the length of 3.
 </code></pre>
@@ -162,22 +160,49 @@ Output: 3
 Explanation: The answer is &quot;wke&quot;, with the length of 3.
 Notice that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.
 </code></pre>
-<h1 id="solution"><a class="markdownIt-Anchor" href="#solution">#</a> Solution</h1>
-<p><strong>Sliding Window Algorithm</strong></p>
-<p>維護兩個 index：  <code>l</code>  和  <code>r</code> ，分別代表 window 左界與右界，window 內的每個字元都是獨特的，不能重複。</p>
-<p>接著線性掃描字串  <code>s</code> ，不斷將右界往右擴展：</p>
+<pre><code>Input: s = &quot;abba&quot;
+Output: 2
+Explanation: The answer is &quot;ab&quot;, with the length of 2.
+</code></pre>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p><strong>Sliding Window Algorithm</strong></p>
+<p>維護兩個 index： <code>l</code> 和 <code>r</code>，分別代表 window 左界與右界，window 內的每個字元都是獨特的，不能重複。</p>
+<p>接著線性掃描字串 <code>s</code>，不斷將右界往右擴展：</p>
 <ol>
-<li>若  <code>s[r]</code>  和 window 內某字元重複，且假設兩個重複字元在  <code>s</code>  中的 index 分別為 k 和 r，就將左界更新為  <code>k + 1</code></li>
+<li>若 <code>s[r]</code> 和 window 內某字元重複，且假設兩個重複字元在 <code>s</code> 中的 index 分別為 k 和 r，就將左界更新為 <code>k + 1</code></li>
 <li>計算 window 長度 (i.e., r - l + 1)，必要時更新 max_len</li>
-<li>紀錄  <code>s[r]</code>  最後一次出現時的 index</li>
+<li>紀錄 <code>s[r]</code> 最後一次出現時的 index</li>
 </ol>
-<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token keyword">public</span><span class="token operator">:</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">int</span> <span class="token function">lengthOfLongestSubstring</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">int</span> r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token keyword">int</span> max_len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    std<span class="token double-colon punctuation">::</span>unordered_map<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> appearedCharIdx<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>      <span class="token comment">// If `s[r]` has already appeared before, and `s[r]`</span></pre></td></tr><tr><td data-num="11"></td><td><pre>      <span class="token comment">// is within the current window, then we should adjust</span></pre></td></tr><tr><td data-num="12"></td><td><pre>      <span class="token comment">// the left window boundary.</span></pre></td></tr><tr><td data-num="13"></td><td><pre>      <span class="token keyword">if</span> <span class="token punctuation">(</span>appearedCharIdx<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> appearedCharIdx<span class="token punctuation">[</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">>=</span> l<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>        l <span class="token operator">=</span> appearedCharIdx<span class="token punctuation">[</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>      <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>      </pre></td></tr><tr><td data-num="17"></td><td><pre>      max_len <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">max</span><span class="token punctuation">(</span>max_len<span class="token punctuation">,</span> r <span class="token operator">-</span> l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>      appearedCharIdx<span class="token punctuation">[</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre>      <span class="token operator">++</span>r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    </pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token keyword">return</span> max_len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h1 id="complexity-analysis"><a class="markdownIt-Anchor" href="#complexity-analysis">#</a> Complexity Analysis</h1>
-<ul>
+<pre><code class="cpp">class Solution &#123;
+ public:
+  int lengthOfLongestSubstring(const string &amp;s) &#123;
+    int l = 0;
+    int r = 0;
+    int max_len = 0;
+    std::unordered_map&lt;char, int&gt; appearedCharIdx;
+
+    while (r &lt; s.size()) &#123;
+      // If `s[r]` has already appeared before, and `s[r]`
+      // is within the current window, then we should adjust
+      // the left window boundary.
+      if (appearedCharIdx.count(s[r]) &amp;&amp; appearedCharIdx[s[r]] &gt;= l) &#123;
+        l = appearedCharIdx[s[r]] + 1;
+      &#125;
+      
+      max_len = std::max(max_len, r - l + 1);
+      appearedCharIdx[s[r]] = r;
+
+      ++r;
+    &#125;
+    
+    return max_len;
+  &#125;
+&#125;;
+</code></pre>
+<h1 id="Complexity-Analysis"><a href="#Complexity-Analysis" class="headerlink" title="Complexity Analysis"></a>Complexity Analysis</h1><ul>
 <li><strong>Time: O(n)</strong> - sliding window 只需將 s 從頭到尾掃描一次</li>
-<li><strong>Space: O(n)</strong> - worst case 時 appearedCharIdx.size () 逼近 s.size ()</li>
+<li><strong>Space: O(n)</strong> - worst case 時 appearedCharIdx.size() 逼近 s.size()</li>
 </ul>
-<h1 id="result"><a class="markdownIt-Anchor" href="#result">#</a> Result</h1>
-<pre><code>Runtime: 11 ms, faster than 84.71% of C++ online submissions for Longest Substring Without Repeating Characters.
+<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><pre><code>Runtime: 11 ms, faster than 84.71% of C++ online submissions for Longest Substring Without Repeating Characters.
 Memory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longest Substring Without Repeating Characters.
 </code></pre>
 
@@ -195,7 +220,7 @@ Memory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longe
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-21 20:47:24" itemprop="dateModified" datetime="2022-08-21T20:47:24+08:00">2022-08-21</time>
+    <time title="Modified: 2022-08-21 20:53:08" itemprop="dateModified" datetime="2022-08-21T20:53:08+08:00">2022-08-21</time>
   </span>
 </div>
 
@@ -251,7 +276,7 @@ Memory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longe
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#problem"><span class="toc-number">1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#examples"><span class="toc-number">2.</span> <span class="toc-text"> Examples</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#solution"><span class="toc-number">3.</span> <span class="toc-text"> Solution</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#complexity-analysis"><span class="toc-number">4.</span> <span class="toc-text"> Complexity Analysis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#result"><span class="toc-number">5.</span> <span class="toc-text"> Result</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Problem"><span class="toc-number">1.</span> <span class="toc-text">Problem</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Examples"><span class="toc-number">2.</span> <span class="toc-text">Examples</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Solution"><span class="toc-number">3.</span> <span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Complexity-Analysis"><span class="toc-number">4.</span> <span class="toc-text">Complexity Analysis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Result"><span class="toc-number">5.</span> <span class="toc-text">Result</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
         <ul>
@@ -360,6 +385,16 @@ Memory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longe
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/Algorithm/" title="In Algorithm">Algorithm</a>
+</div>
+
+    <span><a href="/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/" title="LC#0003 - Longest Substring Without Repeating Characters">LC#0003 - Longest Substring Without Repeating Characters</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
@@ -374,16 +409,6 @@ Memory Usage: 8.1 MB, less than 82.70% of C++ online submissions for Longe
 </div>
 
     <span><a href="/2022/08/21/LC-0002-Add-Two-Numbers/" title="LC#0002 - Add Two Numbers">LC#0002 - Add Two Numbers</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/Algorithm/" title="In Algorithm">Algorithm</a>
-</div>
-
-    <span><a href="/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/" title="LC#0003 - Longest Substring Without Repeating Characters">LC#0003 - Longest Substring Without Repeating Characters</a></span>
   </li>
 
       
