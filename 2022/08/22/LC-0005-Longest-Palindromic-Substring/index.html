@@ -1,0 +1,467 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://aesophor.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://aesophor.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://aesophor.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="leetcode,string,two-pointers" />
+
+
+<link rel="canonical" href="https://aesophor.github.io/2022/08/22/LC-0005-Longest-Palindromic-Substring/">
+
+
+
+  <title>
+LC#0005 - Longest Palindromic Substring - Algorithm |
+aesophor =  = software, adventures, and thoughts</title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">LC#0005 - Longest Palindromic Substring
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-08-22 21:36:21">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-08-22T21:36:21+08:00">2022-08-22</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">aesophor</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="https://images.unsplash.com/photo-1533441325263-74682c42d779?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Algorithm/" itemprop="item" rel="index" title="In Algorithm"><span itemprop="name">Algorithm</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/2022/08/22/LC-0005-Longest-Palindromic-Substring/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="aesophor">
+    <meta itemprop="description" content="software, adventures, and thoughts, {software,reverse} engineer">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="problem"><a class="markdownIt-Anchor" href="#problem">#</a> Problem</h1>
+<p>給定一字串  <code>s</code> ，請找出當中最長的迴文 substring。</p>
+<h1 id="examples"><a class="markdownIt-Anchor" href="#examples">#</a> Examples</h1>
+<blockquote>
+<p>切記，迴文的長度可能是奇數，也可能是偶數。</p>
+</blockquote>
+<pre><code>Input: s = &quot;babad&quot;
+Output: &quot;bab&quot;
+Explanation: &quot;aba&quot; is also a valid answer.
+</code></pre>
+<pre><code>Input: s = &quot;cbbd&quot;
+Output: &quot;bb&quot;
+</code></pre>
+<h1 id="solution"><a class="markdownIt-Anchor" href="#solution">#</a> Solution</h1>
+<p><strong>Expand Around Center + Two Pointers</strong></p>
+<p>分別以  <code>l</code>  與  <code>r</code>  代表 palindrmic substring 之左右界。</p>
+<p>線性掃描  <code>s</code> ，假設目前字元的 index 為  <code>i</code> ：</p>
+<ol>
+<li>答案長度為奇數： <code>l = i</code> ,  <code>r = i</code>  向左右擴張</li>
+<li>答案長度為偶數： <code>l = i</code> ,  <code>r = i + 1</code>  向左右擴張</li>
+</ol>
+<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token keyword">public</span><span class="token operator">:</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  string <span class="token function">longestPalindrome</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">int</span> max_l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> max_r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    size_t len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> max_len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>      std<span class="token double-colon punctuation">::</span><span class="token function">tie</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> r<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">expand</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>      <span class="token function">updateMaxLen</span><span class="token punctuation">(</span>max_l<span class="token punctuation">,</span> max_r<span class="token punctuation">,</span> max_len<span class="token punctuation">,</span> l<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre>      std<span class="token double-colon punctuation">::</span><span class="token function">tie</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> r<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">expand</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>      <span class="token function">updateMaxLen</span><span class="token punctuation">(</span>max_l<span class="token punctuation">,</span> max_r<span class="token punctuation">,</span> max_len<span class="token punctuation">,</span> l<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    </pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>max_l<span class="token punctuation">,</span> max_len<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="18"></td><td><pre></pre></td></tr><tr><td data-num="19"></td><td><pre> <span class="token keyword">private</span><span class="token operator">:</span></pre></td></tr><tr><td data-num="20"></td><td><pre>  std<span class="token double-colon punctuation">::</span>tuple<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> <span class="token function">expand</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s<span class="token punctuation">,</span> <span class="token keyword">int</span> l<span class="token punctuation">,</span> <span class="token keyword">int</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    std<span class="token double-colon punctuation">::</span>tuple<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> ret<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> r <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">==</span> s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>      ret <span class="token operator">=</span> <span class="token punctuation">&#123;</span>l<span class="token operator">--</span><span class="token punctuation">,</span> r<span class="token operator">++</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>    <span class="token keyword">return</span> ret<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>  </pre></td></tr><tr><td data-num="28"></td><td><pre>  <span class="token keyword">void</span> <span class="token function">updateMaxLen</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">&amp;</span>max_l<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>max_r<span class="token punctuation">,</span> size_t <span class="token operator">&amp;</span>max_len<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="29"></td><td><pre>                    <span class="token keyword">const</span> <span class="token keyword">int</span> l<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">const</span> size_t len <span class="token operator">=</span> r <span class="token operator">-</span> l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> len <span class="token operator">></span> max_len<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="31"></td><td><pre>      max_l <span class="token operator">=</span> l<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>      max_r <span class="token operator">=</span> r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>      max_len <span class="token operator">=</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="36"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h1 id="complexity-analysis"><a class="markdownIt-Anchor" href="#complexity-analysis">#</a> Complexity Analysis</h1>
+<ul>
+<li><strong>Time: O(n^2)</strong> - worst case 是整個  <code>s</code>  就是 palindrome</li>
+<li><strong>Space: O(1)</strong> - 主要花費 6 個 local variables</li>
+</ul>
+<h1 id="result"><a class="markdownIt-Anchor" href="#result">#</a> Result</h1>
+<pre><code>Runtime: 61 ms, faster than 64.86% of C++ online submissions for Longest Palindromic Substring.
+Memory Usage: 6.8 MB, less than 99.11% of C++ online submissions for Longest Palindromic Substring.
+</code></pre>
+
+      <div class="tags">
+          <a href="/tags/leetcode/" rel="tag"><i class="ic i-tag"></i> leetcode</a>
+          <a href="/tags/string/" rel="tag"><i class="ic i-tag"></i> string</a>
+          <a href="/tags/two-pointers/" rel="tag"><i class="ic i-tag"></i> two-pointers</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-08-22 22:07:56" itemprop="dateModified" datetime="2022-08-22T22:07:56+08:00">2022-08-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>aesophor <i class="ic i-at"><em>@</em></i>
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="https://aesophor.github.io/2022/08/22/LC-0005-Longest-Palindromic-Substring/" title="LC#0005 - Longest Palindromic Substring">https://aesophor.github.io/2022/08/22/LC-0005-Longest-Palindromic-Substring/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1533441325263-74682c42d779?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1170&amp;q&#x3D;80" title="LC#0003 - Longest Substring Without Repeating Characters">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> Algorithm</span>
+  <h3>LC#0003 - Longest Substring Without Repeating Characters</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#problem"><span class="toc-number">1.</span> <span class="toc-text"> Problem</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#examples"><span class="toc-number">2.</span> <span class="toc-text"> Examples</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#solution"><span class="toc-number">3.</span> <span class="toc-text"> Solution</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#complexity-analysis"><span class="toc-number">4.</span> <span class="toc-text"> Complexity Analysis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#result"><span class="toc-number">5.</span> <span class="toc-text"> Result</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/08/21/LC-0001-Two-Sums/" rel="bookmark" title="LC#0001 - Two Sums">LC#0001 - Two Sums</a></li><li><a href="/2022/08/21/LC-0002-Add-Two-Numbers/" rel="bookmark" title="LC#0002 - Add Two Numbers">LC#0002 - Add Two Numbers</a></li><li><a href="/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/" rel="bookmark" title="LC#0003 - Longest Substring Without Repeating Characters">LC#0003 - Longest Substring Without Repeating Characters</a></li><li class="active"><a href="/2022/08/22/LC-0005-Longest-Palindromic-Substring/" rel="bookmark" title="LC#0005 - Longest Palindromic Substring">LC#0005 - Longest Palindromic Substring</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="aesophor"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">aesophor</p>
+  <div class="description" itemprop="description">{software,reverse} engineer</div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">5</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">2</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">6</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Flc29waG9y" title="https:&#x2F;&#x2F;github.com&#x2F;aesophor"><i class="ic i-github"></i></span>
+      <span class="exturl item instagram" data-url="aHR0cHM6Ly9pbnN0YWdyYW0uY29tL2Flc29waG9yLmNj" title="https:&#x2F;&#x2F;instagram.com&#x2F;aesophor.cc"><i class="ic i-instagram"></i></span>
+      <a href="https://aesophor.github.io/about" title="https:&#x2F;&#x2F;aesophor.github.io&#x2F;about" class="item about"><i class="ic i-address-card"></i></a>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>Posts</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>Archives</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>Categories</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>Tags</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Algorithm/" title="In Algorithm">Algorithm</a>
+</div>
+
+    <span><a href="/2022/08/21/LC-0002-Add-Two-Numbers/" title="LC#0002 - Add Two Numbers">LC#0002 - Add Two Numbers</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Algorithm/" title="In Algorithm">Algorithm</a>
+</div>
+
+    <span><a href="/2022/08/21/LC-0001-Two-Sums/" title="LC#0001 - Two Sums">LC#0001 - Two Sums</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Algorithm/" title="In Algorithm">Algorithm</a>
+</div>
+
+    <span><a href="/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/" title="LC#0003 - Longest Substring Without Repeating Characters">LC#0003 - Longest Substring Without Repeating Characters</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Algorithm/" title="In Algorithm">Algorithm</a>
+</div>
+
+    <span><a href="/2022/08/22/LC-0005-Longest-Palindromic-Substring/" title="LC#0005 - Longest Palindromic Substring">LC#0005 - Longest Palindromic Substring</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Linux/" title="In Linux">Linux</a>
+</div>
+
+    <span><a href="/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">aesophor @ aesophor</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/08/22/LC-0005-Longest-Palindromic-Substring/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

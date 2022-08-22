@@ -7,10 +7,12 @@
         <language>en</language>
         <pubDate>Sun, 21 Aug 2022 16:55:18 +0800</pubDate>
         <lastBuildDate>Sun, 21 Aug 2022 16:55:18 +0800</lastBuildDate>
-        <category>leetcode</category>
-        <category>linked-list</category>
         <category>linux</category>
+        <category>leetcode</category>
+        <category>string</category>
+        <category>two-pointers</category>
         <category>sliding-window</category>
+        <category>linked-list</category>
         <item>
             <guid isPermalink="true">https://aesophor.github.io/2022/08/21/LC-0002-Add-Two-Numbers/</guid>
             <title>LC#0002 - Add Two Numbers</title>

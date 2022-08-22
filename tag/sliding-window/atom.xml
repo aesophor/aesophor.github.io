@@ -4,10 +4,12 @@
     <title> • Posts by &#34;sliding-window&#34; tag</title>
     <link href="https://aesophor.github.io" />
     <updated>2022-08-21T12:00:05.000Z</updated>
-    <category term="leetcode" />
-    <category term="linked-list" />
     <category term="linux" />
+    <category term="leetcode" />
+    <category term="string" />
+    <category term="two-pointers" />
     <category term="sliding-window" />
+    <category term="linked-list" />
     <entry>
         <id>https://aesophor.github.io/2022/08/21/LC-0003-Longest-Substring-Without-Repeating-Characters/</id>
         <title>LC#0003 - Longest Substring Without Repeating Characters</title>
