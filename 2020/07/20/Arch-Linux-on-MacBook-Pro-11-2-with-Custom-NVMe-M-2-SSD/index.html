@@ -27,12 +27,12 @@
   <meta name="keywords" content="linux" />
 
 
-<link rel="canonical" href="https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/">
+<link rel="canonical" href="https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/">
 
 
 
   <title>
-0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD - Linux |
+Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD - Linux |
 aesophor =  = software, adventures, and thoughts</title>
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -60,7 +60,7 @@ aesophor =  = software, adventures, and thoughts</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD
+  <h1 itemprop="name headline">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD
   </h1>
   
 <div class="meta">
@@ -101,7 +101,7 @@ aesophor =  = software, adventures, and thoughts</title>
 
       </div>
       <div id="imgs" class="pjax">
-          <img src="/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/banner.jpg">
+          <img src="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/banner.jpg">
       </div>
     </header>
     <div id="waves">
@@ -131,7 +131,7 @@ aesophor =  = software, adventures, and thoughts</title>
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/">
+  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -147,34 +147,34 @@ aesophor =  = software, adventures, and thoughts</title>
     
 
     <p><img data-src="banner.jpg" alt="banner"></p>
-<h2 id="introduction"><a class="markdownIt-Anchor" href="#introduction">#</a> Introduction</h2>
+<h1 id="introduction"><a class="markdownIt-Anchor" href="#introduction">#</a> Introduction</h1>
 <p>The only laptop I own is Apple’s <span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=">MacBook Pro Retina 15&quot; (late 2014)</span>, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with <span class="exturl" data-url="aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==">Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)</span> and decided to install Arch Linux on it.</p>
-<h2 id="back-up-the-old-ssd"><a class="markdownIt-Anchor" href="#back-up-the-old-ssd">#</a> Back Up the Old SSD</h2>
+<h1 id="back-up-the-old-ssd"><a class="markdownIt-Anchor" href="#back-up-the-old-ssd">#</a> Back Up the Old SSD</h1>
 <p>I booted into a  <code>Gentoo Live USB</code>  and used  <code>dd</code>  to back up my entire old SSD to an image file.</p>
 <pre><code>root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
 </code></pre>
 <p>Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on  <code>/mnt/external_drive</code>  and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.</p>
 <pre><code>root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
 </code></pre>
-<h2 id="firmware-upgrade"><a class="markdownIt-Anchor" href="#firmware-upgrade">#</a> Firmware Upgrade</h2>
+<h1 id="firmware-upgrade"><a class="markdownIt-Anchor" href="#firmware-upgrade">#</a> Firmware Upgrade</h1>
 <p>Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to <strong>macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD</strong>.</p>
-<h2 id="ssd-upgrade"><a class="markdownIt-Anchor" href="#ssd-upgrade">#</a> SSD Upgrade</h2>
+<h1 id="ssd-upgrade"><a class="markdownIt-Anchor" href="#ssd-upgrade">#</a> SSD Upgrade</h1>
 <blockquote>
 <p><strong>CAUTION</strong><br><br>
 Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.</p>
 </blockquote>
 <p>After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on <span class="exturl" data-url="aHR0cDovL3Nob3BlZS50dw==">shopee.tw</span> -&gt; <a target="_blank" rel="noopener" href="https://shopee.tw/product/4848951/1501356237"><strong>Link</strong></a></p>
 <p><img data-src="swap.jpg" alt="swap"></p>
-<h2 id="ssd-data-migration"><a class="markdownIt-Anchor" href="#ssd-data-migration">#</a> SSD Data Migration</h2>
+<h1 id="ssd-data-migration"><a class="markdownIt-Anchor" href="#ssd-data-migration">#</a> SSD Data Migration</h1>
 <p>After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.</p>
 <p>At first I used  <code>dd</code>  to clone all my data from the image file to the new SSD. However, this didn’t work for me, since <strong>I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel</strong>, so although the disk was successfully migrated, I wasn’t able to boot from it.</p>
-<h2 id="prepare-installation-medium"><a class="markdownIt-Anchor" href="#prepare-installation-medium">#</a> Prepare Installation Medium</h2>
+<h1 id="prepare-installation-medium"><a class="markdownIt-Anchor" href="#prepare-installation-medium">#</a> Prepare Installation Medium</h1>
 <p>Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=">Download Arch Linux ISO</span> and prepare Arch Live USB:</p>
 <pre><code>root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
 </code></pre>
 <p>Power off your MacBook, insert the USB stick, hold  <code>alt/option</code>  and power it on again. Now you should see the option to boot from Arch Linux Live USB.</p>
-<h2 id="base-installation"><a class="markdownIt-Anchor" href="#base-installation">#</a> Base Installation</h2>
+<h1 id="base-installation"><a class="markdownIt-Anchor" href="#base-installation">#</a> Base Installation</h1>
 <p>After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on  <code>USB Tethering</code> , and ran:</p>
 <pre><code>root$ dhcpcd
 </code></pre>
@@ -235,7 +235,7 @@ root$ mount /dev/nvme0n1p1 /mnt/boot
 <pre><code>root$ genfstab -L -p /mnt &gt;&gt; /mnt/etc/fstab
 root$ cat /mnt/etc/fstab
 </code></pre>
-<h2 id="configure-the-new-system"><a class="markdownIt-Anchor" href="#configure-the-new-system">#</a> Configure the New System</h2>
+<h1 id="configure-the-new-system"><a class="markdownIt-Anchor" href="#configure-the-new-system">#</a> Configure the New System</h1>
 <p>Chroot into our new system:</p>
 <pre><code>root$ arch-chroot /mnt /bin/bash
 </code></pre>
@@ -289,7 +289,7 @@ root$ passwd aesophor
 <li>run  <code>visudo</code>  and uncomment the line  <code>%wheel ALL=(ALL) ALL</code> .</li>
 </ul>
 <p>At this point, you may logout the root user and re-login with your unprivileged user.</p>
-<h2 id="post-installation"><a class="markdownIt-Anchor" href="#post-installation">#</a> Post Installation</h2>
+<h1 id="post-installation"><a class="markdownIt-Anchor" href="#post-installation">#</a> Post Installation</h1>
 <p>Install <a target="_blank" rel="noopener" href="https://github.com/Jguer/yay"> <code>yay</code> </a>, an AUR helper:</p>
 <pre><code>user$ git clone https://aur.archlinux.org/yay.git
 user$ cd yay
@@ -341,7 +341,7 @@ user$ sudo systemctl enable mbpfan.service
 <li>echo “XHC1” &gt; /proc/acpi/wakeup  # fix immediate wakeup after suspension on macbook</li>
 <li>setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control</li>
 </ul>
-<h2 id="enter-x11"><a class="markdownIt-Anchor" href="#enter-x11">#</a> Enter X11</h2>
+<h1 id="enter-x11"><a class="markdownIt-Anchor" href="#enter-x11">#</a> Enter X11</h1>
 <p>Install my dotfiles:</p>
 <pre><code>user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
 user$ cd ~/Dots
@@ -367,7 +367,7 @@ user$ ./.install.sh
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-21 20:45:30" itemprop="dateModified" datetime="2022-08-21T20:45:30+08:00">2022-08-21</time>
+    <time title="Modified: 2022-08-26 22:51:15" itemprop="dateModified" datetime="2022-08-26T22:51:15+08:00">2022-08-26</time>
   </span>
 </div>
 
@@ -380,7 +380,7 @@ user$ ./.install.sh
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</a>
+    <a href="https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -415,11 +415,11 @@ user$ ./.install.sh
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text"> Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#back-up-the-old-ssd"><span class="toc-number">2.</span> <span class="toc-text"> Back Up the Old SSD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#firmware-upgrade"><span class="toc-number">3.</span> <span class="toc-text"> Firmware Upgrade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssd-upgrade"><span class="toc-number">4.</span> <span class="toc-text"> SSD Upgrade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssd-data-migration"><span class="toc-number">5.</span> <span class="toc-text"> SSD Data Migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#prepare-installation-medium"><span class="toc-number">6.</span> <span class="toc-text"> Prepare Installation Medium</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#base-installation"><span class="toc-number">7.</span> <span class="toc-text"> Base Installation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#configure-the-new-system"><span class="toc-number">8.</span> <span class="toc-text"> Configure the New System</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#post-installation"><span class="toc-number">9.</span> <span class="toc-text"> Post Installation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enter-x11"><span class="toc-number">10.</span> <span class="toc-text"> Enter X11</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text"> Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#back-up-the-old-ssd"><span class="toc-number">2.</span> <span class="toc-text"> Back Up the Old SSD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#firmware-upgrade"><span class="toc-number">3.</span> <span class="toc-text"> Firmware Upgrade</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssd-upgrade"><span class="toc-number">4.</span> <span class="toc-text"> SSD Upgrade</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssd-data-migration"><span class="toc-number">5.</span> <span class="toc-text"> SSD Data Migration</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#prepare-installation-medium"><span class="toc-number">6.</span> <span class="toc-text"> Prepare Installation Medium</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#base-installation"><span class="toc-number">7.</span> <span class="toc-text"> Base Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#configure-the-new-system"><span class="toc-number">8.</span> <span class="toc-text"> Configure the New System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#post-installation"><span class="toc-number">9.</span> <span class="toc-text"> Post Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#enter-x11"><span class="toc-number">10.</span> <span class="toc-text"> Enter X11</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
         <ul>
-          <li class="active"><a href="/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" rel="bookmark" title="0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></li>
+          <li class="active"><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" rel="bookmark" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></li>
         </ul>
       </div>
       <div class="overview panel" data-title="Overview">
@@ -527,7 +527,7 @@ user$ ./.install.sh
 <a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
-    <span><a href="/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
   </ul>
@@ -558,7 +558,7 @@ user$ ./.install.sh
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: '2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/',
+    path: '2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"

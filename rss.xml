@@ -9,40 +9,40 @@
         <lastBuildDate>Mon, 20 Jul 2020 18:48:46 +0800</lastBuildDate>
         <category>linux</category>
         <item>
-            <guid isPermalink="true">https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</guid>
-            <title>0x00 Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>
-            <link>https://aesophor.github.io/2020/07/20/0x00-Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</link>
+            <guid isPermalink="true">https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</guid>
+            <title>Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>
+            <link>https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</link>
             <category>linux</category>
             <pubDate>Mon, 20 Jul 2020 18:48:46 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;&lt;img data-src=&#34;banner.jpg&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h2&gt;
+&lt;h1 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h1&gt;
 &lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15&amp;quot; (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
-&lt;h2 id=&#34;back-up-the-old-ssd&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#back-up-the-old-ssd&#34;&gt;#&lt;/a&gt; Back Up the Old SSD&lt;/h2&gt;
+&lt;h1 id=&#34;back-up-the-old-ssd&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#back-up-the-old-ssd&#34;&gt;#&lt;/a&gt; Back Up the Old SSD&lt;/h1&gt;
 &lt;p&gt;I booted into a  &lt;code&gt;Gentoo Live USB&lt;/code&gt;  and used  &lt;code&gt;dd&lt;/code&gt;  to back up my entire old SSD to an image file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on  &lt;code&gt;/mnt/external_drive&lt;/code&gt;  and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;firmware-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#firmware-upgrade&#34;&gt;#&lt;/a&gt; Firmware Upgrade&lt;/h2&gt;
+&lt;h1 id=&#34;firmware-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#firmware-upgrade&#34;&gt;#&lt;/a&gt; Firmware Upgrade&lt;/h1&gt;
 &lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;ssd-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-upgrade&#34;&gt;#&lt;/a&gt; SSD Upgrade&lt;/h2&gt;
+&lt;h1 id=&#34;ssd-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-upgrade&#34;&gt;#&lt;/a&gt; SSD Upgrade&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
 Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3Nob3BlZS50dw==&#34;&gt;shopee.tw&lt;/span&gt; -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;swap.jpg&#34; alt=&#34;swap&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;ssd-data-migration&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-data-migration&#34;&gt;#&lt;/a&gt; SSD Data Migration&lt;/h2&gt;
+&lt;h1 id=&#34;ssd-data-migration&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-data-migration&#34;&gt;#&lt;/a&gt; SSD Data Migration&lt;/h1&gt;
 &lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
 &lt;p&gt;At first I used  &lt;code&gt;dd&lt;/code&gt;  to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
-&lt;h2 id=&#34;prepare-installation-medium&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prepare-installation-medium&#34;&gt;#&lt;/a&gt; Prepare Installation Medium&lt;/h2&gt;
+&lt;h1 id=&#34;prepare-installation-medium&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prepare-installation-medium&#34;&gt;#&lt;/a&gt; Prepare Installation Medium&lt;/h1&gt;
 &lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=&#34;&gt;Download Arch Linux ISO&lt;/span&gt; and prepare Arch Live USB:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Power off your MacBook, insert the USB stick, hold  &lt;code&gt;alt/option&lt;/code&gt;  and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
-&lt;h2 id=&#34;base-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#base-installation&#34;&gt;#&lt;/a&gt; Base Installation&lt;/h2&gt;
+&lt;h1 id=&#34;base-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#base-installation&#34;&gt;#&lt;/a&gt; Base Installation&lt;/h1&gt;
 &lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on  &lt;code&gt;USB Tethering&lt;/code&gt; , and ran:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dhcpcd
 &lt;/code&gt;&lt;/pre&gt;
@@ -103,7 +103,7 @@ root$ mount /dev/nvme0n1p1 /mnt/boot
 &lt;pre&gt;&lt;code&gt;root$ genfstab -L -p /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
 root$ cat /mnt/etc/fstab
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;configure-the-new-system&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#configure-the-new-system&#34;&gt;#&lt;/a&gt; Configure the New System&lt;/h2&gt;
+&lt;h1 id=&#34;configure-the-new-system&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#configure-the-new-system&#34;&gt;#&lt;/a&gt; Configure the New System&lt;/h1&gt;
 &lt;p&gt;Chroot into our new system:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ arch-chroot /mnt /bin/bash
 &lt;/code&gt;&lt;/pre&gt;
@@ -157,7 +157,7 @@ root$ passwd aesophor
 &lt;li&gt;run  &lt;code&gt;visudo&lt;/code&gt;  and uncomment the line  &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt; .&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;At this point, you may logout the root user and re-login with your unprivileged user.&lt;/p&gt;
-&lt;h2 id=&#34;post-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#post-installation&#34;&gt;#&lt;/a&gt; Post Installation&lt;/h2&gt;
+&lt;h1 id=&#34;post-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#post-installation&#34;&gt;#&lt;/a&gt; Post Installation&lt;/h1&gt;
 &lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt; &lt;code&gt;yay&lt;/code&gt; &lt;/a&gt;, an AUR helper:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://aur.archlinux.org/yay.git
 user$ cd yay
@@ -209,7 +209,7 @@ user$ sudo systemctl enable mbpfan.service
 &lt;li&gt;echo “XHC1” &amp;gt; /proc/acpi/wakeup  # fix immediate wakeup after suspension on macbook&lt;/li&gt;
 &lt;li&gt;setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;enter-x11&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#enter-x11&#34;&gt;#&lt;/a&gt; Enter X11&lt;/h2&gt;
+&lt;h1 id=&#34;enter-x11&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#enter-x11&#34;&gt;#&lt;/a&gt; Enter X11&lt;/h1&gt;
 &lt;p&gt;Install my dotfiles:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
 user$ cd ~/Dots
