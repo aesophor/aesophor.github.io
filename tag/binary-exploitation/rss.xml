@@ -91,7 +91,7 @@ Your choice :
 &lt;/code&gt;&lt;/pre&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Note:&lt;br&gt;
-The non-stripped version of glibc should only be used during exploit script developement. You’ll finally need to switch over to the stripped version which comes with the challenge, because they have different offsets for symbols.&lt;/p&gt;
+The non-stripped version of glibc should only be used during exploit script development. You’ll finally need to switch over to the stripped version which comes with the challenge, because they have different offsets for symbols.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;vulnerability&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#vulnerability&#34;&gt;#&lt;/a&gt; Vulnerability&lt;/h1&gt;
 &lt;p&gt;The third option, “remove a flower from the garden”, contains an obvious UAF vulnerability, as it doesn’t set the freed pointer to NULL.&lt;/p&gt;
