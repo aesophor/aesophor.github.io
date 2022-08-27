@@ -24,12 +24,15 @@
 <link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
   
-
-<link rel="canonical" href="https://aesophor.github.io/about/">
-
+  <meta name="keywords" content="linux,ctf,binary-exploitation" />
 
 
-  <title>About |
+<link rel="canonical" href="https://aesophor.github.io/2020/07/20/pwnable-tw-secret-garden/">
+
+
+
+  <title>
+[pwnable.tw] Secret Garden (350 pts) - CTF |
 aesophor =  = software, adventures, and thoughts</title>
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -57,8 +60,19 @@ aesophor =  = software, adventures, and thoughts</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">About
+  <h1 itemprop="name headline">[pwnable.tw] Secret Garden (350 pts)
   </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2020-07-20 18:48:46">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-07-20T18:48:46+08:00">2020-07-20</time>
+  </span>
+</div>
+
 
           </div>
         </div>
@@ -87,7 +101,7 @@ aesophor =  = software, adventures, and thoughts</title>
 
       </div>
       <div id="imgs" class="pjax">
-          <img src="https://images.unsplash.com/photo-1533441325263-74682c42d779?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
+          <img src="/2020/07/20/pwnable-tw-secret-garden/banner.png">
       </div>
     </header>
     <div id="waves">
@@ -107,9 +121,17 @@ aesophor =  = software, adventures, and thoughts</title>
       <div class="inner">
         <div id="main" class="pjax">
           
-  <div class="page wrap">
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/CTF/" itemprop="item" rel="index" title="In CTF"><span itemprop="name">CTF</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/about/index.html">
+  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/2020/07/20/pwnable-tw-secret-garden/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -124,76 +146,53 @@ aesophor =  = software, adventures, and thoughts</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="whoami"><a class="markdownIt-Anchor" href="#whoami">#</a> Whoami</h1>
-<p>Marco Wang (<a target="_blank" rel="noopener" href="https://github.com/aesophor"><strong>@aesophor</strong></a>) is a software engineer at Synology.</p>
-<p><code>C++20</code>   <code>OOP</code>   <code>UNIX Systems Programming</code>   <code>Operating Systems</code>   <code>Linux Binary Exploitation</code></p>
-<h1 id="experience"><a class="markdownIt-Anchor" href="#experience">#</a> Experience</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.synology.com/en-global"><strong>Synology</strong></a> – Product Developer (2022/7 - Present)
-<ul>
-<li>Working on <span class="exturl" data-url="aHR0cHM6Ly93d3cuc3lub2xvZ3kuY29tL2VuLXVzL2RzbS83LjEvc29mdHdhcmVfc3BlYy9oeWJyaWRfc2hhcmU=">Synology Hybrid Share</span>, a highly scalable hybrid cloud solution developed by Synology.</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://www.synology.com/en-global"><strong>Synology</strong></a> – Product Developer Summer Intern (2019/7 - 2019/8)
-<ul>
-<li>Implemented a part of <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRGlyZWN0b3J5X3NlcnZpY2U=">Directory Service</span> wizard on DSM 7.0 which tries to automatically detect and fix problems in user’s domain settings e.g., <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTGlnaHR3ZWlnaHRfRGlyZWN0b3J5X0FjY2Vzc19Qcm90b2NvbA==">LDAP</span>, <span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtYmEub3JnLw==">Samba</span>, <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRG9tYWluX2NvbnRyb2xsZXI=">DC</span> sync, account object integrity, etc.</li>
-</ul>
-</li>
-</ul>
-<h1 id="conference-talks"><a class="markdownIt-Anchor" href="#conference-talks">#</a> Conference Talks</h1>
-<ul>
-<li>[HITCON 2022] <span class="exturl" data-url="aHR0cHM6Ly9oaXRjb24ub3JnLzIwMjIvYWdlbmRhLzJmNTU1YmQ0LTA2Y2QtNDRiOC1hODU0LTA4Y2VjMGRjMzBhYQ==">CRAX++: Modular Exploit Generator using Dynamic Symbolic Execution</span></li>
-<li>[SITCON 2019] <span class="exturl" data-url="aHR0cHM6Ly9zaXRjb24ub3JnLzIwMTkvYWdlbmRhL2Y3YjJkZDIwLTAyNTctNDIxZC05MzM1LWE0YTc2Y2Y0ZDE0Mg==">解放 Linux 桌面！用 Xlib + 樹狀結構打造自己的 Window Manager</span></li>
-</ul>
-<h1 id="open-source-projects"><a class="markdownIt-Anchor" href="#open-source-projects">#</a> Open Source Projects</h1>
-<ul>
-<li>Collaborative
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/CRAXplusplus"><strong>SQLab/CRAXplusplus</strong></a> – Designed, implemented and analyzed a modular and scalable exploit generator which is capable of solving several CTF challenges and CVE binaries using dynamic symbolic execution.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/S2E/s2e/pulls?q=is%3Apr+is%3Aclosed+author%3Aaesophor"><strong>S2E/s2e</strong></a> – Implemented unconditional execution state forking, refactoring and bug fixes.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/google/glog/pulls?q=is%3Apr+is%3Aclosed+author%3Aaesophor"><strong>google/glog</strong></a> – Implemented LogCleaner and submitted minor security patches.</li>
-</ul>
-</li>
-<li>Solo
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/valkyrie"><strong>valkyrie</strong></a> – AArch64 UNIX-like kernel with preemptive multi-threading, CoW  <code>fork()</code> , VM, VFS, FAT32, Devfs, Procfs, and a self-made C++20 standard library for the kernel.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/wmderland"><strong>wmderland</strong></a> – X11 tiling window manager using space partitioning trees</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/vigilante"><strong>vigilante</strong></a> – 2D pixel-art side-scrolling single-player ARPG</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/hacklympics"><strong>hacklympics</strong></a> – Full-stack online programming examination system</li>
-</ul>
-</li>
-</ul>
-<h1 id="education-and-research"><a class="markdownIt-Anchor" href="#education-and-research">#</a> Education and Research</h1>
-<ul>
-<li>M.Eng. Computer Science and Engineering, National Yang Ming Chiao Tung University (2020/7 - 2022/5)
-<ul>
-<li>Master thesis: <a target="_blank" rel="noopener" href="https://github.com/SQLab/CRAXplusplus"> <code>CRAXplusplus</code> </a> – Modular exploit generator using symbolic execution.</li>
-<li>Research area: Linux binary exploitation [<a href="#reference">1</a>, <a href="#reference">2</a>], C++ vtable reversing [<a href="#reference">3</a>], symbolic execution [<a href="#reference">4</a>].</li>
-</ul>
-</li>
-</ul>
-<h1 id="setup"><a class="markdownIt-Anchor" href="#setup">#</a> Setup</h1>
-<p>I’ve been using Linux as my daily driver for 5 years, and here’s the repo of my <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Flc29waG9yL2RvdGZpbGVz">dotfiles</span>.</p>
-<p><img data-src="https://raw.githubusercontent.com/aesophor/dotfiles/master/.meta/main.png" alt=""></p>
-<ul>
-<li>Model 一 MacBook Pro Retina 15-inch (A1398)</li>
-<li>SSD 一 Samsung 970 EVO Plus NVMe M.2 SSD (1TB)</li>
-<li>OS 一 <span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy8=">Arch Linux</span></li>
-<li>DE 一 <span class="exturl" data-url="aHR0cHM6Ly9rZGUub3JnLw==">KDE</span></li>
-<li>WM 一 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Flc29waG9yL3dtZGVybGFuZA==">wmderland</span> (my own X11 tiling WM)</li>
-<li>Bar 一 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BvbHliYXIvcG9seWJhcg==">polybar</span></li>
-<li>Shell 一 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL29obXl6c2gvb2hteXpzaA==">zsh + ohmyzsh</span></li>
-<li>Editor 一 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25lb3ZpbS9uZW92aW0=">neovim</span></li>
-<li>Terminal 一 <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1J4dnQtdW5pY29kZQ==">urxvt</span></li>
-</ul>
-<h1 id="reference"><a class="markdownIt-Anchor" href="#reference">#</a> Reference</h1>
-<ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vcHJlc2VudGF0aW9uL2QvMVJJV2xpWndQUGl0Nm50bGFWQ3lfSWdkVkMxYkNsSm4tVlJtU04yWFZKSjAvZWRpdD91c3A9c2hhcmluZw==">Return-to-csu: Bypassing 64-bit Linux ASLR + pwnable.tw De-ASLR</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vcHJlc2VudGF0aW9uL2QvMU5JNFRWclotSzlERVNPR1VOSkZFRDVmN3Q1UDJhY3FiWUFxMHoxMmRkcW8vZWRpdD91c3A9c2hhcmluZw==">Framing Signals - A Return to Portable Shellcode</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vcHJlc2VudGF0aW9uL2QvMXVaT3BwWDRQQ2tGRFFNUXhhV24xOC03MUdkTTNlTGZRYUJZV013TU5TWXcvZWRpdD91c3A9c2hhcmluZw==">Devil is Virtual: Reversing Virtual Inheritance in C++ Binaries</span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vcHJlc2VudGF0aW9uL2QvMWZacFRkcGpTQ2VlS2t4MjlFbXRmRi1IZ2hDV2lseHZ0MHBtc0V2Wm93Y00vZWRpdD91c3A9c2hhcmluZw==">Symbolic Execution with SymCC</span></li>
-</ol>
+    <p><img data-src="banner.png" alt="banner"></p>
+<h1 id="introduction"><a class="markdownIt-Anchor" href="#introduction">#</a> Introduction</h1>
+<p>Let’s solve the heap exploitation challenge, <strong><span class="exturl" data-url="aHR0cHM6Ly9wd25hYmxlLnR3L2NoYWxsZW5nZS8jMTI=">Secret Garden [350 pts]</span></strong>, from <span class="exturl" data-url="aHR0cDovL3B3bmFibGUudHc=">pwnable.tw</span>.</p>
+<pre><code>☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
+☆          Secret Garden          ☆
+☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
 
+  1 . Raise a flower
+  2 . Visit the garden
+  3 . Remove a flower from the garden
+  4 . Clean the garden
+  5 . Leave the garden
+
+Your choice :
+</code></pre>
+<p>This challenge comes with a stripped version of x86_64 glibc 2.23.</p>
+<h1 id="preparation"><a class="markdownIt-Anchor" href="#preparation">#</a> Preparation</h1>
+<h3 id="patching-elf"><a class="markdownIt-Anchor" href="#patching-elf">#</a> Patching ELF</h3>
+<pre><code># ./libc_64.so.6
+GNU C Library (Ubuntu GLIBC 2.23-0ubuntu5) stable release version 2.23, by Roland McGrath et al.
+Copyright (C) 2016 Free Software Foundation, Inc.
+</code></pre>
+<pre><code># patchelf --set-interpreter /glibc/2.23/64/lib/ld-2.23.so ./heap_paradise
+</code></pre>
+<h1 id="vulnerability"><a class="markdownIt-Anchor" href="#vulnerability">#</a> Vulnerability</h1>
+<pre><code>Your choice : 3
+Which flower do you want to remove from the garden:0
+*** Error in `./secretgarden': double free or corruption (fasttop): 0x0000558b995ae450 ***
+Aborted (core dumped)
+</code></pre>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span> <span class="token function">chall_free</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  __int64 idx<span class="token punctuation">;</span> <span class="token comment">// [rsp+8h] [rbp-8h]</span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Index :"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  idx <span class="token operator">=</span> <span class="token function">read_long_safely</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token keyword">if</span> <span class="token punctuation">(</span> idx <span class="token operator">&lt;=</span> <span class="token number">15</span> <span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token function">free</span><span class="token punctuation">(</span>ptrs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h1 id="exploitation"><a class="markdownIt-Anchor" href="#exploitation">#</a> Exploitation</h1>
+<h2 id="fast-bin-dup"><a class="markdownIt-Anchor" href="#fast-bin-dup">#</a> Fast bin dup</h2>
+<p>In glibc 2.23,  <code>_int_free()</code>  will refuse to free the given pointer  <code>p</code>  when the first chunk in fastbin is  <code>p</code> .</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">/* Check that the top of the bin is not the record we are going to add</pre></td></tr><tr><td data-num="2"></td><td><pre>   (i.e., double free).  */</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__builtin_expect</span> <span class="token punctuation">(</span>old <span class="token operator">==</span> p<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>	errstr <span class="token operator">=</span> <span class="token string">"double free or corruption (fasttop)"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>	<span class="token keyword">goto</span> errout<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p><span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzOTM3">https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3937</span></p>
+<p>To bypass this restriction, a commonly used technique is:</p>
+<ul>
+<li>free(A)</li>
+<li>free(B)</li>
+<li>free(A)</li>
+</ul>
+<h1 id="exploit-script"><a class="markdownIt-Anchor" href="#exploit-script">#</a> Exploit Script</h1>
+
+      <div class="tags">
+          <a href="/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a>
+          <a href="/tags/ctf/" rel="tag"><i class="ic i-tag"></i> ctf</a>
+          <a href="/tags/binary-exploitation/" rel="tag"><i class="ic i-tag"></i> binary-exploitation</a>
+      </div>
   </div>
 
    <footer>
@@ -204,7 +203,7 @@ aesophor =  = software, adventures, and thoughts</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-20 21:50:40" itemprop="dateModified" datetime="2022-08-20T21:50:40+08:00">2022-08-20</time>
+    <time title="Modified: 2022-08-27 14:04:29" itemprop="dateModified" datetime="2022-08-27T14:04:29+08:00">2022-08-27</time>
   </span>
 </div>
 
@@ -217,7 +216,7 @@ aesophor =  = software, adventures, and thoughts</title>
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="https://aesophor.github.io/about/index.html" title="About">https://aesophor.github.io/about/index.html</a>
+    <a href="https://aesophor.github.io/2020/07/20/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">https://aesophor.github.io/2020/07/20/pwnable-tw-secret-garden/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -231,6 +230,23 @@ aesophor =  = software, adventures, and thoughts</title>
 
   </div>
   
+
+<div class="post-nav">
+    <div class="item left">
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" itemprop="url" rel="next" data-background-image="&#x2F;2020&#x2F;07&#x2F;20&#x2F;Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD&#x2F;banner.jpg" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> Linux</span>
+  <h3>Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</h3>
+  </a>
+
+    </div>
+</div>
+
+  
   <div class="wrap" id="comments"></div>
 
 
@@ -243,9 +259,12 @@ aesophor =  = software, adventures, and thoughts</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#whoami"><span class="toc-number">1.</span> <span class="toc-text"> Whoami</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#experience"><span class="toc-number">2.</span> <span class="toc-text"> Experience</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#conference-talks"><span class="toc-number">3.</span> <span class="toc-text"> Conference Talks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#open-source-projects"><span class="toc-number">4.</span> <span class="toc-text"> Open Source Projects</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#education-and-research"><span class="toc-number">5.</span> <span class="toc-text"> Education and Research</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#setup"><span class="toc-number">6.</span> <span class="toc-text"> Setup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">7.</span> <span class="toc-text"> Reference</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text"> Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">2.</span> <span class="toc-text"> Preparation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#patching-elf"><span class="toc-number">2.0.1.</span> <span class="toc-text"> Patching ELF</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vulnerability"><span class="toc-number">3.</span> <span class="toc-text"> Vulnerability</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exploitation"><span class="toc-number">4.</span> <span class="toc-text"> Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fast-bin-dup"><span class="toc-number">4.1.</span> <span class="toc-text"> Fast bin dup</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exploit-script"><span class="toc-number">5.</span> <span class="toc-text"> Exploit Script</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2020/07/20/pwnable-tw-heap-paradise/" rel="bookmark" title="[pwnable.tw] Heap Paradise (350 pts)">[pwnable.tw] Heap Paradise (350 pts)</a></li><li class="active"><a href="/2020/07/20/pwnable-tw-secret-garden/" rel="bookmark" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></li>
+        </ul>
       </div>
       <div class="overview panel" data-title="Overview">
         <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -258,7 +277,7 @@ aesophor =  = software, adventures, and thoughts</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">2</span>
+        <span class="count">3</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -349,6 +368,16 @@ aesophor =  = software, adventures, and thoughts</title>
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/CTF/" title="In CTF">CTF</a>
+</div>
+
+    <span><a href="/2020/07/20/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
@@ -362,7 +391,7 @@ aesophor =  = software, adventures, and thoughts</title>
 <a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
-    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+    <span><a href="/2020/07/20/pwnable-tw-heap-paradise/" title="[pwnable.tw] Heap Paradise (350 pts)">[pwnable.tw] Heap Paradise (350 pts)</a></span>
   </li>
 
   </ul>
@@ -393,7 +422,7 @@ aesophor =  = software, adventures, and thoughts</title>
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: 'about/',
+    path: '2020/07/20/pwnable-tw-secret-garden/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"
