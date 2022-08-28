@@ -2526,10 +2526,16 @@ main >.inner {
 .social .item.instagram i {
   color: nstagra;
 }
-.social .item.about::before {
+.social .item.twitter::before {
+  background-color: #00aff0;
+}
+.social .item.twitter i {
+  color: #00aff0;
+}
+.social .item.linkedin::before {
   background-color: #3b5998;
 }
-.social .item.about i {
+.social .item.linkedin i {
   color: #3b5998;
 }
 .social .item:focus i,
