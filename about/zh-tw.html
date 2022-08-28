@@ -165,7 +165,7 @@ aesophor =  = software, adventures, and thoughts</title>
 <p><a target="_blank" rel="noopener" href="https://github.com/aesophor/CRAXplusplus"><strong>SQLab/CRAXplusplus</strong></a>: CRAX 是交大 SQLab 發展的脅迫（Exploit）產生器，而 CRAXplusplus 的設計理念是成為一個系統架構清晰、易於擴充、能夠復現實驗、且能於將來整合多篇 AEG 研究的半自動脅迫產生框架。給定一個 x86_64 Linux ELF 與概念測資，該輸入會構成一條特定的執行路徑，本系統運用擬真執行（Concolic Execution）來搜集該路徑的限制式，並且對其添加脅迫限制式，再透過 SMT 求解器計算出最終的脅迫，並進一步後製成脅迫腳本。此外，本系統允許使用者新增自訂的脅迫技術模型（Technique）與分析模組（Module），以期將系統的可擴充性最大化。</p>
 </li>
 <li>
-<p><a target="_blank" rel="noopener" href="https://github.com/aesophor/valkyrie"><strong>valkyrie</strong></a>: 針對 AArch64 撰寫的 UNIX-like 作業系統，包含：佔先式多執行序（kernel/user）、複製時寫入（CoW） <code>fork()</code> 、支援虛擬記憶體、VFS、FAT32、Dev/Proc/Tmp 檔案系統，以及一個自幹的 C++20 標準函示庫。目前僅可於 QEMU 運行起來，自從不知道哪個功能寫完後放到板子上會撞到 vtable 與 memory alignment 的問題。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/aesophor/valkyrie"><strong>valkyrie</strong></a>: 針對 AArch64 撰寫的 UNIX-like 作業系統，包含：佔先式多執行序（kernel/user）、寫入時複製（CoW） <code>fork()</code> 、支援虛擬記憶體、VFS、FAT32、Dev/Proc/Tmp 檔案系統，以及一個自幹的 C++20 標準函示庫。目前僅可於 QEMU 運行起來，自從不知道哪個功能寫完後放到板子上會撞到 vtable 與 memory alignment 的問題。</p>
 </li>
 <li>
 <p><a target="_blank" rel="noopener" href="https://github.com/aesophor/wmderland"><strong>wmderland</strong></a>: 使用空間分割樹的 X11 平鋪式視窗管理器，可理解成簡化版的 i3wm。</p>
@@ -205,7 +205,7 @@ aesophor =  = software, adventures, and thoughts</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-28 17:33:45" itemprop="dateModified" datetime="2022-08-28T17:33:45+08:00">2022-08-28</time>
+    <time title="Modified: 2022-08-28 17:58:41" itemprop="dateModified" datetime="2022-08-28T17:58:41+08:00">2022-08-28</time>
   </span>
 </div>
 
