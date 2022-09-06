@@ -3002,6 +3002,14 @@ main >.inner {
 .md .links:last-child {
   margin-bottom: 0;
 }
+.md ul > li::before {
+  top: 10px !important;
+}
+.md ul,
+.md dd,
+.md ol {
+  line-height: 25px;
+}
 .md ul ul,
 .md dd ul,
 .md ol ul,
