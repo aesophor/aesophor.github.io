@@ -219,7 +219,7 @@ aesophor =  = software, adventures, and thoughts</title>
 </table>
 </blockquote>
 <p>CRAX 是交大 SQLab 發展的脅迫生產器 (Exploit Generator)，而 CRAX++ 是 SQLab 於 2022 年發表的模組化脅迫（Exploit）產生器，其設計理念是成為一個系統架構清晰、易於擴充、能夠復現實驗、且能於將來整合多篇 AEG 研究的半自動脅迫產生框架。</p>
-<h2 id="valkyrie一個-unix-like-作業系統"><a class="markdownIt-Anchor" href="#valkyrie一個-unix-like-作業系統">#</a> valkyrie：一個 UNIX-like 作業系統</h2>
+<h2 id="valkyrie一個類-unix-的作業系統"><a class="markdownIt-Anchor" href="#valkyrie一個類-unix-的作業系統">#</a> valkyrie：一個類 Unix 的作業系統</h2>
 <blockquote>
 <table style="font-size: 100%">
   <tr>
@@ -239,16 +239,18 @@ aesophor =  = software, adventures, and thoughts</title>
   </tr>
 </table>
 </blockquote>
-<p>交大的 Operating System Design and Impl. 作業。類 UNIX 的玩具作業系統，適用於 AArch64 架構，功能：</p>
+<p>從 Bare-metal programming 開始自幹的類 Unix 玩具作業系統，針對 Raspberry Pi 3b+ (CPU: ARM-Cortex-A53) 進行撰寫，功能如下：</p>
 <ul>
-<li>(User &amp; kernel) preemptive multi-threading</li>
-<li>Copy-on-Write  <code>fork()</code></li>
-<li>Virtual memory</li>
-<li>Virtual filesystem (VFS)</li>
-<li>FAT32 filesystem</li>
-<li>/dev, /proc, /tmp filesystems</li>
-<li>一個自幹的 C++20 標準函式庫 (含 functional, list, smart pointers, 移動語意，完美轉發)</li>
-<li>sh, login, cat, ls, cp, mkdir, mknod, mount, …</li>
+<li>自幹簡化版 C++20 標準函式庫 (含 functional, list, smart pointers, 移動語意，完美轉發，concepts)</li>
+<li>基礎設備驅動 (mini UART, Mailbox, SD Card Driver)</li>
+<li>基於 mini UART 的簡易 bootloader</li>
+<li>Timer interrupt, system calls</li>
+<li>基於  <code>fork()</code>  +  <code>exec()</code>  實現 preemptive multi-tasking</li>
+<li>實體記憶體管理：Buddy allocator + SLOB (包含數個 fastbins 與一個 unsorted bin)</li>
+<li>虛擬記憶體，支援 Copy-on-Write  <code>fork()</code></li>
+<li>檔案系統：FAT32, /dev, /proc, /tmp</li>
+<li>虛擬檔案系統 (Virtual Filesystem) 抽象層</li>
+<li>Userland System Software: sh, login, cat, ls, cp, mkdir, mknod, mount, …</li>
 </ul>
 <h2 id="wmderland-使用空間分割樹的-x11-平鋪式視窗管理器"><a class="markdownIt-Anchor" href="#wmderland-使用空間分割樹的-x11-平鋪式視窗管理器">#</a> wmderland: 使用空間分割樹的 X11 平鋪式視窗管理器</h2>
 <blockquote>
@@ -336,7 +338,7 @@ aesophor =  = software, adventures, and thoughts</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-09-07 12:44:18" itemprop="dateModified" datetime="2022-09-07T12:44:18+08:00">2022-09-07</time>
+    <time title="Modified: 2022-09-07 13:16:14" itemprop="dateModified" datetime="2022-09-07T13:16:14+08:00">2022-09-07</time>
   </span>
 </div>
 
@@ -375,7 +377,7 @@ aesophor =  = software, adventures, and thoughts</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B0%A1%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text"> 簡述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E7%B6%93%E6%AD%B7"><span class="toc-number">2.</span> <span class="toc-text"> 工作經歷</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%99%E8%82%B2%E8%83%8C%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text"> 教育背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%88%E6%B3%A8%E9%A0%98%E5%9F%9F"><span class="toc-number">4.</span> <span class="toc-text"> 專注領域</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%94%E8%AC%9B%E7%B6%93%E9%A9%97"><span class="toc-number">5.</span> <span class="toc-text"> 演講經驗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%91%97%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text"> 著作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A2%A9%E5%A3%AB%E7%8F%AD%E9%80%B1%E6%9C%83%E7%B0%A1%E5%A0%B1"><span class="toc-number">7.</span> <span class="toc-text"> 碩士班週會簡報</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%80%8B%E4%BA%BA%E5%B0%88%E6%A1%88"><span class="toc-number">8.</span> <span class="toc-text"> 個人專案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#craxplusplus%E6%A8%A1%E7%B5%84%E5%8C%96-exploit-%E7%94%A2%E7%94%9F%E5%99%A8"><span class="toc-number">8.1.</span> <span class="toc-text"> CRAXplusplus：模組化 Exploit 產生器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#valkyrie%E4%B8%80%E5%80%8B-unix-like-%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1"><span class="toc-number">8.2.</span> <span class="toc-text"> valkyrie：一個 UNIX-like 作業系統</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wmderland-%E4%BD%BF%E7%94%A8%E7%A9%BA%E9%96%93%E5%88%86%E5%89%B2%E6%A8%B9%E7%9A%84-x11-%E5%B9%B3%E9%8B%AA%E5%BC%8F%E8%A6%96%E7%AA%97%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">8.3.</span> <span class="toc-text"> wmderland: 使用空間分割樹的 X11 平鋪式視窗管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vigilante%E7%8D%A8%E7%AB%8B%E8%A3%BD%E4%BD%9C%E7%9A%84-2d-%E5%83%8F%E7%B4%A0%E9%A2%A8-rpg"><span class="toc-number">8.4.</span> <span class="toc-text"> vigilante：獨立製作的 2D 像素風 RPG</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%96%8B%E6%BA%90%E8%B2%A2%E7%8D%BB"><span class="toc-number">9.</span> <span class="toc-text"> 開源貢獻</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A8%9B%E6%A8%82"><span class="toc-number">10.</span> <span class="toc-text"> 娛樂</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8A%E6%88%B2"><span class="toc-number">10.1.</span> <span class="toc-text"> 遊戲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A0%E6%8F%8F"><span class="toc-number">10.2.</span> <span class="toc-text"> 素描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E7%AD%86%E5%AD%97%E6%9B%B8%E6%B3%95"><span class="toc-number">10.3.</span> <span class="toc-text"> 硬筆字書法</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B0%A1%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text"> 簡述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E7%B6%93%E6%AD%B7"><span class="toc-number">2.</span> <span class="toc-text"> 工作經歷</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%99%E8%82%B2%E8%83%8C%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text"> 教育背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%88%E6%B3%A8%E9%A0%98%E5%9F%9F"><span class="toc-number">4.</span> <span class="toc-text"> 專注領域</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%94%E8%AC%9B%E7%B6%93%E9%A9%97"><span class="toc-number">5.</span> <span class="toc-text"> 演講經驗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%91%97%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text"> 著作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A2%A9%E5%A3%AB%E7%8F%AD%E9%80%B1%E6%9C%83%E7%B0%A1%E5%A0%B1"><span class="toc-number">7.</span> <span class="toc-text"> 碩士班週會簡報</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%80%8B%E4%BA%BA%E5%B0%88%E6%A1%88"><span class="toc-number">8.</span> <span class="toc-text"> 個人專案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#craxplusplus%E6%A8%A1%E7%B5%84%E5%8C%96-exploit-%E7%94%A2%E7%94%9F%E5%99%A8"><span class="toc-number">8.1.</span> <span class="toc-text"> CRAXplusplus：模組化 Exploit 產生器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#valkyrie%E4%B8%80%E5%80%8B%E9%A1%9E-unix-%E7%9A%84%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1"><span class="toc-number">8.2.</span> <span class="toc-text"> valkyrie：一個類 Unix 的作業系統</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wmderland-%E4%BD%BF%E7%94%A8%E7%A9%BA%E9%96%93%E5%88%86%E5%89%B2%E6%A8%B9%E7%9A%84-x11-%E5%B9%B3%E9%8B%AA%E5%BC%8F%E8%A6%96%E7%AA%97%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">8.3.</span> <span class="toc-text"> wmderland: 使用空間分割樹的 X11 平鋪式視窗管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vigilante%E7%8D%A8%E7%AB%8B%E8%A3%BD%E4%BD%9C%E7%9A%84-2d-%E5%83%8F%E7%B4%A0%E9%A2%A8-rpg"><span class="toc-number">8.4.</span> <span class="toc-text"> vigilante：獨立製作的 2D 像素風 RPG</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%96%8B%E6%BA%90%E8%B2%A2%E7%8D%BB"><span class="toc-number">9.</span> <span class="toc-text"> 開源貢獻</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A8%9B%E6%A8%82"><span class="toc-number">10.</span> <span class="toc-text"> 娛樂</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8A%E6%88%B2"><span class="toc-number">10.1.</span> <span class="toc-text"> 遊戲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A0%E6%8F%8F"><span class="toc-number">10.2.</span> <span class="toc-text"> 素描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E7%AD%86%E5%AD%97%E6%9B%B8%E6%B3%95"><span class="toc-number">10.3.</span> <span class="toc-text"> 硬筆字書法</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -493,20 +495,20 @@ aesophor =  = software, adventures, and thoughts</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/CTF/" title="In CTF">CTF</a>
+<a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
-    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Linux/" title="In Linux">Linux</a>
+<a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
-    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
   </li>
 
   </ul>
