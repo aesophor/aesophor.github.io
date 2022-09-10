@@ -147,41 +147,33 @@ aesophor = 日新又新 = 努力不會背叛人，它走不快，但早晚會跟
     
 
     <p><img data-src="banner.jpg" alt="banner"></p>
-<h1 id="introduction"><a class="markdownIt-Anchor" href="#introduction">#</a> Introduction</h1>
-<p>The only laptop I own is Apple’s <span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=">MacBook Pro Retina 15&quot; (late 2014)</span>, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with <span class="exturl" data-url="aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==">Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)</span> and decided to install Arch Linux on it.</p>
-<h1 id="back-up-the-old-ssd"><a class="markdownIt-Anchor" href="#back-up-the-old-ssd">#</a> Back Up the Old SSD</h1>
-<p>I booted into a  <code>Gentoo Live USB</code>  and used  <code>dd</code>  to back up my entire old SSD to an image file.</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>The only laptop I own is Apple’s <span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=">MacBook Pro Retina 15” (late 2014)</span>, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with <span class="exturl" data-url="aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==">Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)</span> and decided to install Arch Linux on it.</p>
+<h1 id="Back-Up-the-Old-SSD"><a href="#Back-Up-the-Old-SSD" class="headerlink" title="Back Up the Old SSD"></a>Back Up the Old SSD</h1><p>I booted into a <code>Gentoo Live USB</code> and used <code>dd</code> to back up my entire old SSD to an image file.</p>
 <pre><code>root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
 </code></pre>
-<p>Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on  <code>/mnt/external_drive</code>  and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.</p>
+<p>Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on <code>/mnt/external_drive</code> and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.</p>
 <pre><code>root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
 </code></pre>
-<h1 id="firmware-upgrade"><a class="markdownIt-Anchor" href="#firmware-upgrade">#</a> Firmware Upgrade</h1>
-<p>Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to <strong>macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD</strong>.</p>
-<h1 id="ssd-upgrade"><a class="markdownIt-Anchor" href="#ssd-upgrade">#</a> SSD Upgrade</h1>
-<blockquote>
-<p><strong>CAUTION</strong><br><br>
-Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.</p>
+<h1 id="Firmware-Upgrade"><a href="#Firmware-Upgrade" class="headerlink" title="Firmware Upgrade"></a>Firmware Upgrade</h1><p>Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to <strong>macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD</strong>.</p>
+<h1 id="SSD-Upgrade"><a href="#SSD-Upgrade" class="headerlink" title="SSD Upgrade"></a>SSD Upgrade</h1><blockquote>
+<p><strong>CAUTION</strong><br><br>Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.</p>
 </blockquote>
-<p>After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on <span class="exturl" data-url="aHR0cDovL3Nob3BlZS50dw==">shopee.tw</span> -&gt; <a target="_blank" rel="noopener" href="https://shopee.tw/product/4848951/1501356237"><strong>Link</strong></a></p>
+<p>After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on shopee.tw -&gt; <a target="_blank" rel="noopener" href="https://shopee.tw/product/4848951/1501356237"><strong>Link</strong></a></p>
 <p><img data-src="swap.jpg" alt="swap"></p>
-<h1 id="ssd-data-migration"><a class="markdownIt-Anchor" href="#ssd-data-migration">#</a> SSD Data Migration</h1>
-<p>After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.</p>
-<p>At first I used  <code>dd</code>  to clone all my data from the image file to the new SSD. However, this didn’t work for me, since <strong>I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel</strong>, so although the disk was successfully migrated, I wasn’t able to boot from it.</p>
-<h1 id="prepare-installation-medium"><a class="markdownIt-Anchor" href="#prepare-installation-medium">#</a> Prepare Installation Medium</h1>
-<p>Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.</p>
+<h1 id="SSD-Data-Migration"><a href="#SSD-Data-Migration" class="headerlink" title="SSD Data Migration"></a>SSD Data Migration</h1><p>After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.</p>
+<p>At first I used <code>dd</code> to clone all my data from the image file to the new SSD. However, this didn’t work for me, since <strong>I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel</strong>, so although the disk was successfully migrated, I wasn’t able to boot from it.</p>
+<h1 id="Prepare-Installation-Medium"><a href="#Prepare-Installation-Medium" class="headerlink" title="Prepare Installation Medium"></a>Prepare Installation Medium</h1><p>Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=">Download Arch Linux ISO</span> and prepare Arch Live USB:</p>
 <pre><code>root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
 </code></pre>
-<p>Power off your MacBook, insert the USB stick, hold  <code>alt/option</code>  and power it on again. Now you should see the option to boot from Arch Linux Live USB.</p>
-<h1 id="base-installation"><a class="markdownIt-Anchor" href="#base-installation">#</a> Base Installation</h1>
-<p>After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on  <code>USB Tethering</code> , and ran:</p>
+<p>Power off your MacBook, insert the USB stick, hold <code>alt/option</code> and power it on again. Now you should see the option to boot from Arch Linux Live USB.</p>
+<h1 id="Base-Installation"><a href="#Base-Installation" class="headerlink" title="Base Installation"></a>Base Installation</h1><p>After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on <code>USB Tethering</code>, and ran:</p>
 <pre><code>root$ dhcpcd
 </code></pre>
 <p>Ensure the clock is accurate:</p>
 <pre><code>root$ timedatectl set-ntp true
 </code></pre>
-<p>Run  <code>cfdisk /dev/nvme0n1</code>  and partition the new SSD as follows:</p>
+<p>Run <code>cfdisk /dev/nvme0n1</code> and partition the new SSD as follows:</p>
 <pre><code>                                   Disk: /dev/nvme0n1
                  Size: 931.53 GiB, 1000204886016 bytes, 1953525168 sectors
                 Label: gpt, identifier: 85CF6A21-FC5C-408D-8532-8751C80F0593
@@ -190,7 +182,7 @@ Device                 Start          End        Sectors        Size Type
 /dev/nvme0n1p1          2048       411647         409600        200M EFI System             
 /dev/nvme0n1p2       411648    1953525134     1953113487      931.3G Linux filesystem
 </code></pre>
-<p>Now run  <code>lsblk</code>  and you’ll see something like this:</p>
+<p>Now run <code>lsblk</code> and you’ll see something like this:</p>
 <pre><code>NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -208,7 +200,7 @@ root$ mkfs.fat -F32 /dev/nvme0n1p1
 root$ mkfs.ext4 /dev/mapper/vgcrypt-root
 root$ mkfs.ext4 /dev/mapper/vgcrypt-home
 </code></pre>
-<p>Now run  <code>lsblk</code>  again and you’ll see something like this:</p>
+<p>Now run <code>lsblk</code> again and you’ll see something like this:</p>
 <pre><code>NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -229,20 +221,19 @@ root$ mount /dev/nvme0n1p1 /mnt/boot
 </code></pre>
 <p>Generate fstab:</p>
 <ul>
-<li><code>-L</code>  generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.</li>
-<li><code>-p</code>  prevents pseudo-filesystems from being added.</li>
+<li><code>-L</code> generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.</li>
+<li><code>-p</code> prevents pseudo-filesystems from being added.</li>
 </ul>
 <pre><code>root$ genfstab -L -p /mnt &gt;&gt; /mnt/etc/fstab
 root$ cat /mnt/etc/fstab
 </code></pre>
-<h1 id="configure-the-new-system"><a class="markdownIt-Anchor" href="#configure-the-new-system">#</a> Configure the New System</h1>
-<p>Chroot into our new system:</p>
+<h1 id="Configure-the-New-System"><a href="#Configure-the-New-System" class="headerlink" title="Configure the New System"></a>Configure the New System</h1><p>Chroot into our new system:</p>
 <pre><code>root$ arch-chroot /mnt /bin/bash
 </code></pre>
 <p>Generate locales:</p>
 <ul>
-<li>uncomment the locales you’re going to use in /etc/locale.gen, and run  <code>locale-gen</code> .</li>
-<li>run  <code>echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</code>  to make ENG UTF-8 the default locale.</li>
+<li>uncomment the locales you’re going to use in /etc/locale.gen, and run <code>locale-gen</code>.</li>
+<li>run <code>echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</code> to make ENG UTF-8 the default locale. </li>
 </ul>
 <p>Replace the default console font with terminus:</p>
 <pre><code>root$ pacman -S terminus-font
@@ -252,10 +243,10 @@ root$ echo FONT=ter-v24n &gt; /etc/vconsole.conf
 <pre><code>root$ ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 root$ hwclock --systohc --utc
 </code></pre>
-<p>To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in  <code>/etc/mkinitcpio.conf</code> :</p>
+<p>To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in <code>/etc/mkinitcpio.conf</code>:</p>
 <pre><code>HOOKS=&quot;base udev autodetect keyboard keymap modconf block consolefont encrypt lvm2 filesystems fsck&quot;
 </code></pre>
-<p>Regenerate the initramfs image to EFI Partition ( <code>/dev/nvme0n1p1</code> ):</p>
+<p>Regenerate the initramfs image to EFI Partition (<code>/dev/nvme0n1p1</code>):</p>
 <pre><code>root$ mkinitcpio -p linux
 </code></pre>
 <p>Set hostname:</p>
@@ -265,11 +256,11 @@ root$ hwclock --systohc --utc
 <pre><code>root$ pacman -S dosfstools
 root$ bootctl --path=/boot install
 </code></pre>
-<p>Add an boot entry for systemd-boot by editing  <code>/boot/loader/entries/arch.conf</code> :</p>
-<pre><code>title	Arch Linux
-linux	/vmlinuz-linux
-initrd	/initramfs-linux.img
-options	cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
+<p>Add an boot entry for systemd-boot by editing <code>/boot/loader/entries/arch.conf</code>:</p>
+<pre><code>title    Arch Linux
+linux    /vmlinuz-linux
+initrd    /initramfs-linux.img
+options    cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
 </code></pre>
 <p>Change root user’s password:</p>
 <pre><code>root$ passwd
@@ -286,11 +277,10 @@ root$ passwd aesophor
 </code></pre>
 <p>Set up sudo:</p>
 <ul>
-<li>run  <code>visudo</code>  and uncomment the line  <code>%wheel ALL=(ALL) ALL</code> .</li>
+<li>run <code>visudo</code> and uncomment the line <code>%wheel ALL=(ALL) ALL</code>.</li>
 </ul>
 <p>At this point, you may logout the root user and re-login with your unprivileged user.</p>
-<h1 id="post-installation"><a class="markdownIt-Anchor" href="#post-installation">#</a> Post Installation</h1>
-<p>Install <a target="_blank" rel="noopener" href="https://github.com/Jguer/yay"> <code>yay</code> </a>, an AUR helper:</p>
+<h1 id="Post-Installation"><a href="#Post-Installation" class="headerlink" title="Post Installation"></a>Post Installation</h1><p>Install <a target="_blank" rel="noopener" href="https://github.com/Jguer/yay"><code>yay</code></a>, an AUR helper:</p>
 <pre><code>user$ git clone https://aur.archlinux.org/yay.git
 user$ cd yay
 user$ sudo makepkg -si
@@ -300,15 +290,15 @@ user$ sudo makepkg -si
 user$ yay -S opencl-intel
 user$ sudo pacman -S xorg-server xorg-xinit xorg-apps
 </code></pre>
-<p>Install  <code>xf86-input-mtrack</code>  as our trackpad driver:</p>
+<p>Install <code>xf86-input-mtrack</code> as our trackpad driver:</p>
 <pre><code>user$ yay -S xf86-input-mtrack
 user$ sudo wget -O /etc/X11/xorg.conf.d/10-mtrack.conf https://raw.githubusercontent.com/aesophor/macbookpro-11-2-gentoo-config/master/etc/X11/xorg.conf.d/10mtrack.conf
 user$ sudo gpasswd -a aesophor input
 </code></pre>
-<p>Install  <code>broadcom-wl-dkms</code>  as our Wi-Fi driver (my laptop model is A1398):</p>
+<p>Install <code>broadcom-wl-dkms</code> as our Wi-Fi driver (my laptop model is A1398):</p>
 <pre><code>user$ sudo pacman -S dkms broadcom-wl-dkms
 </code></pre>
-<p>Install  <code>bcwc-pcie-git</code>  as our FaceTimeHD webcam driver:</p>
+<p>Install <code>bcwc-pcie-git</code> as our FaceTimeHD webcam driver:</p>
 <pre><code>user$ yay -S bcwc-pcie-git
 </code></pre>
 <p>Install font packages:</p>
@@ -326,7 +316,7 @@ user$ yay -S wmderland-git polybar dunst picom rofi-git rxvt-unicode firefox
 <pre><code>user$ sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-material-color
 user$ yay -S fcitx5-pinyin-zhwiki
 </code></pre>
-<p>Downgrade  <code>pango</code>  to 1.43 since &gt;= 1.44 cause issue with font rendering on rofi:</p>
+<p>Downgrade <code>pango</code> to 1.43 since &gt;= 1.44 cause issue with font rendering on rofi:</p>
 <pre><code>user$ sudo pacman -U https://archive.archlinux.org/packages/p/pango/pango-1.43.0-1-x86_64.pkg.tar.xz
 </code></pre>
 <p>Powersaving:</p>
@@ -341,8 +331,7 @@ user$ sudo systemctl enable mbpfan.service
 <li>echo “XHC1” &gt; /proc/acpi/wakeup  # fix immediate wakeup after suspension on macbook</li>
 <li>setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control</li>
 </ul>
-<h1 id="enter-x11"><a class="markdownIt-Anchor" href="#enter-x11">#</a> Enter X11</h1>
-<p>Install my dotfiles:</p>
+<h1 id="Enter-X11"><a href="#Enter-X11" class="headerlink" title="Enter X11"></a>Enter X11</h1><p>Install my dotfiles:</p>
 <pre><code>user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
 user$ cd ~/Dots
 user$ rm ~/.zshrc ~/.bashrc
@@ -351,8 +340,7 @@ user$ ./.install.sh
 <p>Start an X11 session (GUI) as your unprivileged user:</p>
 <pre><code>user$ startx
 </code></pre>
-<p>Voilà. Now you can go ahead and start customizing it!<br>
-<img data-src="result.png" alt=""></p>
+<p>Voilà. Now you can go ahead and start customizing it!<br><img data-src="result.png"></p>
 
       <div class="tags">
           <a href="/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a>
@@ -423,7 +411,7 @@ user$ ./.install.sh
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text"> Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#back-up-the-old-ssd"><span class="toc-number">2.</span> <span class="toc-text"> Back Up the Old SSD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#firmware-upgrade"><span class="toc-number">3.</span> <span class="toc-text"> Firmware Upgrade</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssd-upgrade"><span class="toc-number">4.</span> <span class="toc-text"> SSD Upgrade</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssd-data-migration"><span class="toc-number">5.</span> <span class="toc-text"> SSD Data Migration</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#prepare-installation-medium"><span class="toc-number">6.</span> <span class="toc-text"> Prepare Installation Medium</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#base-installation"><span class="toc-number">7.</span> <span class="toc-text"> Base Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#configure-the-new-system"><span class="toc-number">8.</span> <span class="toc-text"> Configure the New System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#post-installation"><span class="toc-number">9.</span> <span class="toc-text"> Post Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#enter-x11"><span class="toc-number">10.</span> <span class="toc-text"> Enter X11</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Back-Up-the-Old-SSD"><span class="toc-number">2.</span> <span class="toc-text">Back Up the Old SSD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Firmware-Upgrade"><span class="toc-number">3.</span> <span class="toc-text">Firmware Upgrade</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSD-Upgrade"><span class="toc-number">4.</span> <span class="toc-text">SSD Upgrade</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSD-Data-Migration"><span class="toc-number">5.</span> <span class="toc-text">SSD Data Migration</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Prepare-Installation-Medium"><span class="toc-number">6.</span> <span class="toc-text">Prepare Installation Medium</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Base-Installation"><span class="toc-number">7.</span> <span class="toc-text">Base Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Configure-the-New-System"><span class="toc-number">8.</span> <span class="toc-text">Configure the New System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Post-Installation"><span class="toc-number">9.</span> <span class="toc-text">Post Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Enter-X11"><span class="toc-number">10.</span> <span class="toc-text">Enter X11</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
         <ul>
@@ -549,20 +537,20 @@ user$ ./.install.sh
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Linux/" title="In Linux">Linux</a>
+<a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
-    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/CTF/" title="In CTF">CTF</a>
+<a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
-    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
   </ul>
