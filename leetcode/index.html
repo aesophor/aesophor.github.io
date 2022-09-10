@@ -124,91 +124,251 @@ aesophor = 日新又新 = 努力不會背叛人，它走不快，但早晚會跟
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="leetcode-刷題記錄"><a class="markdownIt-Anchor" href="#leetcode-刷題記錄">#</a> LeetCode 刷題記錄</h1>
-<p>因為工作突然要寫 <span class="exturl" data-url="aHR0cHM6Ly9nby5kZXYv">Go</span>，所以藉由刷題來熟悉這個陌生的語言。</p>
-<h2 id="two-sum"><a class="markdownIt-Anchor" href="#two-sum">#</a> Two Sum</h2>
-<blockquote>
-<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvdHdvLXN1bS8=">https://leetcode.com/problems/two-sum/</span><br>
-<strong> 難度：</strong> Easy<br>
-<strong> 語言：</strong> Go</p>
+    <h1 id="LeetCode-刷題記錄"><a href="#LeetCode-刷題記錄" class="headerlink" title="LeetCode 刷題記錄"></a>LeetCode 刷題記錄</h1><p>因為工作突然要寫 <span class="exturl" data-url="aHR0cHM6Ly9nby5kZXYv">Go</span>，所以藉由刷題來熟悉這個陌生的語言。</p>
+<p>本人很菜，如果您找到了任何錯誤之處，歡迎寄信或私訊我，謝謝。</p>
+<h2 id="Two-Sum"><a href="#Two-Sum" class="headerlink" title="Two Sum"></a>Two Sum</h2><blockquote>
+<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvdHdvLXN1bS8=">https://leetcode.com/problems/two-sum/</span><br><strong>難度：</strong> Easy<br><strong>語言：</strong> Go</p>
 </blockquote>
-<p>建 complement map，其 key 為 num，value 為 index。然後掃 nums，每遇到一個數字就將 {target - num, 目前的 index} 存進去。對於每個 num，我們就用 num 作為 key 去查詢 complement map，</p>
-<p>如果能查到東西，那麼 {其 value, 目前的 index} 就是答案了。</p>
-<figure class="highlight go"><figcaption data-lang="go"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">func</span> <span class="token function">twoSum</span><span class="token punctuation">(</span>nums <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> target <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  complementIdx <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">for</span> i<span class="token punctuation">,</span> num <span class="token operator">:=</span> <span class="token keyword">range</span> nums <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">if</span> val<span class="token punctuation">,</span> exists <span class="token operator">:=</span> complementIdx<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">;</span> exists <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>      <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span>val<span class="token punctuation">,</span> i<span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    complementIdx<span class="token punctuation">[</span>target <span class="token operator">-</span> num<span class="token punctuation">]</span> <span class="token operator">=</span> i</pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  </pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h2 id="add-two-numbers"><a class="markdownIt-Anchor" href="#add-two-numbers">#</a> Add Two Numbers</h2>
-<blockquote>
-<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvYWRkLXR3by1udW1iZXJzLw==">https://leetcode.com/problems/add-two-numbers/</span><br>
-<strong> 難度：</strong> Medium<br>
-<strong> 語言：</strong> Go</p>
+<ul>
+<li>建一個 complement map<ul>
+<li>key：num</li>
+<li>value：index</li>
+</ul>
+</li>
+<li>掃瞄 nums，對於每個 num ∈ nums<ul>
+<li>對於每個 num，用 num 去查詢 complement map<ul>
+<li>若存在，{value, 目前的 index} 就是答案了</li>
+<li>不存在，將 {target - num, 目前的 index} 存進去</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="go">func twoSum(nums []int, target int) []int &#123;
+  complementIdx := make(map[int]int)
+
+  for i, num := range nums &#123;
+    if val, exists := complementIdx[num]; exists &#123;
+      return []int&#123;val, i&#125;
+    &#125;
+    complementIdx[target - num] = i
+  &#125;
+  
+  return []int&#123;-1, -1&#125;
+&#125;
+</code></pre>
+<h2 id="Add-Two-Numbers"><a href="#Add-Two-Numbers" class="headerlink" title="Add Two Numbers"></a>Add Two Numbers</h2><blockquote>
+<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvYWRkLXR3by1udW1iZXJzLw==">https://leetcode.com/problems/add-two-numbers/</span><br><strong>難度：</strong> Medium<br><strong>語言：</strong> Go</p>
 </blockquote>
 <p>給你兩條 linked list，value 為 123 在 input 是 3 → 2 → 1 → nil，用一樣的 linked list 回傳兩數之和。</p>
-<figure class="highlight go"><figcaption data-lang="go"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">/**</pre></td></tr><tr><td data-num="2"></td><td><pre> * Definition for singly-linked list.</pre></td></tr><tr><td data-num="3"></td><td><pre> * type ListNode struct &#123;</pre></td></tr><tr><td data-num="4"></td><td><pre> *     Val int</pre></td></tr><tr><td data-num="5"></td><td><pre> *     Next *ListNode</pre></td></tr><tr><td data-num="6"></td><td><pre> * &#125;</pre></td></tr><tr><td data-num="7"></td><td><pre> */</span></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token keyword">func</span> <span class="token function">addTwoNumbers</span><span class="token punctuation">(</span>l1 <span class="token operator">*</span>ListNode<span class="token punctuation">,</span> l2 <span class="token operator">*</span>ListNode<span class="token punctuation">)</span> <span class="token operator">*</span>ListNode <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token keyword">var</span> head <span class="token operator">*</span>ListNode</pre></td></tr><tr><td data-num="10"></td><td><pre>  <span class="token keyword">var</span> curr <span class="token operator">*</span>ListNode</pre></td></tr><tr><td data-num="11"></td><td><pre>  carry <span class="token operator">:=</span> <span class="token boolean">false</span></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre>  <span class="token keyword">for</span> l1 <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token operator">||</span> l2 <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token operator">||</span> carry <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    val <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token keyword">if</span> carry <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>      val <span class="token operator">+=</span> <span class="token number">1</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    carry <span class="token operator">=</span> <span class="token boolean">false</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    </pre></td></tr><tr><td data-num="20"></td><td><pre>    <span class="token keyword">if</span> l1 <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>      val <span class="token operator">+=</span> l1<span class="token punctuation">.</span>Val</pre></td></tr><tr><td data-num="22"></td><td><pre>      l1 <span class="token operator">=</span> l1<span class="token punctuation">.</span>Next</pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>    </pre></td></tr><tr><td data-num="25"></td><td><pre>    <span class="token keyword">if</span> l2 <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>      val <span class="token operator">+=</span> l2<span class="token punctuation">.</span>Val</pre></td></tr><tr><td data-num="27"></td><td><pre>      l2 <span class="token operator">=</span> l2<span class="token punctuation">.</span>Next</pre></td></tr><tr><td data-num="28"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>    </pre></td></tr><tr><td data-num="30"></td><td><pre>    <span class="token keyword">if</span> val <span class="token operator">></span> <span class="token number">9</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="31"></td><td><pre>      carry <span class="token operator">=</span> <span class="token boolean">true</span></pre></td></tr><tr><td data-num="32"></td><td><pre>      val <span class="token operator">-=</span> <span class="token number">10</span></pre></td></tr><tr><td data-num="33"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    </pre></td></tr><tr><td data-num="35"></td><td><pre>    <span class="token keyword">var</span> newNode <span class="token operator">*</span>ListNode <span class="token operator">=</span> <span class="token operator">&amp;</span>ListNode<span class="token punctuation">&#123;</span>val<span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>    <span class="token keyword">if</span> curr <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>      head <span class="token operator">=</span> newNode</pre></td></tr><tr><td data-num="38"></td><td><pre>    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>      curr<span class="token punctuation">.</span>Next <span class="token operator">=</span> newNode</pre></td></tr><tr><td data-num="40"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>    curr <span class="token operator">=</span> newNode</pre></td></tr><tr><td data-num="42"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="43"></td><td><pre></pre></td></tr><tr><td data-num="44"></td><td><pre>  <span class="token keyword">if</span> head <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="45"></td><td><pre>    head <span class="token operator">=</span> <span class="token operator">&amp;</span>ListNode<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="46"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="47"></td><td><pre></pre></td></tr><tr><td data-num="48"></td><td><pre>  <span class="token keyword">return</span> head</pre></td></tr><tr><td data-num="49"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h2 id="container-with-most-water"><a class="markdownIt-Anchor" href="#container-with-most-water">#</a> Container With Most Water</h2>
-<blockquote>
-<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvY29udGFpbmVyLXdpdGgtbW9zdC13YXRlci8=">https://leetcode.com/problems/container-with-most-water/</span><br>
-<strong> 難度：</strong> Medium<br>
-<strong> 技巧：</strong> Two Pointers, Greedy<br>
-<strong> 語言：</strong> Go</p>
+<pre><code class="go">/**
+ * Definition for singly-linked list.
+ * type ListNode struct &#123;
+ *     Val int
+ *     Next *ListNode
+ * &#125;
+ */
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode &#123;
+  var head *ListNode
+  var curr *ListNode
+  carry := false
+
+  for l1 != nil || l2 != nil || carry &#123;
+    val := 0
+    if carry &#123;
+      val += 1
+    &#125;
+    carry = false
+    
+    if l1 != nil &#123;
+      val += l1.Val
+      l1 = l1.Next
+    &#125;
+    
+    if l2 != nil &#123;
+      val += l2.Val
+      l2 = l2.Next
+    &#125;
+    
+    if val &gt; 9 &#123;
+      carry = true
+      val -= 10
+    &#125;
+    
+    var newNode *ListNode = &amp;ListNode&#123;val, nil&#125;
+    if curr == nil &#123;
+      head = newNode
+    &#125; else &#123;
+      curr.Next = newNode
+    &#125;
+    curr = newNode
+  &#125;
+
+  if head == nil &#123;
+    head = &amp;ListNode&#123;0, nil&#125;
+  &#125;
+
+  return head
+&#125;
+</code></pre>
+<h2 id="Longest-Substring-Without-Repeating-Characters"><a href="#Longest-Substring-Without-Repeating-Characters" class="headerlink" title="Longest Substring Without Repeating Characters"></a>Longest Substring Without Repeating Characters</h2><blockquote>
+<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvbG9uZ2VzdC1zdWJzdHJpbmctd2l0aG91dC1yZXBlYXRpbmctY2hhcmFjdGVycy9zdWJtaXNzaW9ucy8=">https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/</span><br><strong>難度：</strong> Medium<br><strong>技巧：</strong> Sliding Window (Two Pointers)<br><strong>語言：</strong> Go</p>
+</blockquote>
+<ol>
+<li>Bruteforce<ul>
+<li>選一個 begin<ul>
+<li>選一個 end<ul>
+<li>掃描 [begin, end] 內的字元是否有重複</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>O(N^3)</li>
+</ul>
+</li>
+<li>Sliding Window<ul>
+<li>準備一個 map<ul>
+<li>key：s 中出現過的字元</li>
+<li>value：該字元最後一次出現的 index</li>
+</ul>
+</li>
+<li><code>l</code> 與 <code>r</code> 分別代表 window 左右界<ul>
+<li>規則：window 中不可出現重複字元</li>
+</ul>
+</li>
+<li>不斷擴張 window 右界，同時檢查此次擴張是否會使 window 變得不合法<ul>
+<li>若合法，繼續擴張</li>
+<li>不合法，必須讓它再次合法</li>
+</ul>
+</li>
+<li>對於每個字元 c ∈ s，我們讓 <ul>
+<li>若 c 已經在目前的 window 內（即：l ≤ i ≤ r）<ul>
+<li>則目前 window 已無效，故更新 <code>l</code> 為最後出現的 idx + 1 使得 window 再次合法</li>
+</ul>
+</li>
+<li>用 <code>max()</code> 更新 <code>maxLen</code>，最後回傳之</li>
+<li>將 <code>c</code> 的最後出現 index（即：<code>r</code>）記下來</li>
+</ul>
+</li>
+<li>O(N)</li>
+</ul>
+</li>
+</ol>
+<pre><code class="go">func lengthOfLongestSubstring(s string) int &#123;
+  l := 0
+  maxLen := 0
+  lastAppearedAt := make(map[rune]int)
+
+  for r, c := range s &#123;
+    // If this character has already appeared before,
+    // and if it&#39;s within the current window...
+    if idx, exists := lastAppearedAt[c]; exists &amp;&amp; idx &gt;= l &#123;
+      l = idx + 1
+    &#125;
+
+    maxLen = max(maxLen, r - l + 1)
+    lastAppearedAt[c] = r
+  &#125;
+
+  return maxLen
+&#125;
+</code></pre>
+<h2 id="Container-With-Most-Water"><a href="#Container-With-Most-Water" class="headerlink" title="Container With Most Water"></a>Container With Most Water</h2><blockquote>
+<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvY29udGFpbmVyLXdpdGgtbW9zdC13YXRlci8=">https://leetcode.com/problems/container-with-most-water/</span><br><strong>難度：</strong> Medium<br><strong>技巧：</strong> Two Pointers, Greedy<br><strong>語言：</strong> Go</p>
 </blockquote>
 <p>給你一個 slice，例如：heights = [1,8,6,2,5,4,8,3,7]，其中每個數字代表該地點的高度為多少，請求出哪兩點之間的積水最多。</p>
 <ol>
-<li>Bruteforce
-<ul>
-<li>對於每個高度 h ∈ heights
-<ul>
+<li>Bruteforce<ul>
+<li>對於每個高度 h ∈ heights<ul>
 <li>再掃自己除外的高度，計算積水面積</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Two Pointers + Greedy
-<ul>
-<li><code>l</code>  為 heights 的 index，即 0</li>
-<li><code>r</code>  為 heights 的 last index，即  <code>len(heights) - 1</code></li>
-<li>讓  <code>l</code>  與  <code>r</code>  走向 slice 的中央
-<ul>
+<li>Two Pointers + Greedy<ul>
+<li><code>l</code> 為 heights 的 index，即 0</li>
+<li><code>r</code> 為 heights 的 last index，即 <code>len(heights) - 1</code></li>
+<li>讓 <code>l</code> 與 <code>r</code> 走向 slice 的中央<ul>
 <li>高度較低者，往中間走</li>
 <li>高度較高者，不動</li>
-<li>在此過程中不斷計算積水面積，並用  <code>max()</code>  更新結果</li>
+<li>在此過程中不斷計算積水面積，並用 <code>max()</code> 更新結果</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<figure class="highlight go"><figcaption data-lang="go"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">func</span> <span class="token function">maxArea</span><span class="token punctuation">(</span>height <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  ret <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  l <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  r <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>height<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token keyword">for</span> l <span class="token operator">&lt;=</span> r <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    ret <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>ret<span class="token punctuation">,</span> <span class="token function">min</span><span class="token punctuation">(</span>height<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">,</span> height<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>r <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    </pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">if</span> height<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> height<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>      l<span class="token operator">++</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>      r<span class="token operator">--</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="15"></td><td><pre></pre></td></tr><tr><td data-num="16"></td><td><pre>  <span class="token keyword">return</span> ret</pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="18"></td><td><pre></pre></td></tr><tr><td data-num="19"></td><td><pre><span class="token keyword">func</span> <span class="token function">min</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>  <span class="token keyword">if</span> x <span class="token operator">&lt;=</span> y <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    <span class="token keyword">return</span> x</pre></td></tr><tr><td data-num="22"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>  <span class="token keyword">return</span> y</pre></td></tr><tr><td data-num="24"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token keyword">func</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>  <span class="token keyword">if</span> x <span class="token operator">>=</span> y <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    <span class="token keyword">return</span> x</pre></td></tr><tr><td data-num="28"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>  <span class="token keyword">return</span> y</pre></td></tr><tr><td data-num="30"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h2 id="trapping-rain-water"><a class="markdownIt-Anchor" href="#trapping-rain-water">#</a> Trapping Rain Water</h2>
-<blockquote>
-<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvdHJhcHBpbmctcmFpbi13YXRlci8=">https://leetcode.com/problems/trapping-rain-water/</span><br>
-<strong> 難度：</strong> Hard<br>
-<strong> 技巧：</strong> DP<br>
-<strong> 語言：</strong> Go</p>
+<pre><code class="go">func maxArea(height []int) int &#123;
+  ret := 0
+  l := 0
+  r := len(height) - 1
+
+  for l &lt;= r &#123;
+    ret = max(ret, min(height[l], height[r]) * (r - l))
+    
+    if height[l] &lt;= height[r] &#123;
+      l++
+    &#125; else &#123;
+      r--
+    &#125;
+  &#125;
+
+  return ret
+&#125;
+</code></pre>
+<h2 id="Trapping-Rain-Water"><a href="#Trapping-Rain-Water" class="headerlink" title="Trapping Rain Water"></a>Trapping Rain Water</h2><blockquote>
+<p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvdHJhcHBpbmctcmFpbi13YXRlci8=">https://leetcode.com/problems/trapping-rain-water/</span><br><strong>難度：</strong> Hard<br><strong>技巧：</strong> DP<br><strong>語言：</strong> Go</p>
 </blockquote>
 <p>給你一個 slice，例如：heights = [0,1,0,2,1,0,1,3,2,1,2,1]，其中每個數字代表該地點的高度為多少，要你算出會積多少格的水。</p>
 <ol>
-<li>Bruteforce
-<ul>
+<li>Bruteforce<ul>
 <li>對於每個 x，我們都找出該點以左的最高高度、該點以右的最高高度，看看該 x 能積多少水。</li>
-<li>時間：O (N^2)</li>
+<li>時間：O(N^2)</li>
 </ul>
 </li>
-<li>DP
-<ul>
-<li>準備兩個 slice
-<ul>
-<li><code>ls</code> ：記錄每個點「該點以左的最高高度」</li>
-<li><code>rs</code> ：記錄每個點「該點以右的最高高度」</li>
+<li>DP<ul>
+<li>準備兩個 slice<ul>
+<li><code>ls</code>：記錄每個點「該點以左的最高高度」</li>
+<li><code>rs</code>：記錄每個點「該點以右的最高高度」</li>
 </ul>
 </li>
-<li>掃一次 heights，對於每個 h ∈ heights
-<ul>
-<li>積水的最高可能高度：  <code>min(ls[i], rs[i])</code></li>
-<li>該點高度： <code>h</code></li>
+<li>掃一次 heights，對於每個 h ∈ heights<ul>
+<li>積水的最高可能高度： <code>min(ls[i], rs[i])</code></li>
+<li>該點高度：<code>h</code></li>
 <li>將上述兩者相減，請特別注意這一步可能出現負數</li>
-<li>若相減結果 &gt; 0 就累加到  <code>ret</code> ，最後回傳之</li>
+<li>若相減結果 &gt; 0 就累加到 <code>ret</code>，最後回傳之</li>
 </ul>
 </li>
-<li>時間：O (N)</li>
+<li>時間：O(N)</li>
 </ul>
 </li>
 </ol>
-<figure class="highlight go"><figcaption data-lang="go"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">func</span> <span class="token function">trap</span><span class="token punctuation">(</span>height <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  size <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>height<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  l <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  r <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  ls <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  rs <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span> </pre></td></tr><tr><td data-num="7"></td><td><pre>  </pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token comment">// [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3]</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    ls<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> height<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    l <span class="token operator">=</span> ls<span class="token punctuation">[</span>i<span class="token punctuation">]</span></pre></td></tr><tr><td data-num="12"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="13"></td><td><pre></pre></td></tr><tr><td data-num="14"></td><td><pre>  <span class="token comment">// [3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0]</span></pre></td></tr><tr><td data-num="15"></td><td><pre>  <span class="token keyword">for</span> i <span class="token operator">:=</span> size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    rs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> height<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    r <span class="token operator">=</span> rs<span class="token punctuation">[</span>i<span class="token punctuation">]</span></pre></td></tr><tr><td data-num="18"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="19"></td><td><pre></pre></td></tr><tr><td data-num="20"></td><td><pre>  <span class="token keyword">var</span> ret <span class="token builtin">int</span></pre></td></tr><tr><td data-num="21"></td><td><pre>  <span class="token keyword">for</span> i<span class="token punctuation">,</span> h <span class="token operator">:=</span> <span class="token keyword">range</span> height <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    ret <span class="token operator">+=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">min</span><span class="token punctuation">(</span>ls<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> rs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span> h<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="23"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token keyword">return</span> ret</pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="26"></td><td><pre></pre></td></tr><tr><td data-num="27"></td><td><pre><span class="token keyword">func</span> <span class="token function">min</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>  <span class="token keyword">if</span> x <span class="token operator">&lt;=</span> y <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>    <span class="token keyword">return</span> x</pre></td></tr><tr><td data-num="30"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="31"></td><td><pre>  <span class="token keyword">return</span> y</pre></td></tr><tr><td data-num="32"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="33"></td><td><pre><span class="token keyword">func</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>  <span class="token keyword">if</span> x <span class="token operator">>=</span> y <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>    <span class="token keyword">return</span> x</pre></td></tr><tr><td data-num="36"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>  <span class="token keyword">return</span> y</pre></td></tr><tr><td data-num="38"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure>
+<pre><code class="go">func trap(height []int) int &#123;
+  size := len(height)
+  l := 0
+  r := 0
+  ls := make([]int, size)
+  rs := make([]int, size) 
+  
+  // [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3]
+  for i := 0; i &lt; size; i++ &#123;
+    ls[i] = max(l, height[i])
+    l = ls[i]
+  &#125;
+
+  // [3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0]
+  for i := size - 1; i &gt;= 0; i-- &#123;
+    rs[i] = max(r, height[i])
+    r = rs[i]
+  &#125;
+
+  var ret int
+  for i, h := range height &#123;
+    ret += max(0, min(ls[i], rs[i]) - h)
+  &#125;
+  return ret
+&#125;
+</code></pre>
+
   </div>
 
    <footer>
@@ -219,7 +379,7 @@ aesophor = 日新又新 = 努力不會背叛人，它走不快，但早晚會跟
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-09-11 00:13:10" itemprop="dateModified" datetime="2022-09-11T00:13:10+08:00">2022-09-11</time>
+    <time title="Modified: 2022-09-11 01:22:19" itemprop="dateModified" datetime="2022-09-11T01:22:19+08:00">2022-09-11</time>
   </span>
 </div>
 
@@ -258,7 +418,7 @@ aesophor = 日新又新 = 努力不會背叛人，它走不快，但早晚會跟
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-%E5%88%B7%E9%A1%8C%E8%A8%98%E9%8C%84"><span class="toc-number">1.</span> <span class="toc-text"> LeetCode 刷題記錄</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#two-sum"><span class="toc-number">1.1.</span> <span class="toc-text"> Two Sum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add-two-numbers"><span class="toc-number">1.2.</span> <span class="toc-text"> Add Two Numbers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#container-with-most-water"><span class="toc-number">1.3.</span> <span class="toc-text"> Container With Most Water</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trapping-rain-water"><span class="toc-number">1.4.</span> <span class="toc-text"> Trapping Rain Water</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LeetCode-%E5%88%B7%E9%A1%8C%E8%A8%98%E9%8C%84"><span class="toc-number">1.</span> <span class="toc-text">LeetCode 刷題記錄</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Two-Sum"><span class="toc-number">1.1.</span> <span class="toc-text">Two Sum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-Two-Numbers"><span class="toc-number">1.2.</span> <span class="toc-text">Add Two Numbers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Longest-Substring-Without-Repeating-Characters"><span class="toc-number">1.3.</span> <span class="toc-text">Longest Substring Without Repeating Characters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-With-Most-Water"><span class="toc-number">1.4.</span> <span class="toc-text">Container With Most Water</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trapping-Rain-Water"><span class="toc-number">1.5.</span> <span class="toc-text">Trapping Rain Water</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -381,20 +541,20 @@ aesophor = 日新又新 = 努力不會背叛人，它走不快，但早晚會跟
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Linux/" title="In Linux">Linux</a>
+<a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
-    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/CTF/" title="In CTF">CTF</a>
+<a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
-    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
   </ul>
