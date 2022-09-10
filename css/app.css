@@ -829,12 +829,12 @@ body.loaded #sidebar .panel.active,
   -webkit-animation: slideUpBigIn 0.5s;
           animation: slideUpBigIn 0.5s;
 }
-.slide-right-in {
+.slide-right-in,
+#tool.affix .player-info.show {
   -webkit-animation: slideRightIn 0.3s;
           animation: slideRightIn 0.3s;
 }
-.slide-left-in,
-#tool.affix .player-info.show {
+.slide-left-in {
   -webkit-animation: slideLeftIn 0.3s;
           animation: slideLeftIn 0.3s;
 }
@@ -1678,6 +1678,7 @@ main >.inner {
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
+  flex-direction: row-reverse;
 }
 @media (min-width: 1200px) {
   main >.inner {
@@ -2097,7 +2098,7 @@ main >.inner {
 }
 #tool {
   position: fixed;
-  left: 1rem;
+  right: 1rem;
   top: 50vh;
   z-index: 9;
 }
@@ -2151,7 +2152,7 @@ main >.inner {
   display: none;
   bottom: 0;
   overflow: hidden;
-  left: 3.5rem;
+  right: 3.5rem;
   width: 50vw;
   z-index: 9;
   max-width: 25rem;
@@ -2174,7 +2175,7 @@ main >.inner {
   box-shadow: 0 0 0.5rem rgba(0,0,0,0.1);
   background: var(--grey-1-a3);
   border-radius: 0.3125rem;
-  left: 0;
+  right: 0;
   bottom: 0;
 }
 #tool.affix .item {
@@ -2192,11 +2193,11 @@ main >.inner {
   display: block;
 }
 #tool.affix .player-info {
-  left: 2.5rem;
+  right: 2.5rem;
 }
 @media (min-width: 1200px) {
   #tool.affix .player-info {
-    left: 3.5rem;
+    right: 3.5rem;
   }
 }
 @media (max-width: 991px) {
@@ -2207,12 +2208,6 @@ main >.inner {
 }
 #tool.affix .player-info.show {
   display: block;
-}
-@media (max-width: 991px) {
-  #tool.affix .player-info.show {
-    -webkit-animation: slideRightIn 0.3s;
-            animation: slideRightIn 0.3s;
-  }
 }
 #tool.affix .back-to-top {
   align-items: center;
@@ -2230,7 +2225,7 @@ main >.inner {
 }
 @media (min-width: 1200px) {
   #tool.affix {
-    left: 1rem;
+    right: 1rem;
     bottom: 1rem;
   }
 }
@@ -2740,7 +2735,7 @@ main >.inner {
   margin: 0 auto;
   width: calc(100% - 0.625rem);
   position: relative;
-  padding-right: 16.25rem;
+  padding-left: 16.25rem;
 }
 @media (min-width: 1200px) {
   #footer .inner {
