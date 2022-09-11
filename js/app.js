@@ -1236,6 +1236,7 @@ const themeColorListener = function () {
 }
 
 const visibilityListener = function () {
+  /*
   document.addEventListener('visibilitychange', function() {
     switch(document.visibilityState) {
       case 'hidden':
@@ -1256,6 +1257,7 @@ const visibilityListener = function () {
       break;
     }
   });
+  */
 }
 
 const showtip = function(msg) {
