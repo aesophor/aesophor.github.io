@@ -217,7 +217,7 @@ aesophor's Blog</title>
 <figure class="highlight go"><figcaption data-lang="go"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">func</span> <span class="token function">lengthOfLongestSubstring</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  l <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  maxLen <span class="token operator">:=</span> <span class="token number">0</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  lastAppearedAt <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">rune</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token keyword">for</span> r<span class="token punctuation">,</span> c <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token comment">// If this character has already appeared before,</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token comment">// and if it's within the current window...</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">if</span> idx<span class="token punctuation">,</span> exists <span class="token operator">:=</span> lastAppearedAt<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">;</span> exists <span class="token operator">&amp;&amp;</span> idx <span class="token operator">>=</span> l <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>      l <span class="token operator">=</span> idx <span class="token operator">+</span> <span class="token number">1</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre>    maxLen <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>maxLen<span class="token punctuation">,</span> r <span class="token operator">-</span> l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    lastAppearedAt<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> r</pre></td></tr><tr><td data-num="15"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="16"></td><td><pre></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token keyword">return</span> maxLen</pre></td></tr><tr><td data-num="18"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h2 id="reverse-integer"><a class="markdownIt-Anchor" href="#reverse-integer">#</a> Reverse Integer</h2>
 <blockquote>
 <p><strong>題目：</strong> <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvcmV2ZXJzZS1pbnRlZ2VyLw==">https://leetcode.com/problems/reverse-integer/</span><br>
-<strong> 難度：</strong> Easy<br>
+<strong> 難度：</strong> Medium<br>
 <strong> 語言：</strong> Go</p>
 </blockquote>
 <p>在  <code>ret *= 10</code>  前，記得檢查此操作是否會造成  <code>ret</code>  signed integer overflow。</p>
@@ -389,7 +389,7 @@ aesophor's Blog</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-09-15 19:46:49" itemprop="dateModified" datetime="2022-09-15T19:46:49+08:00">2022-09-15</time>
+    <time title="Modified: 2022-09-15 19:47:18" itemprop="dateModified" datetime="2022-09-15T19:47:18+08:00">2022-09-15</time>
   </span>
 </div>
 
@@ -551,20 +551,20 @@ aesophor's Blog</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/CTF/" title="In CTF">CTF</a>
+<a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
-    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Linux/" title="In Linux">Linux</a>
+<a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
-    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+    <span><a href="/2022/08/27/pwnable-tw-secret-garden/" title="[pwnable.tw] Secret Garden (350 pts)">[pwnable.tw] Secret Garden (350 pts)</a></span>
   </li>
 
   </ul>
