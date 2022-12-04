@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>日新又新 • Posts by &#34;work&#34; category</title>
+        <link>https://aesophor.github.io</link>
+        <description>eku</description>
+        <language>en</language>
+        <pubDate>Mon, 17 Oct 2022 21:39:04 +0800</pubDate>
+        <lastBuildDate>Mon, 17 Oct 2022 21:39:04 +0800</lastBuildDate>
+        <category>linux</category>
+        <category>ctf</category>
+        <category>binary-exploitation</category>
+        <category>golang</category>
+        <category>backend</category>
+        <category>distributed-systems</category>
+        <item>
+            <guid isPermalink="true">https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/</guid>
+            <title>An Introduction to Kafka&#39;s Messaging System</title>
+            <link>https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/</link>
+            <category>golang</category>
+            <category>backend</category>
+            <category>distributed-systems</category>
+            <pubDate>Mon, 17 Oct 2022 21:39:04 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h1&gt;
+&lt;p&gt;Apache Kafka is an open-source distributed event streaming platform. Here’s a quick overview about Kafka:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Architecture: a distributed system consisting of servers and clients&lt;/li&gt;
+&lt;li&gt;Communicates over: TCP/IP&lt;/li&gt;
+&lt;li&gt;Scalability: bare-metal hardware, VMs, containers, cloud environments&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAzOTk1NjMwMQ==&#34;&gt;https://segmentfault.com/a/1190000039956301&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#installation&#34;&gt;#&lt;/a&gt; Installation&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;brew install kafka
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;zookeeper config&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# /opt/homebrew/etc/kafka/zookeeper.properties
+dataDir=/opt/homebrew/var/lib/zookeeper
+clientPort=2181
+maxClientCnxns=0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;kafka server config&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# /opt/homebrew/etc/kafka/server.properties
+
+broker.id=0
+listeners=PLAINTEXT://:9092
+advertised.listeners=PLAINTEXT://127.0.0.1:9092
+log.dirs=/opt/homebrew/var/lib/kafka-logs
+num.partitions=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;running&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#running&#34;&gt;#&lt;/a&gt; Running&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;Start zookeeper&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;zookeeper-server-start /opt/homebrew/etc/kafka/zookeeper.properties
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Start kafka-server&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kafka-server-start /opt/homebrew/etc/kafka/server.properties
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Start kafka-consumer&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kafka-console-consumer --bootstrap-server localhost:9092 --topic account.user.activated
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Start kafka-producer&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kafka-console-producer --bootstrap-server localhost:9092 --topic account.user.activated
+&amp;gt; msg...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;kafka-go&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#kafka-go&#34;&gt;#&lt;/a&gt; kafka-go&lt;/h1&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

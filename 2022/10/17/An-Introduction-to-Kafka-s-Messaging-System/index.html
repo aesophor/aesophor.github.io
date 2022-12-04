@@ -24,12 +24,15 @@
 <link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
   
-
-<link rel="canonical" href="https://aesophor.github.io/about/en-us">
-
+  <meta name="keywords" content="golang,backend,distributed-systems" />
 
 
-  <title>About |
+<link rel="canonical" href="https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/">
+
+
+
+  <title>
+An Introduction to Kafka's Messaging System - Work |
 aesophor's Blog</title>
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -57,8 +60,19 @@ aesophor's Blog</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">About
+  <h1 itemprop="name headline">An Introduction to Kafka's Messaging System
   </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-10-17 21:39:04">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-10-17T21:39:04+08:00">2022-10-17</time>
+  </span>
+</div>
+
 
           </div>
         </div>
@@ -107,9 +121,17 @@ aesophor's Blog</title>
       <div class="inner">
         <div id="main" class="pjax">
           
-  <div class="page wrap">
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Work/" itemprop="item" rel="index" title="In Work"><span itemprop="name">Work</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/about/en-us.html">
+  <link itemprop="mainEntityOfPage" href="https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.png">
@@ -124,68 +146,61 @@ aesophor's Blog</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="aesophor"><a class="markdownIt-Anchor" href="#aesophor">#</a> AESOPHOR</h1>
+    <h1 id="introduction"><a class="markdownIt-Anchor" href="#introduction">#</a> Introduction</h1>
+<p>Apache Kafka is an open-source distributed event streaming platform. Here’s a quick overview about Kafka:</p>
 <ul>
-<li>Product Developer at <span class="exturl" data-url="aHR0cHM6Ly93d3cuc3lub2xvZ3kuY29tL2VuLWdsb2JhbA==">Synology</span> working on <span class="exturl" data-url="aHR0cHM6Ly93d3cuc3lub2xvZ3kuY29tL2VuLWdsb2JhbC9kc20vNy4xL3NvZnR3YXJlX3NwZWMvaHlicmlkX3NoYXJl">Hybrid Share</span></li>
-<li>Security Researcher, CTF Player</li>
-<li>MS degree at Software Quality Laboratory, NYCU (Class of 2022)</li>
-<li>Speaker at HITCON 2022, SITCON 2019</li>
-<li>TOEIC: Golden Certificate (950/990)</li>
+<li>Architecture: a distributed system consisting of servers and clients</li>
+<li>Communicates over: TCP/IP</li>
+<li>Scalability: bare-metal hardware, VMs, containers, cloud environments</li>
 </ul>
-<h1 id="interests"><a class="markdownIt-Anchor" href="#interests">#</a> Interests</h1>
-<ul>
-<li>Modern C++</li>
-<li>Operating Systems (<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Flc29waG9yL3ZhbGt5cmll">Actually, I’ve written one including its standard library in C++20</span>)</li>
-<li>UNIX Systems Programming</li>
-<li>Linux Binary Exploitation</li>
-<li>Game Hacking</li>
-</ul>
-<h1 id="talks"><a class="markdownIt-Anchor" href="#talks">#</a> Talks</h1>
-<ul>
-<li><strong>[HITCON 2022]</strong> <span class="exturl" data-url="aHR0cHM6Ly9oaXRjb24ub3JnLzIwMjIvYWdlbmRhLzJmNTU1YmQ0LTA2Y2QtNDRiOC1hODU0LTA4Y2VjMGRjMzBhYQ==">CRAX++: Modular Exploit Generator using Dynamic Symbolic Execution</span></li>
-<li><strong>[SITCON 2019]</strong> <span class="exturl" data-url="aHR0cHM6Ly9zaXRjb24ub3JnLzIwMTkvYWdlbmRhL2Y3YjJkZDIwLTAyNTctNDIxZC05MzM1LWE0YTc2Y2Y0ZDE0Mg==">解放 Linux 桌面！用 Xlib + 樹狀結構打造自己的 Window Manager</span></li>
-</ul>
-<h1 id="publications"><a class="markdownIt-Anchor" href="#publications">#</a> Publications</h1>
-<ul>
-<li>Wang Guan-Zhong and Huang Shih-Kun. “CRAXplusplus: Modular Exploit Generator using Symbolic Execution” (2022). HITCON PEACE 2022. [<a href="craxplusplus_thesis.pdf">Thesis</a>] [<a href="craxplusplus_slides.pdf">Slides</a>] [<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NRTGFiL0NSQVhwbHVzcGx1cw==">Code &amp; Dataset</span>]</li>
-</ul>
-<h1 id="presentations-at-sqlab"><a class="markdownIt-Anchor" href="#presentations-at-sqlab">#</a> Presentations at SQLab</h1>
-<p>Here are some slides that I presented at SQLab, NYCU.</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1RIWliZwPPit6ntlaVCy_IgdVC1bClJn-VRmSN2XVJJ0/edit?usp=sharing"><strong>Return-to-csu</strong>: Bypassing 64-bit Linux ASLR + pwnable.tw De-ASLR</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1NI4TVrZ-K9DESOGUNJFED5f7t5P2acqbYAq0z12ddqo/edit?usp=sharing"><strong>Framing Signals</strong>: A Return to Portable Shellcode</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1uZOppX4PCkFDQMQxaWn18-71GdM3eLfQaBYWMwMNSYw/edit?usp=sharing"><strong>Devil is Virtual</strong>: Reversing Virtual Inheritance in C++ Binaries</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1fZpTdpjSCeeKkx29EmtfF-HghCWilxvt0pmsEvZowcM/edit?usp=sharing"><strong>Symbolic Execution with SymCC</strong></a></li>
-</ul>
-<h1 id="personal-projects-selected"><a class="markdownIt-Anchor" href="#personal-projects-selected">#</a> Personal Projects (Selected)</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/valkyrie"><strong>valkyrie</strong></a>: AArch64 UNIX-like kernel with preemptive multi-threading, CoW  <code>fork()</code> , VM, VFS, FAT32, Devfs, Procfs, and a self-made C++20 standard library for the kernel.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/CRAXplusplus"><strong>SQLab/CRAXplusplus</strong></a>: Designed, implemented and analyzed a modular and scalable exploit generator which is capable of solving several CTF challenges and CVE binaries using dynamic symbolic execution.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/wmderland"><strong>wmderland</strong></a>: X11 tiling window manager using space partitioning trees</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/aesophor/vigilante"><strong>vigilante</strong></a>: 2D pixel-art side-scrolling single-player ARPG</li>
-</ul>
-<h1 id="open-source-contributions"><a class="markdownIt-Anchor" href="#open-source-contributions">#</a> Open Source Contributions</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/S2E/s2e/pulls?q=is%3Apr+is%3Aclosed+author%3Aaesophor"><strong>S2E/s2e</strong></a>: Implemented unconditional execution state forking, refactoring and bug fixes.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/google/glog/pulls?q=is%3Apr+is%3Aclosed+author%3Aaesophor"><strong>google/glog</strong></a>: Implemented LogCleaner and submitted minor security patches.</li>
-</ul>
-<h1 id="gaming"><a class="markdownIt-Anchor" href="#gaming">#</a> Gaming</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/"><strong>CS:GO</strong></a>: I mostly play in casual mode (ID:  <code>hy^24853623eku</code> ) with my private cheat.</li>
-<li><a target="_blank" rel="noopener" href="https://store.steampowered.com/sub/626153/"><strong>Skyrim SE</strong></a>: I’ve been playing Skyrim for ~10 years. Currently playing a heavily modded version of Skyrim AE with my custom ENB preset, on a M1 Pro MacBook Pro, via a legally purchased copy of CrossOver 22.0.</li>
-</ul>
-<table style="border: 1px solid transparent">
-  <tr>
-    <td valign="top"><img data-src="havoc.png"></td>
-    <td valign="top"><img data-src="skyrim.png"></td>
-  </tr>
-</table>
-<h1 id="sketching"><a class="markdownIt-Anchor" href="#sketching">#</a> Sketching</h1>
-<p>The following (replicated) artworks are created on an iPad Pro 2020 with Adobe Fresco.</p>
-<p><img data-src="portfolio.png" alt=""></p>
-<h1 id="calligraphy-traditional-chinese"><a class="markdownIt-Anchor" href="#calligraphy-traditional-chinese">#</a> Calligraphy (Traditional Chinese)</h1>
-<p><img data-src="calligraphy.png" alt=""></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAzOTk1NjMwMQ==">https://segmentfault.com/a/1190000039956301</span></p>
+<h1 id="installation"><a class="markdownIt-Anchor" href="#installation">#</a> Installation</h1>
+<pre><code>brew install kafka
+</code></pre>
+<p>zookeeper config</p>
+<pre><code># /opt/homebrew/etc/kafka/zookeeper.properties
+dataDir=/opt/homebrew/var/lib/zookeeper
+clientPort=2181
+maxClientCnxns=0
+</code></pre>
+<p>kafka server config</p>
+<pre><code># /opt/homebrew/etc/kafka/server.properties
 
+broker.id=0
+listeners=PLAINTEXT://:9092
+advertised.listeners=PLAINTEXT://127.0.0.1:9092
+log.dirs=/opt/homebrew/var/lib/kafka-logs
+num.partitions=1
+</code></pre>
+<h1 id="running"><a class="markdownIt-Anchor" href="#running">#</a> Running</h1>
+<ol>
+<li>Start zookeeper</li>
+</ol>
+<pre><code>zookeeper-server-start /opt/homebrew/etc/kafka/zookeeper.properties
+</code></pre>
+<ol start="2">
+<li>Start kafka-server</li>
+</ol>
+<pre><code>kafka-server-start /opt/homebrew/etc/kafka/server.properties
+</code></pre>
+<ol start="3">
+<li>Start kafka-consumer</li>
+</ol>
+<pre><code>kafka-console-consumer --bootstrap-server localhost:9092 --topic account.user.activated
+</code></pre>
+<ol start="4">
+<li>Start kafka-producer</li>
+</ol>
+<pre><code>kafka-console-producer --bootstrap-server localhost:9092 --topic account.user.activated
+&gt; msg...
+</code></pre>
+<h1 id="kafka-go"><a class="markdownIt-Anchor" href="#kafka-go">#</a> kafka-go</h1>
+
+      <div class="tags">
+          <a href="/tags/golang/" rel="tag"><i class="ic i-tag"></i> golang</a>
+          <a href="/tags/backend/" rel="tag"><i class="ic i-tag"></i> backend</a>
+          <a href="/tags/distributed-systems/" rel="tag"><i class="ic i-tag"></i> distributed-systems</a>
+      </div>
   </div>
 
    <footer>
@@ -196,7 +211,7 @@ aesophor's Blog</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-09-11 10:37:35" itemprop="dateModified" datetime="2022-09-11T10:37:35+08:00">2022-09-11</time>
+    <time title="Modified: 2022-11-05 15:54:28" itemprop="dateModified" datetime="2022-11-05T15:54:28+08:00">2022-11-05</time>
   </span>
 </div>
 
@@ -209,7 +224,7 @@ aesophor's Blog</title>
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="https://aesophor.github.io/about/en-us.html" title="About">https://aesophor.github.io/about/en-us.html</a>
+    <a href="https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/" title="An Introduction to Kafka&#39;s Messaging System">https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -223,6 +238,23 @@ aesophor's Blog</title>
 
   </div>
   
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/08/27/pwnable-tw-secret-garden/" itemprop="url" rel="prev" data-background-image="&#x2F;2022&#x2F;08&#x2F;27&#x2F;pwnable-tw-secret-garden&#x2F;banner.png" title="[pwnable.tw] Secret Garden (350 pts)">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> CTF</span>
+  <h3>[pwnable.tw] Secret Garden (350 pts)</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
   <div class="wrap" id="comments"></div>
 
 
@@ -235,9 +267,12 @@ aesophor's Blog</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#aesophor"><span class="toc-number">1.</span> <span class="toc-text"> AESOPHOR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#interests"><span class="toc-number">2.</span> <span class="toc-text"> Interests</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#talks"><span class="toc-number">3.</span> <span class="toc-text"> Talks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#publications"><span class="toc-number">4.</span> <span class="toc-text"> Publications</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#presentations-at-sqlab"><span class="toc-number">5.</span> <span class="toc-text"> Presentations at SQLab</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#personal-projects-selected"><span class="toc-number">6.</span> <span class="toc-text"> Personal Projects (Selected)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#open-source-contributions"><span class="toc-number">7.</span> <span class="toc-text"> Open Source Contributions</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gaming"><span class="toc-number">8.</span> <span class="toc-text"> Gaming</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sketching"><span class="toc-number">9.</span> <span class="toc-text"> Sketching</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#calligraphy-traditional-chinese"><span class="toc-number">10.</span> <span class="toc-text"> Calligraphy (Traditional Chinese)</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text"> Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#installation"><span class="toc-number">2.</span> <span class="toc-text"> Installation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#running"><span class="toc-number">3.</span> <span class="toc-text"> Running</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka-go"><span class="toc-number">4.</span> <span class="toc-text"> kafka-go</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li class="active"><a href="/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/" rel="bookmark" title="An Introduction to Kafka's Messaging System">An Introduction to Kafka's Messaging System</a></li>
+        </ul>
       </div>
       <div class="overview panel" data-title="Overview">
         <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -250,19 +285,19 @@ aesophor's Blog</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">2</span>
+        <span class="count">3</span>
         <span class="name">posts</span>
       </a>
     </div>
     <div class="item categories">
       <a href="/categories/">
-        <span class="count">2</span>
+        <span class="count">3</span>
         <span class="name">categories</span>
       </a>
     </div>
     <div class="item tags">
       <a href="/tags/">
-        <span class="count">3</span>
+        <span class="count">6</span>
         <span class="name">tags</span>
       </a>
     </div>
@@ -358,6 +393,16 @@ aesophor's Blog</title>
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/Work/" title="In Work">Work</a>
+</div>
+
+    <span><a href="/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/" title="An Introduction to Kafka&#39;s Messaging System">An Introduction to Kafka's Messaging System</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
@@ -402,7 +447,7 @@ aesophor's Blog</title>
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: 'about/en-us',
+    path: '2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"

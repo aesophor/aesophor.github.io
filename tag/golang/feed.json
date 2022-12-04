@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "日新又新 • All posts by \"golang\" tag",
+    "description": "eku",
+    "home_page_url": "https://aesophor.github.io",
+    "items": [
+        {
+            "id": "https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/",
+            "url": "https://aesophor.github.io/2022/10/17/An-Introduction-to-Kafka-s-Messaging-System/",
+            "title": "An Introduction to Kafka's Messaging System",
+            "date_published": "2022-10-17T13:39:04.000Z",
+            "content_html": "<h1 id=\"introduction\"><a class=\"markdownIt-Anchor\" href=\"#introduction\">#</a> Introduction</h1>\n<p>Apache Kafka is an open-source distributed event streaming platform. Here’s a quick overview about Kafka:</p>\n<ul>\n<li>Architecture: a distributed system consisting of servers and clients</li>\n<li>Communicates over: TCP/IP</li>\n<li>Scalability: bare-metal hardware, VMs, containers, cloud environments</li>\n</ul>\n<p><span class=\"exturl\" data-url=\"aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAzOTk1NjMwMQ==\">https://segmentfault.com/a/1190000039956301</span></p>\n<h1 id=\"installation\"><a class=\"markdownIt-Anchor\" href=\"#installation\">#</a> Installation</h1>\n<pre><code>brew install kafka\n</code></pre>\n<p>zookeeper config</p>\n<pre><code># /opt/homebrew/etc/kafka/zookeeper.properties\ndataDir=/opt/homebrew/var/lib/zookeeper\nclientPort=2181\nmaxClientCnxns=0\n</code></pre>\n<p>kafka server config</p>\n<pre><code># /opt/homebrew/etc/kafka/server.properties\n\nbroker.id=0\nlisteners=PLAINTEXT://:9092\nadvertised.listeners=PLAINTEXT://127.0.0.1:9092\nlog.dirs=/opt/homebrew/var/lib/kafka-logs\nnum.partitions=1\n</code></pre>\n<h1 id=\"running\"><a class=\"markdownIt-Anchor\" href=\"#running\">#</a> Running</h1>\n<ol>\n<li>Start zookeeper</li>\n</ol>\n<pre><code>zookeeper-server-start /opt/homebrew/etc/kafka/zookeeper.properties\n</code></pre>\n<ol start=\"2\">\n<li>Start kafka-server</li>\n</ol>\n<pre><code>kafka-server-start /opt/homebrew/etc/kafka/server.properties\n</code></pre>\n<ol start=\"3\">\n<li>Start kafka-consumer</li>\n</ol>\n<pre><code>kafka-console-consumer --bootstrap-server localhost:9092 --topic account.user.activated\n</code></pre>\n<ol start=\"4\">\n<li>Start kafka-producer</li>\n</ol>\n<pre><code>kafka-console-producer --bootstrap-server localhost:9092 --topic account.user.activated\n&gt; msg...\n</code></pre>\n<h1 id=\"kafka-go\"><a class=\"markdownIt-Anchor\" href=\"#kafka-go\">#</a> kafka-go</h1>\n",
+            "tags": [
+                "golang",
+                "backend",
+                "distributed-systems"
+            ]
+        }
+    ]
+}
