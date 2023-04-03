@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://aesophor.github.io</id>
-    <title>日新又新</title>
+    <title></title>
     <link href="https://aesophor.github.io" />
     <updated>2022-08-27T06:06:00.000Z</updated>
     <category term="linux" />
