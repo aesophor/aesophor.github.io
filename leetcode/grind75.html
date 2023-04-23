@@ -1433,7 +1433,7 @@ aesophor</title>
 <li>掃描題目給的每個 job，假設目前掃描到的 job 是第 i 個：
 <ul>
 <li>往回找到第 j 個 job，其中  <code>jobs[j].end &lt;= jobs[i].start</code></li>
-<li>狀態轉移方程： <code>dp[i] = min(dp[i - 1], dp[j] + jobs[i].profit)</code></li>
+<li>狀態轉移方程： <code>dp[i] = max(dp[i - 1], dp[j] + jobs[i].profit)</code></li>
 </ul>
 </li>
 <li>答案就在  <code>dp.back()</code></li>
@@ -1527,7 +1527,7 @@ aesophor</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2023-04-23 21:08:26" itemprop="dateModified" datetime="2023-04-23T21:08:26+08:00">2023-04-23</time>
+    <time title="Modified: 2023-04-23 21:14:01" itemprop="dateModified" datetime="2023-04-23T21:14:01+08:00">2023-04-23</time>
   </span>
 </div>
 
