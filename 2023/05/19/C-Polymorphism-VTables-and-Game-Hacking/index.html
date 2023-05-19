@@ -280,7 +280,7 @@ These terms are borrowed from: <span class="exturl" data-url="aHR0cHM6Ly9yZWZzcG
 <p>Next, let’s see what happens if we override a parent’s virtual member function. In the following example, the derived class  <code>B</code>  overrides  <code>foo()</code>  from its base class  <code>A</code> .</p>
 <p><img data-src="virt-single-2.png" alt=""></p>
 <p>Similar to what happened with multiple inheritance as we discussed earlier, a new entry is inserted into the primary vtable ( <code>_vptr (primary)</code> , and the original entry in the virtual vtable ( <code>_vptr (vbase)</code> ) is now replaced with a  <code>virtual thunk to B::foo()</code> . If you recall, we’ve seen a “non-virtual thunk to XXX” before, and this time it’s called a “virtual thunk to XXX”. Quite interesting… 🤔</p>
-<p>Finally, let’s consider the most complicated scenario: <strong>The Diamond of Death</strong>. In the below example, We can see that both  <code>B</code>  and  <code>C</code>  virtually inherits from  <code>A</code> , and thanks to virtual inheritance, there’s only one copy of  <code>A</code> 's data members (they are placed in  <code>_vptr (vbase)</code> ).</p>
+<p>Finally, let’s consider the most complicated scenario: <strong>The Diamond of Death</strong>. In the below example, We can see that both  <code>B</code>  and  <code>C</code>  virtually inherit from  <code>A</code> , and thanks to virtual inheritance, there’s only one copy of  <code>A</code> 's data members (they are placed in  <code>_vptr (vbase)</code> ).</p>
 <p><img data-src="virt-diamond-1.png" alt=""></p>
 <p>Let’s see what happen if we override a virtual member function from  <code>A</code> . Familiar things happen again!</p>
 <p><img data-src="virt-diamond-2.png" alt=""></p>
@@ -356,7 +356,7 @@ client.dylib: Mach-O 64-bit dynamically linked shared library x86_64
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2023-05-20 01:56:04" itemprop="dateModified" datetime="2023-05-20T01:56:04+08:00">2023-05-20</time>
+    <time title="Modified: 2023-05-20 02:19:18" itemprop="dateModified" datetime="2023-05-20T02:19:18+08:00">2023-05-20</time>
   </span>
 </div>
 
@@ -543,6 +543,16 @@ client.dylib: Mach-O 64-bit dynamically linked shared library x86_64
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/Linux/" title="In Linux">Linux</a>
+</div>
+
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/CTF/" title="In CTF">CTF</a>
 </div>
 
@@ -557,16 +567,6 @@ client.dylib: Mach-O 64-bit dynamically linked shared library x86_64
 </div>
 
     <span><a href="/2023/05/19/C-Polymorphism-VTables-and-Game-Hacking/" title="C++ Polymorphism, vtables, and Game Hacking">C++ Polymorphism, vtables, and Game Hacking</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/Linux/" title="In Linux">Linux</a>
-</div>
-
-    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
   </ul>
