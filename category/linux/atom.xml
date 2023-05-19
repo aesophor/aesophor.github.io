@@ -7,6 +7,8 @@
     <category term="linux" />
     <category term="ctf" />
     <category term="binary-exploitation" />
+    <category term="cpp" />
+    <category term="reverse engineering" />
     <entry>
         <id>https://aesophor.github.io/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/</id>
         <title>Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</title>

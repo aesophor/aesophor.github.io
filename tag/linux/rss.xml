@@ -10,6 +10,8 @@
         <category>linux</category>
         <category>ctf</category>
         <category>binary-exploitation</category>
+        <category>cpp</category>
+        <category>reverse engineering</category>
         <item>
             <guid isPermalink="true">https://aesophor.github.io/2022/08/27/pwnable-tw-secret-garden/</guid>
             <title>[pwnable.tw] Secret Garden (350 pts)</title>
