@@ -272,7 +272,8 @@ These terms are borrowed from: <span class="exturl" data-url="aHR0cHM6Ly9yZWZzcG
 </li>
 </ul>
 <p><img data-src="multi-2.png" alt=""></p>
-<h2 id="virtual-inheritance"><a class="markdownIt-Anchor" href="#virtual-inheritance">#</a> Virtual Inheritance</h2>
+<p>This also implies that:</p>
+<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span> <span class="token operator">*</span>p1 <span class="token operator">=</span> <span class="token operator">&amp;</span>c<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">void</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>Father <span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// p1 != p2</span></pre></td></tr></table></figure><h2 id="virtual-inheritance"><a class="markdownIt-Anchor" href="#virtual-inheritance">#</a> Virtual Inheritance</h2>
 <p><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvVmlydHVhbF9pbmhlcml0YW5jZQ==">Virtual inheritance</span> in C++ is a technique to eliminate the “diamond of death” by ensuring only one copy of a base class’s member variables are inherited by grandchild derived classes. Let’s take a look at an example from libstdc++ 10.2.0:</p>
 <figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// Templates omitted for simplicity.</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">ios_base</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">basic_ios</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ios_base</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">basic_istream</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">virtual</span> <span class="token keyword">public</span> <span class="token class-name">basic_ios</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">basic_ostream</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">virtual</span> <span class="token keyword">public</span> <span class="token class-name">basic_ios</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token keyword">class</span> <span class="token class-name">basic_iostream</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">basic_istream</span><span class="token punctuation">,</span> <span class="token keyword">public</span> <span class="token class-name">basic_ostream</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>Without virtual inheritance, the data members of  <code>basic_ios</code>  will be passed down twice to the most derived class  <code>basic_iostream</code>  (one via  <code>basic_istream</code> , one via  <code>basic_ostream</code> ), resulting in ambiguous and duplicated data members in  <code>basic_iostream</code> . To understand the layout of vtables under virtual inheritance, let’s begin with the simplest scenario:</p>
 <p><img data-src="virt-single-1.png" alt=""></p>
@@ -356,7 +357,7 @@ client.dylib: Mach-O 64-bit dynamically linked shared library x86_64
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2023-05-20 02:19:18" itemprop="dateModified" datetime="2023-05-20T02:19:18+08:00">2023-05-20</time>
+    <time title="Modified: 2023-05-20 09:32:56" itemprop="dateModified" datetime="2023-05-20T09:32:56+08:00">2023-05-20</time>
   </span>
 </div>
 
@@ -543,10 +544,10 @@ client.dylib: Mach-O 64-bit dynamically linked shared library x86_64
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Linux/" title="In Linux">Linux</a>
+<a href="/categories/C/" title="In C++">C++</a>
 </div>
 
-    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
+    <span><a href="/2023/05/19/C-Polymorphism-VTables-and-Game-Hacking/" title="C++ Polymorphism, vtables, and Game Hacking">C++ Polymorphism, vtables, and Game Hacking</a></span>
   </li>
 
       
@@ -563,10 +564,10 @@ client.dylib: Mach-O 64-bit dynamically linked shared library x86_64
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/C/" title="In C++">C++</a>
+<a href="/categories/Linux/" title="In Linux">Linux</a>
 </div>
 
-    <span><a href="/2023/05/19/C-Polymorphism-VTables-and-Game-Hacking/" title="C++ Polymorphism, vtables, and Game Hacking">C++ Polymorphism, vtables, and Game Hacking</a></span>
+    <span><a href="/2020/07/20/Arch-Linux-on-MacBook-Pro-11-2-with-Custom-NVMe-M-2-SSD/" title="Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD">Arch Linux on MacBook Pro 11,2 with Custom NVMe M.2 SSD</a></span>
   </li>
 
   </ul>
